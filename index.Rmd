@@ -1,0 +1,7 @@
+---
+title: "Workshop de Introdução ao R - UFSC"
+---
+
+Informações sobre o workshop
+- Data
+- Overview

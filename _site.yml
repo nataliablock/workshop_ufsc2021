@@ -1,0 +1,29 @@
+name: "workshop_r_ufsc"
+output_dir: "."
+navbar:
+  title: "Workshop Introdução ao R - UFSC"
+  left:
+    - icon: fa-home
+      href: index.html
+    - text: "Preparação para o Workshop"
+      href: preparacao.html
+    - text: "Workshops"
+      menu:
+        - text: "Workshop 1"
+          href: workshop1.html
+        - text: "Workshop 2"
+          href: workshop2.html
+        - text: "Workshop 3"
+          href: workshop3.html     
+        - text: "Workshop 4"
+          href: workshop4.html
+    - text: "Repositório"
+      href: https://github.com/nataliablock/workshop_ufsc2021
+    - text: "Dashboard"
+      href: https://example.com
+  right:
+    - icon: fab fa-twitter
+      href: https://twitter.com/nataliamblock
+output:
+  html_document:
+    theme: flatly

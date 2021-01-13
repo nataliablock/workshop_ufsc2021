@@ -1,0 +1,7 @@
+---
+title: "Preparação para o Workshop"
+---
+
+Instruções de como se preparar para o Workshop
+
+Instalação do R e do RStudio
