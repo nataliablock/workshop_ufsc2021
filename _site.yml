@@ -20,7 +20,7 @@ navbar:
     - text: "Repositório"
       href: repositorio_redirect.html
     - text: "Dashboard"
-      href: dashbord_redirect.html
+      href: dashboard_redirect.html
   right:
     - icon: fab fa-twitter
       href: https://twitter.com/nataliamblock
