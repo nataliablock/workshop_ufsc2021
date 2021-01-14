@@ -18,7 +18,7 @@ navbar:
         - text: "Workshop 4"
           href: workshop4.html
     - text: "Repositório"
-      href: https://nataliablock.github.io/workshop_ufsc2021/
+      href: https://github.com/nataliablock/workshop_ufsc2021
     - text: "Dashboard"
       href: https://nataliablock.github.io/ufsc_dashboard/
   right:
