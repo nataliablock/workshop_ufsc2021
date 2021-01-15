@@ -55,7 +55,7 @@ alemanha
 Objetos podem ser nomeados da forma como preferir, mas existem algumas regras:
 
   * Não é possível começar nomes de objetos com números
-  * O R é sensível a letras maiúsculas e minúsculas (idade é diferente de Idade)
+  * O R é sensível a letras maiúsculas e minúsculas (`idade` é diferente de `Idade`)
   * Alguns nomes não podem ser utilizados pois são funções fundamentais no R como `if`, `else`, `for`
   * Apesar de ser permitido é melhor evitar qualquer outro nome de função para nomear objetos como `mean`, `data`, `df`.
 
@@ -111,8 +111,118 @@ alemanha
 ls()
 ```
 
+
+Caso queiramos remover um objeto do ambiente global do R utilizamos a função `rm()`
+
+```{r}
+rm(alemanha)
+```
+
+Também podemos remover vários objetos ao mesmo tempo
+
+```{r}
+rm(alemanha_mult, italia, nome_pais, total_turistas)
+```
+
+
 ## Funções e seus argumentos
 
 Como dito anteriormente, tudo o que existe no R é um objeto e tudo o que acontece é uma chamada a uma função. Funções são scripts "empacotados" que automatizam conjuntos de códigos. Muitas funções são pré-definidas, as quais chamamos de funções da base R, ou estão disponíveis em pacotes os quais precisamos instalar e importar (vamos tratar sobre isso mais adiante).
 
-Uma função normalmente recebe uma ou mais entradas (inputs) chamadas **argumentos** e geralmente (mas não sempre) retornam valores.
+Uma função normalmente recebe uma ou mais entradas (inputs) chamadas **argumentos** e geralmente (mas não sempre) **retornam valores**.
+
+Um exemplo de função é a `sqrt` que calcula a raiz quadrada de um valor. O **argumento** desta função é o valor o qual queremos calcular a raiz, e o valor que o R retorna, o output, é o resultado do cálculo. Ao executar a função dizemos que estamos **chamando a função**. Vejamos:
+
+```{r echo=TRUE}
+sqrt(16)
+```
+
+Argumentos podem ser não apenas números, mas também outros tipos objetos. Para saber que tipo de argumento recebe uma função devemos verificar a documentação (como veremos a seguir). Alguns argumentos podem ser especificados pelo usuário ou, caso não sejam, recebem um valor default especificado pelo desenvolvedor da função. Esse tipo de argumento é chamado de **opção** da função. As opções são normalmente utilizadas para alterar a forma como a função opera, como tirar um valor ou um símbolo indesejado, por exemplo. No entanto, caso queira algo específicoo, você deve especificar o valor desejado para ser utilizado ao invés do default.
+
+Vejamos a função `round()`, utilizada para arredondar valores
+
+```{r echo=TRUE}
+round(3.14159)
+
+```
+
+Repare que a função arredonda para o valor inteiro. Mas digamos que eu queira que o número seja arredondado para dois dígitos depois do ponto. Como descubro como fazer isso? Podemos utilizar `args(round)`, que retornará os argumentos desta função, ou podemos pedir ajuda utilizando `help(round)` ou `?round`, que retornará a sua documentação (aparecerá no painel de baixo à direita do RStudio)
+
+```{r echo= TRUE}
+
+args(round)
+
+```
+
+```{r}
+?round
+```
+
+A documentação mostra que podemos incluir como o segundo argumento da função (que é uma opção) o número de digitos desejados
+
+```{r echo=TRUE}
+
+round(3.14159, digits= 2)
+
+```
+
+Caso você siga a sequência de argumentos elencadas na documentação não é preciso digitar o nome da opção
+
+```{r echo=TRUE}
+round(3.14159, 2)
+```
+
+## Instalando e importando funções
+
+Como explicado anteriormente, existem função que não fazer parte da base do R e precisamos instalá-las e importá-las para que sejam usadas. Vamos instalar dois pacotes que iremos usar no workshop: o `tidyverse` e o `readxl`. Para isso utilizamos a função `install.packages()`. Veja que o nome do pacote deve vir entre aspas dentro dos parenteses
+
+```{r eval=FALSE, include=TRUE}
+install.packages("tidyverse")
+install.packages("readxl")
+
+```
+
+Não basta instalar o pacote. Toda que iniciarmos o R precisamos importar os pacotes de desejamos utilizar.
+Vamos importar estes pacotes. Para isso podemos utilizar a função `library()` ou `require()`. Para a importação não colocamos os nomes dos pacotes entre aspas.
+
+```{r eval=FALSE, include=TRUE}
+library(tidyverse)
+require(readxl)
+```
+
+Agora podemos utilizar as funções que vem dentro desses pacotes. O pacote `readxl` é utilizado para importar documentos de Excel para o R. Sobre o `tidyverse` falaremos com mais detalhes no próximo workshop.
+
+
+
+
+## Gerenciamento de dados
+
+  * Diretório de trabalho
+  * `getwd()`
+  * `setwd()`
+  * dica de como descobrir o endereço do diretório de trabalho a partir do RStudio
+  
+  
+## Importando e exportando dados
+
+  
+  * Importando .csv com a função `read_csv()` do `readr`, que é parte do tidyverse
+  * Importando planilhas do excel com a função `read_excel()` do `readxl`
+  
+
+## Atividades
+
+1. Crie um diretório (pasta) em seu computador para salvar os documentos utilizados e gerados no workshop
+
+2. Faça o download do repositório do workshop no Github, copie os documentos da pasta **dados** e cole no diretório que criou para o workshop
+
+3. Aponte o R para este diretório como explicado na seção **Gerenciamento de dados**. 
+
+4. Faça o upload dos bancos `migracao_completo.csv`, `export_sc.xlsx` e `import_sc.xlsx`, salvando-os em objetos chamados respectivamente de `migracao`, `exportacao` e `importacao`. Siga as instruções da seção **Importando e exportando dados**. 
+
+5. Caso tenha desenvolvido um script próprio com suas anotações neste primeiro workshop, salve-o nesta pasta
+
+6. Essa atividade deve ser cumprida para iniciarmos o próximo workshop. Precisaremos desses bancos já importados e o diretório já apontado para o R para iniciarmos a aula.
+
+
+

@@ -27,4 +27,6 @@ Para mais detalhes sobre o R e o R Studio:
 
 ## Créditos 
 
-Este curso se baseia em diversos materiais disponíveis gratuitamente (e generosamente) na internet. Em grande medida me baseei no curso [R for Social Scientists](https://datacarpentry.org/r-socialsci/) do [Data Carpentry](https://datacarpentry.org) e no [R Crash Course](http://tiagoventura.rbind.io/files/crash_course_gvpt) lecionado por [Tiago Ventura](http://tiagoventura.rbind.io) na University of Maryland, College Park.
+Este curso se baseia em diversos materiais disponíveis gratuitamente (e generosamente) na internet. Em grande medida me baseei no curso [R for Social Scientists](https://datacarpentry.org/r-socialsci/) do [Data Carpentry](https://datacarpentry.org), no [R Crash Course](http://tiagoventura.rbind.io/files/crash_course_gvpt) lecionado por [Tiago Ventura](http://tiagoventura.rbind.io) na University of Maryland, College Park, e no livro [R for Data Science](https://r4ds.had.co.nz) de Hadley Wickham e Garrett Grolemund.
+
+## Fonte dos dados utilizados neste workshop

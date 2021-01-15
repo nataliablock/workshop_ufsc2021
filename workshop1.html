@@ -453,7 +453,7 @@ div.tocify {
 <p>Objetos podem ser nomeados da forma como preferir, mas existem algumas regras:</p>
 <ul>
 <li>Não é possível começar nomes de objetos com números</li>
-<li>O R é sensível a letras maiúsculas e minúsculas (idade é diferente de Idade)</li>
+<li>O R é sensível a letras maiúsculas e minúsculas (<code>idade</code> é diferente de <code>Idade</code>)</li>
 <li>Alguns nomes não podem ser utilizados pois são funções fundamentais no R como <code>if</code>, <code>else</code>, <code>for</code></li>
 <li>Apesar de ser permitido é melhor evitar qualquer outro nome de função para nomear objetos como <code>mean</code>, <code>data</code>, <code>df</code>.</li>
 </ul>
@@ -488,11 +488,70 @@ alemanha</code></pre>
 <pre class="r"><code>ls()</code></pre>
 <pre><code>## [1] &quot;alemanha&quot;       &quot;alemanha_mult&quot;  &quot;italia&quot;         &quot;nome_pais&quot;     
 ## [5] &quot;total_turistas&quot;</code></pre>
+<p>Caso queiramos remover um objeto do ambiente global do R utilizamos a função <code>rm()</code></p>
+<pre class="r"><code>rm(alemanha)</code></pre>
+<p>Também podemos remover vários objetos ao mesmo tempo</p>
+<pre class="r"><code>rm(alemanha_mult, italia, nome_pais, total_turistas)</code></pre>
 </div>
 <div id="funções-e-seus-argumentos" class="section level2">
 <h2>Funções e seus argumentos</h2>
 <p>Como dito anteriormente, tudo o que existe no R é um objeto e tudo o que acontece é uma chamada a uma função. Funções são scripts “empacotados” que automatizam conjuntos de códigos. Muitas funções são pré-definidas, as quais chamamos de funções da base R, ou estão disponíveis em pacotes os quais precisamos instalar e importar (vamos tratar sobre isso mais adiante).</p>
-<p>Uma função normalmente recebe uma ou mais entradas (inputs) chamadas <strong>argumentos</strong> e geralmente (mas não sempre) retornam valores.</p>
+<p>Uma função normalmente recebe uma ou mais entradas (inputs) chamadas <strong>argumentos</strong> e geralmente (mas não sempre) <strong>retornam valores</strong>.</p>
+<p>Um exemplo de função é a <code>sqrt</code> que calcula a raiz quadrada de um valor. O <strong>argumento</strong> desta função é o valor o qual queremos calcular a raiz, e o valor que o R retorna, o output, é o resultado do cálculo. Ao executar a função dizemos que estamos <strong>chamando a função</strong>. Vejamos:</p>
+<pre class="r"><code>sqrt(16)</code></pre>
+<pre><code>## [1] 4</code></pre>
+<p>Argumentos podem ser não apenas números, mas também outros tipos objetos. Para saber que tipo de argumento recebe uma função devemos verificar a documentação (como veremos a seguir). Alguns argumentos podem ser especificados pelo usuário ou, caso não sejam, recebem um valor default especificado pelo desenvolvedor da função. Esse tipo de argumento é chamado de <strong>opção</strong> da função. As opções são normalmente utilizadas para alterar a forma como a função opera, como tirar um valor ou um símbolo indesejado, por exemplo. No entanto, caso queira algo específicoo, você deve especificar o valor desejado para ser utilizado ao invés do default.</p>
+<p>Vejamos a função <code>round()</code>, utilizada para arredondar valores</p>
+<pre class="r"><code>round(3.14159)</code></pre>
+<pre><code>## [1] 3</code></pre>
+<p>Repare que a função arredonda para o valor inteiro. Mas digamos que eu queira que o número seja arredondado para dois dígitos depois do ponto. Como descubro como fazer isso? Podemos utilizar <code>args(round)</code>, que retornará os argumentos desta função, ou podemos pedir ajuda utilizando <code>help(round)</code> ou <code>?round</code>, que retornará a sua documentação (aparecerá no painel de baixo à direita do RStudio)</p>
+<pre class="r"><code>args(round)</code></pre>
+<pre><code>## function (x, digits = 0) 
+## NULL</code></pre>
+<pre class="r"><code>?round</code></pre>
+<p>A documentação mostra que podemos incluir como o segundo argumento da função (que é uma opção) o número de digitos desejados</p>
+<pre class="r"><code>round(3.14159, digits= 2)</code></pre>
+<pre><code>## [1] 3.14</code></pre>
+<p>Caso você siga a sequência de argumentos elencadas na documentação não é preciso digitar o nome da opção</p>
+<pre class="r"><code>round(3.14159, 2)</code></pre>
+<pre><code>## [1] 3.14</code></pre>
+</div>
+<div id="instalando-e-importando-funções" class="section level2">
+<h2>Instalando e importando funções</h2>
+<p>Como explicado anteriormente, existem função que não fazer parte da base do R e precisamos instalá-las e importá-las para que sejam usadas. Vamos instalar dois pacotes que iremos usar no workshop: o <code>tidyverse</code> e o <code>readxl</code>. Para isso utilizamos a função <code>install.packages()</code>. Veja que o nome do pacote deve vir entre aspas dentro dos parenteses</p>
+<pre class="r"><code>install.packages(&quot;tidyverse&quot;)
+install.packages(&quot;readxl&quot;)</code></pre>
+<p>Não basta instalar o pacote. Toda que iniciarmos o R precisamos importar os pacotes de desejamos utilizar. Vamos importar estes pacotes. Para isso podemos utilizar a função <code>library()</code> ou <code>require()</code>. Para a importação não colocamos os nomes dos pacotes entre aspas.</p>
+<pre class="r"><code>library(tidyverse)
+require(readxl)</code></pre>
+<p>Agora podemos utilizar as funções que vem dentro desses pacotes. O pacote <code>readxl</code> é utilizado para importar documentos de Excel para o R. Sobre o <code>tidyverse</code> falaremos com mais detalhes no próximo workshop.</p>
+</div>
+<div id="gerenciamento-de-dados" class="section level2">
+<h2>Gerenciamento de dados</h2>
+<ul>
+<li>Diretório de trabalho</li>
+<li><code>getwd()</code></li>
+<li><code>setwd()</code></li>
+<li>dica de como descobrir o endereço do diretório de trabalho a partir do RStudio</li>
+</ul>
+</div>
+<div id="importando-e-exportando-dados" class="section level2">
+<h2>Importando e exportando dados</h2>
+<ul>
+<li>Importando .csv com a função <code>read_csv()</code> do <code>readr</code>, que é parte do tidyverse</li>
+<li>Importando planilhas do excel com a função <code>read_excel()</code> do <code>readxl</code></li>
+</ul>
+</div>
+<div id="atividades" class="section level2">
+<h2>Atividades</h2>
+<ol style="list-style-type: decimal">
+<li><p>Crie um diretório (pasta) em seu computador para salvar os documentos utilizados e gerados no workshop</p></li>
+<li><p>Faça o download do repositório do workshop no Github, copie os documentos da pasta <strong>dados</strong> e cole no diretório que criou para o workshop</p></li>
+<li><p>Aponte o R para este diretório como explicado na seção <strong>Gerenciamento de dados</strong>.</p></li>
+<li><p>Faça o upload dos bancos <code>migracao_completo.csv</code>, <code>export_sc.xlsx</code> e <code>import_sc.xlsx</code>, salvando-os em objetos chamados respectivamente de <code>migracao</code>, <code>exportacao</code> e <code>importacao</code>. Siga as instruções da seção <strong>Importando e exportando dados</strong>.</p></li>
+<li><p>Caso tenha desenvolvido um script próprio com suas anotações neste primeiro workshop, salve-o nesta pasta</p></li>
+<li><p>Essa atividade deve ser cumprida para iniciarmos o próximo workshop. Precisaremos desses bancos já importados e o diretório já apontado para o R para iniciarmos a aula.</p></li>
+</ol>
 </div>
 </div>
 

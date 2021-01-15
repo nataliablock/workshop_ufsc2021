@@ -8,9 +8,6 @@ output:
     toc_depth: 2
 ---
 
-# Tidyverse, dplyr e manipulação de dados
+# Estrutura de dados, manipulação de dados com a base R e o dplyr
 
-Hello World!
-
-
-## Subcontent
+## Estrutura de dados
