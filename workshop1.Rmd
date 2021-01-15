@@ -9,10 +9,110 @@ output:
 ---
 
 
-# Content
+# Fundamentos de R
 
-Hello World!
+Para começar nós vamos:
+
+  * Entender como o material está organizado no site e no repositório (o que é comando e o que é output na página)
+  * Discutir a apresentação dos gráficos do dashboard (abrir em nova aba para evitar sair do site)
+  * Conversar sobre a programação como meio e a comunicação da informação exposta pelos dados como fim
+  * Diferenciar o R do RStudio  
+  * Explorar o RStudio
+  * Entender o que são os ambientes global e local e o uso de memória do computador pelo R 
+
+## O que é o R?
+
+O R é uma linguagem de programação especialmente utilizada para estatística e ciência de dados, apesar de estar sendo crescentemente utilizada para propósitos mais gerais (criação de websites, aplicativos de web, dashboards, entre outros).
+
+O R é uma linguagem orientada a objetos e funcional. Desta forma, em R:
+
+  * Tudo o que existe é um objeto (orientada a objetos)
+  * Tudo o que acontece é uma chamada à uma função (funcional)
+  
+## Criando objetos em R
+
+Você pode obter uma saída (também chamada de output) simplesmente digitando algum cálculo no console:
+```{r echo=TRUE}
+7 + 9
+```
+
+```{r echo=TRUE}
+12/7
+```
+
+No entanto, a linguagem se torna mais útil quando **atribuimos valores a objetos**. Para criar um objeto precisamos dar-lhe um nome seguido do operador de atribuição `<-` e o valor que queremos atribuir.
+
+```{r echo=TRUE}
+alemanha<-9000
+```
+
+Nem todo o comando em R retornará alguma resposta. Ao criar um objeto é possível vê-lo no painel Environment do RStudio (no topo à direita) ou podemos digitar seu nome no console. O R retornará o valor atribuído a ele.
+
+```{r echo=TRUE}
+alemanha
+```
+
+Objetos podem ser nomeados da forma como preferir, mas existem algumas regras:
+
+  * Não é possível começar nomes de objetos com números
+  * O R é sensível a letras maiúsculas e minúsculas (idade é diferente de Idade)
+  * Alguns nomes não podem ser utilizados pois são funções fundamentais no R como `if`, `else`, `for`
+  * Apesar de ser permitido é melhor evitar qualquer outro nome de função para nomear objetos como `mean`, `data`, `df`.
+
+Objetos podem receber qualquer tipo de valor, inclusive podendo ser palavras, que chamamos de character ou string. Uma string deve ser sempre apresentada ao objeto entre aspas para que seja interpretada pela linguagem como uma palavra.
+
+Vale destacar que é bom evitar acentuação sempre que possível no seu código. É muito comum encontrarmos problemas para rodar o código pois a linguagem não compreendeu a acentuação.
+
+```{r echo=TRUE}
+nome_pais<-"Alemanha"
+
+nome_pais
+
+```
+
+Como veremos a diante os objetos podem conter vários tipos de estruturas de dados, como os dataframes, que são as tabelas como as que trabalhamos no Excel. 
+
+É possível fazer operações com objetos
+```{r echo=TRUE}
+alemanha * 2
+```
+
+Veja que o R apresenta o resultado mas não o "salva". Se quisermos ter esse resultado salvo precisamos atribuí-lo a um objeto:
+
+```{r echo=TRUE}
+alemanha_mult<-alemanha*2
+
+alemanha_mult
+```
+
+Também é possível fazer operações entre objetos
+
+```{r echo=TRUE}
+
+italia<-3000
+
+total_turistas<-alemanha + italia
+
+total_turistas
+
+```
+
+O R é bastante flexível; é possível subscrever o valor contido em um objeto por outro. Veja que no código abaixo estou substituindo o valor 9000 por 10000. O valor 9000 será perdido
+
+```{r echo=TRUE}
+alemanha<-10000
+
+alemanha
+```
 
 
-## Subcontent
+É possível verificar todos os objetos que criamos no painel Global Environment do RStudio. Também é possível ver todos os objetos do ambiente global digitando a função `ls` no console
+```{r echo=TRUE}
+ls()
+```
 
+## Funções e seus argumentos
+
+Como dito anteriormente, tudo o que existe no R é um objeto e tudo o que acontece é uma chamada a uma função. Funções são scripts "empacotados" que automatizam conjuntos de códigos. Muitas funções são pré-definidas, as quais chamamos de funções da base R, ou estão disponíveis em pacotes os quais precisamos instalar e importar (vamos tratar sobre isso mais adiante).
+
+Uma função normalmente recebe uma ou mais entradas (inputs) chamadas **argumentos** e geralmente (mas não sempre) retornam valores.

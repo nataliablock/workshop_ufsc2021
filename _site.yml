@@ -5,7 +5,7 @@ navbar:
   left:
     - icon: fa-home
       href: index.html
-    - text: "Preparação para o Workshop"
+    - text: "Instruções para o Workshop"
       href: preparacao.html
     - text: "Workshops"
       menu:

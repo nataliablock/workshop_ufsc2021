@@ -1,7 +1,30 @@
 ---
-title: "Preparação para o Workshop"
+title: "Instruções para o Workshop"
 ---
 
 Instruções de como se preparar para o Workshop
 
-Instalação do R e do RStudio
+## Como acompanhar o workshop online
+
+  * Sugiro a leitura do material do workshop anterior antes do seguinte para relembrar os conceitos e tirar dúvidas. 
+
+## Instalação do R e do RStudio
+
+Para mais detalhes sobre o R e o R Studio:
+
+  * Veja este [tutorial do Data Carpentry](https://datacarpentry.org/r-socialsci/00-intro/index.html)
+  * Leia o capítulo "O R e RStudio" do livro [Usando R: um Guia para Cientistas Políticos](http://electionsbr.com/livro/introducao-ao-r.html#o-r-e-rstudio)
+
+## Acesso aos materiais do workshop
+
+  * Os links para repositório e o dashboard no menu abrem na mesma página. Para evitar sair do site clique em cima dos links e abra em uma janela diferente
+  
+## Materiais complementares
+
+## Atividades
+
+## Buscando ajuda
+
+## Créditos 
+
+Este curso se baseia em diversos materiais disponíveis gratuitamente (e generosamente) na internet. Em grande medida me baseei no curso [R for Social Scientists](https://datacarpentry.org/r-socialsci/) do [Data Carpentry](https://datacarpentry.org) e no [R Crash Course](http://tiagoventura.rbind.io/files/crash_course_gvpt) lecionado por [Tiago Ventura](http://tiagoventura.rbind.io) na University of Maryland, College Park.

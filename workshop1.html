@@ -366,7 +366,7 @@ div.tocify {
   </a>
 </li>
 <li>
-  <a href="preparacao.html">Preparação para o Workshop</a>
+  <a href="preparacao.html">Instruções para o Workshop</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -417,11 +417,82 @@ div.tocify {
 </div>
 
 
-<div id="content" class="section level1">
-<h1>Content</h1>
-<p>Hello World!</p>
-<div id="subcontent" class="section level2">
-<h2>Subcontent</h2>
+<div id="fundamentos-de-r" class="section level1">
+<h1>Fundamentos de R</h1>
+<p>Para começar nós vamos:</p>
+<ul>
+<li>Entender como o material está organizado no site e no repositório (o que é comando e o que é output na página)</li>
+<li>Discutir a apresentação dos gráficos do dashboard (abrir em nova aba para evitar sair do site)</li>
+<li>Conversar sobre a programação como meio e a comunicação da informação exposta pelos dados como fim</li>
+<li>Diferenciar o R do RStudio<br />
+</li>
+<li>Explorar o RStudio</li>
+<li>Entender o que são os ambientes global e local e o uso de memória do computador pelo R</li>
+</ul>
+<div id="o-que-é-o-r" class="section level2">
+<h2>O que é o R?</h2>
+<p>O R é uma linguagem de programação especialmente utilizada para estatística e ciência de dados, apesar de estar sendo crescentemente utilizada para propósitos mais gerais (criação de websites, aplicativos de web, dashboards, entre outros).</p>
+<p>O R é uma linguagem orientada a objetos e funcional. Desta forma, em R:</p>
+<ul>
+<li>Tudo o que existe é um objeto (orientada a objetos)</li>
+<li>Tudo o que acontece é uma chamada à uma função (funcional)</li>
+</ul>
+</div>
+<div id="criando-objetos-em-r" class="section level2">
+<h2>Criando objetos em R</h2>
+<p>Você pode obter uma saída (também chamada de output) simplesmente digitando algum cálculo no console:</p>
+<pre class="r"><code>7 + 9</code></pre>
+<pre><code>## [1] 16</code></pre>
+<pre class="r"><code>12/7</code></pre>
+<pre><code>## [1] 1.714286</code></pre>
+<p>No entanto, a linguagem se torna mais útil quando <strong>atribuimos valores a objetos</strong>. Para criar um objeto precisamos dar-lhe um nome seguido do operador de atribuição <code>&lt;-</code> e o valor que queremos atribuir.</p>
+<pre class="r"><code>alemanha&lt;-9000</code></pre>
+<p>Nem todo o comando em R retornará alguma resposta. Ao criar um objeto é possível vê-lo no painel Environment do RStudio (no topo à direita) ou podemos digitar seu nome no console. O R retornará o valor atribuído a ele.</p>
+<pre class="r"><code>alemanha</code></pre>
+<pre><code>## [1] 9000</code></pre>
+<p>Objetos podem ser nomeados da forma como preferir, mas existem algumas regras:</p>
+<ul>
+<li>Não é possível começar nomes de objetos com números</li>
+<li>O R é sensível a letras maiúsculas e minúsculas (idade é diferente de Idade)</li>
+<li>Alguns nomes não podem ser utilizados pois são funções fundamentais no R como <code>if</code>, <code>else</code>, <code>for</code></li>
+<li>Apesar de ser permitido é melhor evitar qualquer outro nome de função para nomear objetos como <code>mean</code>, <code>data</code>, <code>df</code>.</li>
+</ul>
+<p>Objetos podem receber qualquer tipo de valor, inclusive podendo ser palavras, que chamamos de character ou string. Uma string deve ser sempre apresentada ao objeto entre aspas para que seja interpretada pela linguagem como uma palavra.</p>
+<p>Vale destacar que é bom evitar acentuação sempre que possível no seu código. É muito comum encontrarmos problemas para rodar o código pois a linguagem não compreendeu a acentuação.</p>
+<pre class="r"><code>nome_pais&lt;-&quot;Alemanha&quot;
+
+nome_pais</code></pre>
+<pre><code>## [1] &quot;Alemanha&quot;</code></pre>
+<p>Como veremos a diante os objetos podem conter vários tipos de estruturas de dados, como os dataframes, que são as tabelas como as que trabalhamos no Excel.</p>
+<p>É possível fazer operações com objetos</p>
+<pre class="r"><code>alemanha * 2</code></pre>
+<pre><code>## [1] 18000</code></pre>
+<p>Veja que o R apresenta o resultado mas não o “salva”. Se quisermos ter esse resultado salvo precisamos atribuí-lo a um objeto:</p>
+<pre class="r"><code>alemanha_mult&lt;-alemanha*2
+
+alemanha_mult</code></pre>
+<pre><code>## [1] 18000</code></pre>
+<p>Também é possível fazer operações entre objetos</p>
+<pre class="r"><code>italia&lt;-3000
+
+total_turistas&lt;-alemanha + italia
+
+total_turistas</code></pre>
+<pre><code>## [1] 12000</code></pre>
+<p>O R é bastante flexível; é possível subscrever o valor contido em um objeto por outro. Veja que no código abaixo estou substituindo o valor 9000 por 10000. O valor 9000 será perdido</p>
+<pre class="r"><code>alemanha&lt;-10000
+
+alemanha</code></pre>
+<pre><code>## [1] 10000</code></pre>
+<p>É possível verificar todos os objetos que criamos no painel Global Environment do RStudio. Também é possível ver todos os objetos do ambiente global digitando a função <code>ls</code> no console</p>
+<pre class="r"><code>ls()</code></pre>
+<pre><code>## [1] &quot;alemanha&quot;       &quot;alemanha_mult&quot;  &quot;italia&quot;         &quot;nome_pais&quot;     
+## [5] &quot;total_turistas&quot;</code></pre>
+</div>
+<div id="funções-e-seus-argumentos" class="section level2">
+<h2>Funções e seus argumentos</h2>
+<p>Como dito anteriormente, tudo o que existe no R é um objeto e tudo o que acontece é uma chamada a uma função. Funções são scripts “empacotados” que automatizam conjuntos de códigos. Muitas funções são pré-definidas, as quais chamamos de funções da base R, ou estão disponíveis em pacotes os quais precisamos instalar e importar (vamos tratar sobre isso mais adiante).</p>
+<p>Uma função normalmente recebe uma ou mais entradas (inputs) chamadas <strong>argumentos</strong> e geralmente (mas não sempre) retornam valores.</p>
 </div>
 </div>
 
