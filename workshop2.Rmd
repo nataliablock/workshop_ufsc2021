@@ -8,6 +8,14 @@ output:
     toc_depth: 2
 ---
 
-# Estrutura de dados, manipulação de dados com a base R e o dplyr
+# Estrutura de dados, manipulação de dados e o dplyr
 
 ## Estrutura de dados
+
+
+## Inspecionando dados
+
+
+## Manipulação de dados com dplyr
+
+## Atividades

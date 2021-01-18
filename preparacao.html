@@ -341,42 +341,74 @@ $(document).ready(function () {
 </div>
 
 
-<p>Instruções de como se preparar para o Workshop</p>
-<div id="como-acompanhar-o-workshop-online" class="section level2">
-<h2>Como acompanhar o workshop online</h2>
-<ul>
-<li>Sugiro a leitura do material do workshop anterior antes do seguinte para relembrar os conceitos e tirar dúvidas.</li>
-</ul>
-</div>
-<div id="instalação-do-r-e-do-rstudio" class="section level2">
-<h2>Instalação do R e do RStudio</h2>
+<div id="instalação-do-r-e-do-rstudio" class="section level1">
+<h1>Instalação do R e do RStudio</h1>
+<div id="instale-o-r-e-o-rstudio-antes-do-primeiro-workshop-não-realizaremos-a-instalação-durante-a-aula." class="section level3">
+<h3>Instale o R e o RStudio antes do primeiro workshop! Não realizaremos a instalação durante a aula.</h3>
+<p>Para instalar a linguagem R você deve acessar o <a href="https://cran.r-project.org">CRAN</a>. Logo na página de início terá os links para a instalação para cada sistema operacional. É só baixar o do seu computador e realizar a instalação.</p>
+<p>Você pode baixar o IDE RStudio <a href="https://rstudio.com/products/rstudio/download/">neste link</a>. Selecione a opção RStudio Desktop Free. O site irá detectar o seu sistema operacional, basta fazer o download e instalar.</p>
+<p>Caso tenha alguma dúvida você encontra uma explicação mais sistemática da instalação para cada sistema operacional <a href="https://datacarpentry.org/r-socialsci/setup.html">nesse link (em inglês)</a>.</p>
+<p>Para uma explicação da instalação para Windows em português (talvez esteja um pouco defasada) <a href="http://material.curso-r.com/instalacao/">veja este material</a>.</p>
 <p>Para mais detalhes sobre o R e o R Studio:</p>
 <ul>
 <li>Veja este <a href="https://datacarpentry.org/r-socialsci/00-intro/index.html">tutorial do Data Carpentry</a></li>
 <li>Leia o capítulo “O R e RStudio” do livro <a href="http://electionsbr.com/livro/introducao-ao-r.html#o-r-e-rstudio">Usando R: um Guia para Cientistas Políticos</a></li>
 </ul>
 </div>
-<div id="acesso-aos-materiais-do-workshop" class="section level2">
-<h2>Acesso aos materiais do workshop</h2>
-<ul>
-<li>Os links para repositório e o dashboard no menu abrem na mesma página. Para evitar sair do site clique em cima dos links e abra em uma janela diferente</li>
-</ul>
 </div>
-<div id="materiais-complementares" class="section level2">
-<h2>Materiais complementares</h2>
+<div id="como-acompanhar-o-workshop-online" class="section level1">
+<h1>Como acompanhar o workshop online</h1>
+<p>A melhor forma de reter o conteúdo em um curso de programação é digitar o código e escrever seus próprios comentários e explicações no script ao longo da aula. Neste workshop utilizaremos o método “live coding” em que digitarei o código “ao vivo” ao mesmo tempo em que o explico. Contudo, é possível que encontremos alguns desafios pelo fato de estarmos fazendo este workshop online e por termos tão pouco tempo. A seguir proponho formas para que você possa acompanhar este curso da maneira mais proveitosa possível:</p>
+<div id="se-possível-acompanhe-o-workshop-com-duas-telas" class="section level3">
+<h3>Se possível acompanhe o workshop com duas telas</h3>
+<p>Como expliquei, a melhor forma de fazer o curso é digitando o código e fazendo anotações ao longo da aula. Desta forma, o ideal é que você possa assitir o video do workshop em uma tela e interagir com o R em outra. Caso você não disponha de dois monitores (ou computadores) uma sugestão seria assitir os videos em um tablet ou no seu celular (talvez seja necessário dar um zoom na tela para enxergar os códigos) e trabalhar com o R no seu computador.</p>
+<p>Caso nenhuma dessas soluções seja viável para você recomendo que assista o video da aula e posteriormente refaça todos os códigos segundo o roteiro do workshop disponível na aba “Workshops” deste site. O roteiro segue exatamente a ordem e as explicações do workshop, de forma que você pode prestar atenção apenas no video, caso não tenha como interagir com o R ao longo da aula, e testar os comandos disponíveis no roteiro sozinho em outro momento.</p>
 </div>
-<div id="atividades" class="section level2">
-<h2>Atividades</h2>
+<div id="como-proceder-caso-se-perca-ou-trave-no-meio-da-aula." class="section level3">
+<h3>Como proceder caso “se perca” ou “trave” no meio da aula.</h3>
+<p>Teremos apenas um total de 8 horas para aprender uma boa introdução ao R. Você sairá desse workshop com os instrumentos básicos para limpar bases de dados e desenvolver gráficos por conta própria. No entanto, esse tempo é muito curto para aprender todos os fundamentos de R. Neste sentido, desenvolvi um workshop com base nos dados que vocês estão analisando na atual pesquisa do grupo, que lhe dará o conhecimento básico de como fazer no R o que vinha fazendo no Excel. Indicarei material complementar ao final do roteiro de cada workshop para quem quiser se aprofundar no tema por conta própria.</p>
+<p>Ao aprender uma linguagem nova cometemos erros constantemente. Em linguagem de programação não é diferente. Mensagens de erro poderão ocorrer com frequência, e se você não conseguir entender qual foi o problema do seu código com rapidez é provável que “trave” em algum comando. Diferentemente de um workshop presencial, não poderei ver tela a tela para verificar o que aconteceu para que seu comando não “rodasse”. Como teremos apenas 2 horas para cada encontro, sugiro que siga as seguintes recomendações caso isso ocorra com você:</p>
+<ol style="list-style-type: decimal">
+<li><strong>Verifique a sintaxe do seu código</strong>: você provavelmente pode ter deixado de digitar algo ou digitou alguma coisa errada. Verifique se não esqueceu de fechar aspas, parênteses, se colocou vírgulas nos lugares corretos. Geralmente o RStudio faz uma marcação em códigos que ele não reconhece, o que torna mais fácil identificar o possível erro.</li>
+<li><strong>Verifique se fez o upload do pacote da função que está utilizando</strong>: esse é um erro muito comum de quem está começando. Como ainda não temos familiaridade com os nomes das funções, geralmente esquecemos de fazer o upload dos pacotes. Confira se tem o pacote instalado e se fez o upload para a sua seção de trabalho (utilizando <code>library()</code> ou <code>require()</code> como veremos no workshop1)</li>
+<li><strong>Recorra ao roteiro do workshop</strong>: caso não consiga identificar o problema em tempo hábil e já tenhamos seguido para outro comando (ou seja, caso se perca), vá até o roteiro do workshop aqui no site e identifique o código que “perdeu”. Toda vez que não conseguir acompanhar a aula por algum motivo retorne ao roteiro. Está tudo lá.</li>
+<li><strong>Se a dúvida persistir peça ajuda antes do workshop seguinte</strong>: caso tenha encontrado dificuldades em um workshop não desista! Retorne ao roteiro, leia-o e rode os comandos novamente. Identifique as dúvidas que permanecerem e peça ajuda (veja como mais abaixo). Tente resolver suas dúvidas antes do próximo workshop.</li>
+</ol>
 </div>
-<div id="buscando-ajuda" class="section level2">
-<h2>Buscando ajuda</h2>
+<div id="tirando-dúvidas-no-workshop" class="section level3">
+<h3>Tirando dúvidas no workshop</h3>
+<p>Você terá muitas dúvidas ao longo do workshop e isso é ótimo! Caso suas dúvidas tenham a ver com comandos que não rodam peço que siga as recomendações que enumerei na seção anterior. De resto tentarei responder a todas no workshop. No entanto, lembre-se de que teremos apenas 2 horas para cada encontro. Caso sua dúvida seja conceitual provavelmente conseguirei responder prontamente. Se tiver dúvidas quanto a como desenvolver algo em R para além do que está no nosso roteiro, devo lhe responder dentro de uma destas três formas:</p>
+<ol style="list-style-type: decimal">
+<li>Se for algo rápido de explicar demonstrarei logo</li>
+<li>Caso sua dúvida estiver em algum material complementar que eu já tenha disponibilizado farei referência a ele e peço que o verifique quando puder.</li>
+<li>Se for algo que irá demandar mais tempo e que provavelmente irá atrasar o resto do workshop, tentarei buscar material complementar sobre o assunto e/ou incluir uma seção no roteiro demonstrando a resposta após o workshop e os avisarei quando for publicado.</li>
+</ol>
 </div>
-<div id="créditos" class="section level2">
-<h2>Créditos</h2>
+<div id="leia-o-roteiro-do-workshop-anterior-e-faça-as-atividades-propostas" class="section level3">
+<h3>Leia o roteiro do workshop anterior e faça as atividades propostas</h3>
+<p>Sugiro a leitura do material do workshop anterior antes do seguinte para relembrar os conceitos e tirar dúvidas. É impressindível que realize as atividades propostas entre os workshops pois o material produzido na atividade será necessário para começar as atividades do workshop seguinte. Por exemplo: na atividade do workshop 1 você terá que fazer o upload no R dos bancos que serão utilizados no workshop 2. Caso não tenha realizado a atividade você ficará atrasado na aula e não conseguirá acompanhar as explicações desde o início.</p>
+</div>
+</div>
+<div id="acesso-aos-materiais-do-workshop" class="section level1">
+<h1>Acesso aos materiais do workshop</h1>
+<p>Os dados trabalhados neste workshop e os scripts com as soluções das atividades estarão disponíveis no repositório do Github acessível no menu deste site. Os links no menu para repositório e para o dashboard que será apresentado no primeiro workshop abrem na mesma página. Para evitar sair do site abra-os em uma janela diferente.</p>
+<p>Para ter acesso aos dados você precisará baixar toda a pasta do respositório e, uma vez o download sendo realizado na sua máquina, basta copiar a pasta “dados” e colar no seu diretório de trabalho (você fará isso na atividade do workshop 1).</p>
+<p>Para baixar a pasta vá até o repositório, clique no botão verde “Code” e selecione a opção “Download ZIP” (veja a imagem abaixo)</p>
+<p><img src="screenshot.png" /></p>
+</div>
+<div id="buscando-ajuda" class="section level1">
+<h1>Buscando ajuda</h1>
+<p>Angely Bernardo será nossa monitora neste curso. Caso tenha dificuldades para realizar as atividades entre um workshop e outro entre em contato com ela. Angely está generosamento nos dando esse apoio, mas também estará aprendendo R como vocês. Se houver outras dificuldades que Angely não conseguir solucionar resolveremos juntos. O canal de comunicação será decidido no primeiro workshop.</p>
+</div>
+<div id="créditos" class="section level1">
+<h1>Créditos</h1>
 <p>Este curso se baseia em diversos materiais disponíveis gratuitamente (e generosamente) na internet. Em grande medida me baseei no curso <a href="https://datacarpentry.org/r-socialsci/">R for Social Scientists</a> do <a href="https://datacarpentry.org">Data Carpentry</a>, no <a href="http://tiagoventura.rbind.io/files/crash_course_gvpt">R Crash Course</a> lecionado por <a href="http://tiagoventura.rbind.io">Tiago Ventura</a> na University of Maryland, College Park, e no livro <a href="https://r4ds.had.co.nz">R for Data Science</a> de Hadley Wickham e Garrett Grolemund.</p>
 </div>
-<div id="fonte-dos-dados-utilizados-neste-workshop" class="section level2">
-<h2>Fonte dos dados utilizados neste workshop</h2>
+<div id="fonte-dos-dados-utilizados-neste-workshop" class="section level1">
+<h1>Fonte dos dados utilizados neste workshop</h1>
+<p>Dados de Exportação do estado de Santa Catarina. <a href="http://comexstat.mdic.gov.br/pt/municipio/20930">Comexstat</a>, Ministério da Economia. Acesso em 11/01/2021</p>
+<p>Dados de Importação do estado de Santa Catarina. <a href="http://comexstat.mdic.gov.br/pt/municipio/20931">Comexstat</a>,Ministério da Economia. Acesso em 11/01/2021</p>
+<p>Dados de Imigração. <a href="https://portaldeimigracao.mj.gov.br/pt/dados/microdados/1733-obmigra/dados/microdados/401205-sismigra">SISMIGRA</a>; <a href="https://portaldeimigracao.mj.gov.br/pt/component/k2/itemlist/category/51-sincre">SINCRE</a>, Ministério da Justiça e Segurança Pública. Acesso em 11/01/2021.</p>
 </div>
 
 

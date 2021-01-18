@@ -193,8 +193,6 @@ require(readxl)
 Agora podemos utilizar as funções que vem dentro desses pacotes. O pacote `readxl` é utilizado para importar documentos de Excel para o R. Sobre o `tidyverse` falaremos com mais detalhes no próximo workshop.
 
 
-
-
 ## Gerenciamento de dados
 
   * Diretório de trabalho
@@ -209,8 +207,11 @@ Agora podemos utilizar as funções que vem dentro desses pacotes. O pacote `rea
   * Importando .csv com a função `read_csv()` do `readr`, que é parte do tidyverse
   * Importando planilhas do excel com a função `read_excel()` do `readxl`
   
+  #### !!! CRIAR SCRIPT PARA O RESULTADO DA ATIVIDADE
+  #### !!! CRIAR UMA PASTA DE SCRIPTS E FAZER UPLOAD NO GITHUB
+  
 
-## Atividades
+# Atividades
 
 1. Crie um diretório (pasta) em seu computador para salvar os documentos utilizados e gerados no workshop
 

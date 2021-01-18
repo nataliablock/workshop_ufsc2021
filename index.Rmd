@@ -1,7 +1,18 @@
 ---
-title: "Workshop de Introdução ao R - UFSC"
+title: "Bem vindo ao website do Workshop de Introdução ao R"
 ---
 
-Informações sobre o workshop
-- Data
-- Overview
+Este workshop foi desenvolvido para o grupo de pesquisa Relações Internacionais e Ciência, Tecnologia e Inovação da UFSC.
+
+### O que você encontrará neste site?
+Neste site está disponível todo o material desenvolvido para o curso. Na aba "Workshops" estão os roteiros dos workshops com os respectivos códigos. Em "Repositório" você encontra o repositório do Github deste workshop com o material utilizado.
+
+### Leia a página "Instruções para o Workshop" antes do nosso primeiro encontro. 
+Lá você encontrará orientações importantes para acompanhar os workshops.  
+
+### Tenha o R e o RStudio instalados no seu computador antes do primeiro workshop.
+As instruções de instalação estão na página "Instruções para o Workshop".
+
+### Calendários dos Workshops
+Os workshops ocorrerão nos seguintes dias e horários: (*incluir quando definido*)
+
