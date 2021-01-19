@@ -194,22 +194,107 @@ Agora podemos utilizar as funções que vem dentro desses pacotes. O pacote `rea
 
 
 ## Gerenciamento de dados
+O R não é capaz de identificar sozinho aonde estão os seus dados. Você precisa direcionar o R para o seu diretório de trabalho. Por exemplo: se você criou uma pasta para salvar todos os documentos que está utilizando neste workshop, como scritps e dados, você precisará direcionar o R para esta pasta para que possa fazer o upload dos bancos e abrir os scripts. Da mesma forma, caso queira salvar scripts e bancos que criou é preciso que já tenha definido o diretório de trabalho onde quer que o R os salve.
 
-  * Diretório de trabalho
-  * `getwd()`
-  * `setwd()`
-  * dica de como descobrir o endereço do diretório de trabalho a partir do RStudio
-  
-  
+Primeiro vamos identificar para qual diretório o R está apontado agora:
+
+```{r eval=FALSE, include=TRUE}
+getwd()
+```
+
+Para direcionar o R para a pasta que queremos usamos a função `setwd()` e dentro dos parênteses, entre aspas, digitamos o caminho de onde esta pasta se encontra no computador. Exemplo: no meu computador (MAC) eu criei uma pasta chamada "workshop_ufsc2021" onde salvo todos os documentos que criei para esse workshop. Ele está dentro da pasta "repositories" no meu diretório do Dropbox. Assim, para apontar esta pasta para o R eu faço o seguinte:
+
+```{r eval=FALSE, include=TRUE}
+setwd("~/Dropbox/repositories/workshop_ufsc2021")
+```
+
+Para verificar se o R fez o redirecionamento basta digitar `getwd()` novamente.
+
+Para encontrar o caminho correto da sua pasta no Windows clique com o botão direito sobre um dos documentos dentro da pasta e clique em "Propriedades". Na janela que abrir, na aba "Geral" você encontrará o caminho em "Localização". Geralmente os caminhos no Windows começam com `C:\`. 
+
+O redirecionamento costuma ser complicado para quem está começando com a linguagem. Uma forma mais fácil é realizá-lo pelo menu do próprio RStudio. Vá em Session > Set Working Directory > Choose Directory. Navegue até a sua pasta e clique em "Abrir". Você verá que o próprio RStudio irá "digitar" o `setwd()` no painel console. Copie este comando e cole bem no início do seu script. Assim, da próxima vez que for trabalhar neste projeto bastará rodar este comando, sem a necessidade de voltar ao menu do RStudio para redirecionar o diretório. Veja as imagens abaixo.  
+
+![](imagens/setwd1.png)
+
+![](imagens/setwd2.png)
+
+![](imagens/setwd3.png)
+
 ## Importando e exportando dados
+O R comporta vários tipos de estrutura de dados, como veremos no próximo workshop. No entanto, focaremos nos data frames, que são estruturas tabulares de dados, semelhantes às tabelas de excel. Na seção vamos aprender como abrir tabelas/planilhas no R.
 
-  
-  * Importando .csv com a função `read_csv()` do `readr`, que é parte do tidyverse
-  * Importando planilhas do excel com a função `read_excel()` do `readxl`
-  
-  #### !!! CRIAR SCRIPT PARA O RESULTADO DA ATIVIDADE
-  #### !!! CRIAR UMA PASTA DE SCRIPTS E FAZER UPLOAD NO GITHUB
-  
+Antes de tudo é preciso se certificar de que o R está apontando para o diretório em que estão as tabelas que se quer abrir, como vimos na seção anterior. 
+
+As tabelas podem estar em extensões diferentes. Existem inúmeras extensões, mas as mais comuns são as planilhas de excel (.xlsx), os documentos .csv e os txt. Vamos focar nesses três tipos e ao longo do workshop usaremos tabelas de excel e csv. No material complementar você encontra documentação explicando como abrir outros tipos de bancos de dados (SPSS, STATA, json, etc). 
+
+Para abrir documentos .csv utilizamos a funcão `read_csv()` do pacote `readr`, que é parte integrante do `tidyverse` que baixamos na seção sobre importação de pacotes. Desta forma, primeiro certifique-se de que fez o upload do tidyverse antes de rodar essa função.
+
+Irei abrir o banco de imigração e salvarei em um objeto que chamarei de migração. O nome do documento é `migracao_completo.csv`. A função `read_csv()` deverá receber como argumento o nome do documento com a extensão entre aspas. Caso o banco esteja em pasta diferente do diretório que está apontado para o R é preciso colocar o caminho da pasta onde estão os dados, seguido de barra (/) e o nome do documento. Veja a seguir:
+
+```{r eval=FALSE, include=TRUE}
+#para fazer o upload do tidyverse:
+#library(tidyverse)
+#como já realizamos o upload anteriormente não é necessário rodar essa linha de novo, por isso
+#está comentada
+
+#caso o documento esteja no diretório que você apontou basta criar o objeto e utilizar a função read_csv como asseguir:
+
+migracao<-read_csv("migracao_completo.csv")
+
+
+```
+```{r eval=FALSE, include=TRUE}
+
+#caso o documento esteja em outra pasta é necessário colocar o caminho antes do nome. No meu caso o banco se encontra na pasta "dados" que está dentro do repositório para o qual apontei o R. Dessa forma, preciso indicar o nome da pasta antes, seguido de barra, e o nome do arquivo
+
+migracao<-read_csv("dados/migracao_completo.csv")
+
+```
+
+A mensagem que aparece no console indica como a função leu cada coluna do banco. Ela atribuiu o tipo character a todas as colunas, ou seja, o R entendeu que todas as colunas continham palavras. É possível alterar as colunas para números, fatores ou outros tipos de dados. Veja como fazer isso no material adicional a seguir. Nos próximos workshops vamos aprender a alterar esses tipos de dados.
+
+Repare o que banco de dados aparece no painel Environmet do RStudio. Para dar uma olhada nos dados use a função `View()` como a seguir:
+
+```{r eval=FALSE, include=TRUE}
+View(migracao)
+```
+
+Também é possível ver o banco clicando no ícone com a imagem de uma tabela ao lado direito do banco no painel Environment do RStudio.
+
+Para abrir bancos com outras extensões seguimos a mesma lógica anterior. Para importar bancos com extensão .txt utilizamos a função `read_table()` também do pacote `readr` do `tidyverse`. Veja o exemplo a seguir:
+
+```{r eval=FALSE, include=TRUE}
+
+nome_objeto<-read_table("meu_banco.txt")
+
+```
+
+Para abrir planilhas do excel utilizamos a função `read_excel` do pacote `readxl` que instalamos na seção anterior. Não esqueça de verificar se fez o upload do `readxl`
+
+```{r eval=FALSE, include=TRUE}
+
+nome_objeto<-read_excel("meu_banco.xlsx")
+
+```
+
+Você pode exportar bancos de dados que tenha criado ou alterado no R. Para isso basta utilizar as funções `write_csv()` ou `write_excel` dependendo da extensão que quer salvar os seus bancos. Para isso, após escrever o nome da função coloque dentro dos parênteses o nome do objeto em que você salvou a tabela, seguido de vírgula e o nome que quer dar ao banco entre aspas. O banco será salvo no diretório para o qual o R está apontando. Veja os exemplos abaixo.
+```{r eval=FALSE, include=TRUE}
+
+#caso eu queira salvar o meu banco em arquivo csv:
+
+write_csv(nome_do_objeto_com_banco, "nome_do_banco.csv")
+
+#para salvar uma planilha de excel
+
+write_excel(nome_do_objeto_com_banco, "nome_do_banco.xlsx")
+
+```
+
+# Material adicional
+
+[Cheat sheet](material_adicional/data-import.pdf) elaborado pelo RStudio sobre importação de dados com tidyverse. Nele são apresentados os argumentos das funções mais importantes do pacote readr, dentre eles da `read_csv()`
+
+[Documentação do readxl](https://readxl.tidyverse.org) com as funções do pacote demonstrando como importar planilhas do excel, listar nome de planilhas e abrir planilhas diferentes do excel para o R.
 
 # Atividades
 

@@ -528,21 +528,58 @@ require(readxl)</code></pre>
 </div>
 <div id="gerenciamento-de-dados" class="section level2">
 <h2>Gerenciamento de dados</h2>
-<ul>
-<li>Diretório de trabalho</li>
-<li><code>getwd()</code></li>
-<li><code>setwd()</code></li>
-<li>dica de como descobrir o endereço do diretório de trabalho a partir do RStudio</li>
-</ul>
+<p>O R não é capaz de identificar sozinho aonde estão os seus dados. Você precisa direcionar o R para o seu diretório de trabalho. Por exemplo: se você criou uma pasta para salvar todos os documentos que está utilizando neste workshop, como scritps e dados, você precisará direcionar o R para esta pasta para que possa fazer o upload dos bancos e abrir os scripts. Da mesma forma, caso queira salvar scripts e bancos que criou é preciso que já tenha definido o diretório de trabalho onde quer que o R os salve.</p>
+<p>Primeiro vamos identificar para qual diretório o R está apontado agora:</p>
+<pre class="r"><code>getwd()</code></pre>
+<p>Para direcionar o R para a pasta que queremos usamos a função <code>setwd()</code> e dentro dos parênteses, entre aspas, digitamos o caminho de onde esta pasta se encontra no computador. Exemplo: no meu computador (MAC) eu criei uma pasta chamada “workshop_ufsc2021” onde salvo todos os documentos que criei para esse workshop. Ele está dentro da pasta “repositories” no meu diretório do Dropbox. Assim, para apontar esta pasta para o R eu faço o seguinte:</p>
+<pre class="r"><code>setwd(&quot;~/Dropbox/repositories/workshop_ufsc2021&quot;)</code></pre>
+<p>Para verificar se o R fez o redirecionamento basta digitar <code>getwd()</code> novamente.</p>
+<p>Para encontrar o caminho correto da sua pasta no Windows clique com o botão direito sobre um dos documentos dentro da pasta e clique em “Propriedades”. Na janela que abrir, na aba “Geral” você encontrará o caminho em “Localização”. Geralmente os caminhos no Windows começam com <code>C:\</code>.</p>
+<p>O redirecionamento costuma ser complicado para quem está começando com a linguagem. Uma forma mais fácil é realizá-lo pelo menu do próprio RStudio. Vá em Session &gt; Set Working Directory &gt; Choose Directory. Navegue até a sua pasta e clique em “Abrir”. Você verá que o próprio RStudio irá “digitar” o <code>setwd()</code> no painel console. Copie este comando e cole bem no início do seu script. Assim, da próxima vez que for trabalhar neste projeto bastará rodar este comando, sem a necessidade de voltar ao menu do RStudio para redirecionar o diretório. Veja as imagens abaixo.</p>
+<p><img src="imagens/setwd1.png" /></p>
+<p><img src="imagens/setwd2.png" /></p>
+<p><img src="imagens/setwd3.png" /></p>
 </div>
 <div id="importando-e-exportando-dados" class="section level2">
 <h2>Importando e exportando dados</h2>
-<ul>
-<li>Importando .csv com a função <code>read_csv()</code> do <code>readr</code>, que é parte do tidyverse</li>
-<li>Importando planilhas do excel com a função <code>read_excel()</code> do <code>readxl</code></li>
-</ul>
-<p>#### !!! CRIAR SCRIPT PARA O RESULTADO DA ATIVIDADE #### !!! CRIAR UMA PASTA DE SCRIPTS E FAZER UPLOAD NO GITHUB</p>
+<p>O R comporta vários tipos de estrutura de dados, como veremos no próximo workshop. No entanto, focaremos nos data frames, que são estruturas tabulares de dados, semelhantes às tabelas de excel. Na seção vamos aprender como abrir tabelas/planilhas no R.</p>
+<p>Antes de tudo é preciso se certificar de que o R está apontando para o diretório em que estão as tabelas que se quer abrir, como vimos na seção anterior.</p>
+<p>As tabelas podem estar em extensões diferentes. Existem inúmeras extensões, mas as mais comuns são as planilhas de excel (.xlsx), os documentos .csv e os txt. Vamos focar nesses três tipos e ao longo do workshop usaremos tabelas de excel e csv. No material complementar você encontra documentação explicando como abrir outros tipos de bancos de dados (SPSS, STATA, json, etc).</p>
+<p>Para abrir documentos .csv utilizamos a funcão <code>read_csv()</code> do pacote <code>readr</code>, que é parte integrante do <code>tidyverse</code> que baixamos na seção sobre importação de pacotes. Desta forma, primeiro certifique-se de que fez o upload do tidyverse antes de rodar essa função.</p>
+<p>Irei abrir o banco de imigração e salvarei em um objeto que chamarei de migração. O nome do documento é <code>migracao_completo.csv</code>. A função <code>read_csv()</code> deverá receber como argumento o nome do documento com a extensão entre aspas. Caso o banco esteja em pasta diferente do diretório que está apontado para o R é preciso colocar o caminho da pasta onde estão os dados, seguido de barra (/) e o nome do documento. Veja a seguir:</p>
+<pre class="r"><code>#para fazer o upload do tidyverse:
+#library(tidyverse)
+#como já realizamos o upload anteriormente não é necessário rodar essa linha de novo, por isso
+#está comentada
+
+#caso o documento esteja no diretório que você apontou basta criar o objeto e utilizar a função read_csv como asseguir:
+
+migracao&lt;-read_csv(&quot;migracao_completo.csv&quot;)</code></pre>
+<pre class="r"><code>#caso o documento esteja em outra pasta é necessário colocar o caminho antes do nome. No meu caso o banco se encontra na pasta &quot;dados&quot; que está dentro do repositório para o qual apontei o R. Dessa forma, preciso indicar o nome da pasta antes, seguido de barra, e o nome do arquivo
+
+migracao&lt;-read_csv(&quot;dados/migracao_completo.csv&quot;)</code></pre>
+<p>A mensagem que aparece no console indica como a função leu cada coluna do banco. Ela atribuiu o tipo character a todas as colunas, ou seja, o R entendeu que todas as colunas continham palavras. É possível alterar as colunas para números, fatores ou outros tipos de dados. Veja como fazer isso no material adicional a seguir. Nos próximos workshops vamos aprender a alterar esses tipos de dados.</p>
+<p>Repare o que banco de dados aparece no painel Environmet do RStudio. Para dar uma olhada nos dados use a função <code>View()</code> como a seguir:</p>
+<pre class="r"><code>View(migracao)</code></pre>
+<p>Também é possível ver o banco clicando no ícone com a imagem de uma tabela ao lado direito do banco no painel Environment do RStudio.</p>
+<p>Para abrir bancos com outras extensões seguimos a mesma lógica anterior. Para importar bancos com extensão .txt utilizamos a função <code>read_table()</code> também do pacote <code>readr</code> do <code>tidyverse</code>. Veja o exemplo a seguir:</p>
+<pre class="r"><code>nome_objeto&lt;-read_table(&quot;meu_banco.txt&quot;)</code></pre>
+<p>Para abrir planilhas do excel utilizamos a função <code>read_excel</code> do pacote <code>readxl</code> que instalamos na seção anterior. Não esqueça de verificar se fez o upload do <code>readxl</code></p>
+<pre class="r"><code>nome_objeto&lt;-read_excel(&quot;meu_banco.xlsx&quot;)</code></pre>
+<p>Você pode exportar bancos de dados que tenha criado ou alterado no R. Para isso basta utilizar as funções <code>write_csv()</code> ou <code>write_excel</code> dependendo da extensão que quer salvar os seus bancos. Para isso, após escrever o nome da função coloque dentro dos parênteses o nome do objeto em que você salvou a tabela, seguido de vírgula e o nome que quer dar ao banco entre aspas. O banco será salvo no diretório para o qual o R está apontando. Veja os exemplos abaixo.</p>
+<pre class="r"><code>#caso eu queira salvar o meu banco em arquivo csv:
+
+write_csv(nome_do_objeto_com_banco, &quot;nome_do_banco.csv&quot;)
+
+#para salvar uma planilha de excel
+
+write_excel(nome_do_objeto_com_banco, &quot;nome_do_banco.xlsx&quot;)</code></pre>
 </div>
+</div>
+<div id="material-adicional" class="section level1">
+<h1>Material adicional</h1>
+<p><a href="material_adicional/data-import.pdf">Cheat sheet</a> elaborado pelo RStudio sobre importação de dados com tidyverse. Nele são apresentados os argumentos das funções mais importantes do pacote readr, dentre eles da <code>read_csv()</code></p>
+<p><a href="https://readxl.tidyverse.org">Documentação do readxl</a> com as funções do pacote demonstrando como importar planilhas do excel, listar nome de planilhas e abrir planilhas diferentes do excel para o R.</p>
 </div>
 <div id="atividades" class="section level1">
 <h1>Atividades</h1>

@@ -7,6 +7,9 @@ Este workshop foi desenvolvido para o grupo de pesquisa Relações Internacionai
 ### O que você encontrará neste site?
 Neste site está disponível todo o material desenvolvido para o curso. Na aba "Workshops" estão os roteiros dos workshops com os respectivos códigos. Em "Repositório" você encontra o repositório do Github deste workshop com o material utilizado.
 
+### Sobre a instrutora
+Já tivemos a oportunidade de nos conhecer mas me apresento novamente. Meu nome é Natalia Block, cientista de dados com atuação no Brasil e nos EUA. Antes de migrar para a carreira de cientista de dados atuei como cientista política desenvolvendo pesquisa na academia e no setor privado e em dando suporte à gestão de programas em organizações não governamentais. 
+
 ### Leia a página "Instruções para o Workshop" antes do nosso primeiro encontro. 
 Lá você encontrará orientações importantes para acompanhar os workshops.  
 

@@ -62,7 +62,7 @@ Para ter acesso aos dados você precisará baixar toda a pasta do respositório 
 
 Para baixar a pasta vá até o repositório, clique no botão verde "Code" e selecione a opção "Download ZIP" (veja a imagem abaixo)
 
-![](screenshot.png)
+![](imagens/screenshot.png)
 
 
   

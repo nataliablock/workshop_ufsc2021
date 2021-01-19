@@ -8,7 +8,7 @@ output:
     toc_depth: 2
 ---
 
-# Customização de gráficos do ggplot
+# Customização de gráficos no ggplot
 
 Hello World!
 
