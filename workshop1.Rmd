@@ -1,5 +1,5 @@
 ---
-title: "Workshop 1 - Dia"
+title: "Workshop 1 - 26 de janeiro"
 output:
   html_document:
     theme: flatly
@@ -304,7 +304,7 @@ write_excel(nome_do_objeto_com_banco, "nome_do_banco.xlsx")
 
 3. Aponte o R para este diretório como explicado na seção **Gerenciamento de dados**. 
 
-4. Faça o upload dos bancos `migracao_completo.csv`, `export_sc.xlsx` e `import_sc.xlsx`, salvando-os em objetos chamados respectivamente de `migracao`, `exportacao` e `importacao`. Siga as instruções da seção **Importando e exportando dados**. 
+4. Faça o upload dos bancos `migracao_completo.csv`, `export_sc.xlsx` e `import_sc.xlsx`, salvando-os em objetos chamados respectivamente de `migracao`, `exportacao` e `importacao`. Perceba que os nomes dos objetos a serem criados não têm nenhuma acentuação! Evite acentuação ao programar! Siga as instruções da seção **Importando e exportando dados**. 
 
 5. Caso tenha desenvolvido um script próprio com suas anotações neste primeiro workshop, salve-o nesta pasta
 
