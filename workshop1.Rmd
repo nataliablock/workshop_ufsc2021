@@ -290,7 +290,7 @@ write_excel(nome_do_objeto_com_banco, "nome_do_banco.xlsx")
 
 ```
 
-# Material adicional
+# Material complementar
 
 [Cheat sheet](material_adicional/data-import.pdf) elaborado pelo RStudio sobre importação de dados com tidyverse. Nele são apresentados os argumentos das funções mais importantes do pacote readr, dentre eles da `read_csv()`
 
