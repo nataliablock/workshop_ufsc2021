@@ -17,5 +17,10 @@ Lá você encontrará orientações importantes para acompanhar os workshops.
 As instruções de instalação estão na página "Instruções para o Workshop".
 
 ### Calendários dos Workshops
-Os workshops ocorrerão nos seguintes dias e horários: (*a definir*)
+Os workshops ocorrerão no horário de 19 às 21:15 nos seguintes dias:
+
+  * 26/01/2021: Workshop 1
+  * 02/02/2021: Workshop 2
+  * 09/02/2021: Workshop 3
+  * 23/02/2021 (depois do Carnaval): Workshop 4
 
