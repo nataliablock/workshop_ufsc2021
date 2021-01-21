@@ -101,7 +101,7 @@ Para estudar vetores e listas com mais detalhes veja o material disponibilizado 
 
 
 ## Inspecionando e fazendo subset de dados
-Vamos finalmente começar a usar os dados que trouxemos para o R!. Os objetos `migracao`, `exportacao` e `importacao` são todos data frames. Podemos descobrir várias informações sobre eles como número de colunas e linhas, o tipo de dados suas variáveis, entre outras coisas. Desta forma, podemos inspecionar data frames por tamanho, conteúdo, nomes e resumo:
+Vamos finalmente começar a usar os dados que trouxemos para o R! Os objetos `migracao`, `exportacao` e `importacao` são todos data frames. Podemos descobrir várias informações sobre eles como número de colunas e linhas, o tipo de dados de suas variáveis, entre outras coisas. Desta forma, podemos inspecionar data frames por **tamanho, conteúdo, nomes e resumo**:
 
 ### Tamanho
   * `dim()` - retorna um vetor com o número de linhas como primeiro elemento e o número de colunas como o segundo
@@ -168,10 +168,11 @@ names(migracao)
 
 Veja o capítulo [vetores](https://r4ds.had.co.nz/vectors.html) no livro [R for Data Science](https://r4ds.had.co.nz/index.html) para mais detalhes de como trabalhar com vetores e listas
 
+[Tutorial que escrevi sobre automatização de códigos para cientistas sociais](https://nataliablock.rbind.io/post/automatizar/). O tutorial apresenta uma breve revisão das estruturas de dados apresentadas aqui e apresenta tópicos mais avançados como o uso de listas, funções e iteração para automatizar trabalhos repetitivos no R.
+
 [Relação](https://www.tidyverse.org/packages/) de pacotes contidos no tidyverse
 
 [Documentação](https://tidyverse.tidyverse.org) do tidyverse
 
-[Tutorial que escrevi sobre automatização de códigos para cientistas sociais](https://nataliablock.rbind.io/post/automatizar/). O tutorial apresenta uma breve revisão das estruturas de dados apresentadas aqui e apresenta tópicos mais avançados como o uso de listas, funções e iteração para automatizar trabalhos repetitivos no R.
 
 ## Atividades
