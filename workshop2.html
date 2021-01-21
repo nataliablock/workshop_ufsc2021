@@ -11,7 +11,7 @@
 
 
 
-<title>Workshop 2 - Dia</title>
+<title>Workshop 2 - 2 de fevereiro (a confirmar)</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -412,15 +412,161 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Workshop 2 - Dia</h1>
+<h1 class="title toc-ignore">Workshop 2 - 2 de fevereiro (a confirmar)</h1>
 
 </div>
 
 
-<div id="estrutura-de-dados-manipulação-de-dados-com-a-base-r-e-o-dplyr" class="section level1">
-<h1>Estrutura de dados, manipulação de dados com a base R e o dplyr</h1>
-<div id="estrutura-de-dados" class="section level2">
-<h2>Estrutura de dados</h2>
+<div id="estruturas-de-dados-e-manipulação-de-dados-com-dplyr-e-tidyr" class="section level1">
+<h1>Estruturas de dados e manipulação de dados com dplyr e tidyr</h1>
+<div id="estruturas-de-dados" class="section level2">
+<h2>Estruturas de dados</h2>
+<p>Existem várias formas de se organizar dados no R: como vetor, lista, matriz, data frame, dentre várias outras estruturas.</p>
+<p>Neste workshop focaremos nos vetores e nos data frames pois são as estruturas de dados mais utilizadas por nós das ciências sociais e que serão mais utilizados para os dados que vocês tratam no grupo de pesquisa.</p>
+<p>Vamos ver muito rapidamente o que são vetores, data frames e listas.</p>
+<div id="vetores" class="section level3">
+<h3>Vetores</h3>
+<p>São estruturas que comportam o mesmo tipo de dado. Para criar um vetor criamos um objeto e utilizamos a função <code>c</code> seguida de parenteses com os elementos deste vetor.</p>
+<pre class="r"><code>nome&lt;-c(&quot;Julia&quot;, &quot;Tiago&quot;, &quot;Simone&quot;) #lembre-se de que palavras devem vir sempre entre aspas!
+
+idade&lt;-c(40, 32, 17)
+
+profissao&lt;-c(&quot;engenheira&quot;, &quot;professor&quot;, &quot;estudante&quot;)
+
+nome</code></pre>
+<pre><code>## [1] &quot;Julia&quot;  &quot;Tiago&quot;  &quot;Simone&quot;</code></pre>
+<pre class="r"><code>idade</code></pre>
+<pre><code>## [1] 40 32 17</code></pre>
+<pre class="r"><code>profissao</code></pre>
+<pre><code>## [1] &quot;engenheira&quot; &quot;professor&quot;  &quot;estudante&quot;</code></pre>
+<p>Para verificar o tipo de dado contido em um vetor utilizamos o função <code>class()</code></p>
+<pre class="r"><code>class(nome)</code></pre>
+<pre><code>## [1] &quot;character&quot;</code></pre>
+<pre class="r"><code>class(idade)</code></pre>
+<pre><code>## [1] &quot;numeric&quot;</code></pre>
+<pre class="r"><code>class (profissao)</code></pre>
+<pre><code>## [1] &quot;character&quot;</code></pre>
+</div>
+<div id="data-frames" class="section level3">
+<h3>Data frames</h3>
+<p>São as estrutura de dados mais utilizadas em análise de dados. Trata-se de estruturas de dados tabulares, assim como as planilhas do excel. No contexto do R data frames são definidos como um conjunto de vetores; cada coluna de um data frame é um vetor, de forma que cada coluna deve conter um mesmo tipo de dado.</p>
+<p>Se data frames são compostos de vetores podemos criar com os vetores nomes, idade e profissão criados acima. Para isso usarei a função <code>data.frame()</code> e incluirei esses vetores dentro dos parênteses.</p>
+<pre class="r"><code>catalogo&lt;-data.frame(nome, idade, profissao)
+
+catalogo</code></pre>
+<pre><code>##     nome idade  profissao
+## 1  Julia    40 engenheira
+## 2  Tiago    32  professor
+## 3 Simone    17  estudante</code></pre>
+<p>Também é possível verificar o data frame criado utilizando a função <code>View()</code> que vimos no workshop anterior</p>
+<pre class="r"><code>View(catalogo)</code></pre>
+<p>Podemos sempre utilizar a função <code>class()</code> para verificar o tipo ou estrutura de dado dos objetos ou dos elementos contidos nele. Quando utilizamos esta função nos vetores criados acima ela nos retornou o tipo de dados contido no vetor. O exemplo abaixo mostra o tipo de estrutura de dados contido no objeto <code>catalogo</code></p>
+<pre class="r"><code>class(catalogo)</code></pre>
+<pre><code>## [1] &quot;data.frame&quot;</code></pre>
+</div>
+<div id="listas" class="section level3">
+<h3>Listas</h3>
+<p>São estruturas que podem comportar dados de tipos diferentes. Não utilizaremos as listas neste workshop, mas elas são estruturas importantes de se conhecer pois elas possibilitam automatizar bastante o trabalho no R. Mas este assunto é mais avançado, deixarei material complementar sobre automatização de códigos para quem quiser se aprofundar.</p>
+<p>Vou criar uma lista que contenha o vetor profissão, o data frame catalogo e uma string. Para isso uso a função <code>list()</code> e incluo os elementos entre parênteses</p>
+<pre class="r"><code>lista&lt;-list(profissao, catalogo, &quot;Isso é uma frase&quot;)
+
+lista</code></pre>
+<pre><code>## [[1]]
+## [1] &quot;engenheira&quot; &quot;professor&quot;  &quot;estudante&quot; 
+## 
+## [[2]]
+##     nome idade  profissao
+## 1  Julia    40 engenheira
+## 2  Tiago    32  professor
+## 3 Simone    17  estudante
+## 
+## [[3]]
+## [1] &quot;Isso é uma frase&quot;</code></pre>
+<p>O número que aparece em cima de cada elemento é a posição em que ele se encontra dentro da lista. Desta forma, se eu quiser acessar apenas o vetor eu devo escrever o nome da lista e o número correspondente à posição que ele está entre colchetes</p>
+<pre class="r"><code>lista[1]</code></pre>
+<pre><code>## [[1]]
+## [1] &quot;engenheira&quot; &quot;professor&quot;  &quot;estudante&quot;</code></pre>
+<p>O data frame está na segunda posição da lista</p>
+<pre class="r"><code>lista[2]</code></pre>
+<pre><code>## [[1]]
+##     nome idade  profissao
+## 1  Julia    40 engenheira
+## 2  Tiago    32  professor
+## 3 Simone    17  estudante</code></pre>
+<p>Para estudar vetores e listas com mais detalhes veja o material disponibilizado na seção “Material complementar”. A partir de agora vamos focar nossos estudos nos data frames</p>
+</div>
+</div>
+<div id="inspecionando-e-fazendo-subset-de-dados" class="section level2">
+<h2>Inspecionando e fazendo subset de dados</h2>
+<p>Vamos finalmente começar a usar os dados que trouxemos para o R!. Os objetos <code>migracao</code>, <code>exportacao</code> e <code>importacao</code> são todos data frames. Podemos descobrir várias informações sobre eles como número de colunas e linhas, o tipo de dados suas variáveis, entre outras coisas. Desta forma, podemos inspecionar data frames por tamanho, conteúdo, nomes e resumo:</p>
+<div id="tamanho" class="section level3">
+<h3>Tamanho</h3>
+<ul>
+<li><code>dim()</code> - retorna um vetor com o número de linhas como primeiro elemento e o número de colunas como o segundo</li>
+<li><code>nrow</code> - retorna o número de linhas</li>
+<li><code>ncol</code> - retorna o número de colunas</li>
+</ul>
+<p>Vamos testar essas funções com o nosso banco <code>migracao</code>:</p>
+<pre class="r"><code>dim(migracao)</code></pre>
+<pre><code>## [1] 826375      7</code></pre>
+<p>Este banco apresenta 826375 linhas e 7 colunas</p>
+<pre class="r"><code>nrow(migracao)</code></pre>
+<pre><code>## [1] 826375</code></pre>
+<pre class="r"><code>ncol(migracao)</code></pre>
+<pre><code>## [1] 7</code></pre>
+</div>
+<div id="conteúdo" class="section level3">
+<h3>Conteúdo</h3>
+<ul>
+<li><code>head()</code> - retorna as 6 primeiras linhas</li>
+<li><code>tail()</code> - retorna as 6 últimas linhas</li>
+</ul>
+<pre class="r"><code>head(migracao)</code></pre>
+<pre><code>## # A tibble: 6 x 7
+##      X1 DATA_REG   CLASSIFICACAO UFRES PNASC_DESC           SEXO_DESCRICAO   ano
+##   &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;         &lt;chr&gt; &lt;chr&gt;                &lt;chr&gt;          &lt;dbl&gt;
+## 1     1 04/01/2010 PERMANENTE    SP    ITALIA               Masculino       2010
+## 2     2 04/01/2010 PERMANENTE    AM    BELGICA              Feminino        2010
+## 3     3 04/01/2010 PERMANENTE    RJ    ITALIA               Masculino       2010
+## 4     4 04/01/2010 PERMANENTE    PR    COSTA RICA           Masculino       2010
+## 5     5 04/01/2010 PERMANENTE    AP    GUINE BISSAU         Feminino        2010
+## 6     6 04/01/2010 PERMANENTE    RJ    REPUBLICA POPULAR D… Masculino       2010</code></pre>
+<pre class="r"><code>tail(migracao)</code></pre>
+<pre><code>## # A tibble: 6 x 7
+##       X1 DATA_REG   CLASSIFICACAO UFRES PNASC_DESC  SEXO_DESCRICAO   ano
+##    &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;         &lt;chr&gt; &lt;chr&gt;       &lt;chr&gt;          &lt;dbl&gt;
+## 1 826370 19/12/2019 Temporário    RJ    INDONÉSIA   Masculino       2019
+## 2 826371 05/12/2019 Temporário    RS    ITÁLIA      Masculino       2019
+## 3 826372 31/12/2019 Temporário    RS    MÉXICO      Feminino        2019
+## 4 826373 13/12/2019 Temporário    RS    MÉXICO      Masculino       2019
+## 5 826374 06/12/2019 Temporário    SP    MOÇAMBIQUE  Masculino       2019
+## 6 826375 19/12/2019 Temporário    RJ    REINO UNIDO Masculino       2019</code></pre>
+</div>
+<div id="nomes" class="section level3">
+<h3>Nomes</h3>
+<ul>
+<li><code>names()</code>- retorna os nomes das colunas</li>
+</ul>
+<pre class="r"><code>names(migracao)</code></pre>
+<pre><code>## [1] &quot;X1&quot;             &quot;DATA_REG&quot;       &quot;CLASSIFICACAO&quot;  &quot;UFRES&quot;         
+## [5] &quot;PNASC_DESC&quot;     &quot;SEXO_DESCRICAO&quot; &quot;ano&quot;</code></pre>
+</div>
+<div id="resumo" class="section level3">
+<h3>Resumo</h3>
+</div>
+</div>
+<div id="manipulação-de-dados-com-dplyr-e-tidyr" class="section level2">
+<h2>Manipulação de dados com dplyr e tidyr</h2>
+</div>
+<div id="material-complementar" class="section level2">
+<h2>Material complementar</h2>
+<p>Veja o capítulo <a href="https://r4ds.had.co.nz/vectors.html">vetores</a> no livro <a href="https://r4ds.had.co.nz/index.html">R for Data Science</a> para mais detalhes de como trabalhar com vetores e listas</p>
+<p><a href="https://www.tidyverse.org/packages/">Relação</a> de pacotes contidos no tidyverse</p>
+<p><a href="https://tidyverse.tidyverse.org">Documentação</a> do tidyverse</p>
+<p><a href="https://nataliablock.rbind.io/post/automatizar/">Tutorial que escrevi sobre automatização de códigos para cientistas sociais</a>. O tutorial apresenta uma breve revisão das estruturas de dados apresentadas aqui e apresenta tópicos mais avançados como o uso de listas, funções e iteração para automatizar trabalhos repetitivos no R.</p>
+</div>
+<div id="atividades" class="section level2">
+<h2>Atividades</h2>
 </div>
 </div>
 

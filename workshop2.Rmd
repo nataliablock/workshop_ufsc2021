@@ -1,5 +1,5 @@
 ---
-title: "Workshop 2 - Dia"
+title: "Workshop 2 - 2 de fevereiro (a confirmar)"
 output:
   html_document:
     theme: flatly
@@ -8,14 +8,170 @@ output:
     toc_depth: 2
 ---
 
-# Estrutura de dados, manipulação de dados e o dplyr
+# Estruturas de dados e manipulação de dados com dplyr e tidyr
 
-## Estrutura de dados
+## Estruturas de dados
+Existem várias formas de se organizar dados no R: como vetor, lista, matriz, data frame, dentre várias outras estruturas. 
+
+Neste workshop focaremos nos vetores e nos data frames pois são as estruturas de dados mais utilizadas por nós das ciências sociais e que serão mais utilizados para os dados que vocês tratam no grupo de pesquisa. 
+
+Vamos ver muito rapidamente o que são vetores, data frames e listas. 
+
+### Vetores
+São estruturas que comportam o mesmo tipo de dado. Para criar um vetor criamos um objeto e utilizamos a função `c` seguida de parenteses com os elementos deste vetor. 
+
+```{r echo=TRUE}
+nome<-c("Julia", "Tiago", "Simone") #lembre-se de que palavras devem vir sempre entre aspas!
+
+idade<-c(40, 32, 17)
+
+profissao<-c("engenheira", "professor", "estudante")
+
+nome
+
+idade
+
+profissao
+```
+
+Para verificar o tipo de dado contido em um vetor utilizamos o função `class()`
+
+```{r echo=TRUE}
+
+class(nome)
+
+class(idade)
+
+class (profissao)
+
+```
+
+### Data frames
+São as estrutura de dados mais utilizadas em análise de dados. Trata-se de estruturas de dados tabulares, assim como as planilhas do excel. No contexto do R data frames são definidos como um conjunto de vetores; cada coluna de um data frame é um vetor, de forma que cada coluna deve conter um mesmo tipo de dado.
+
+Se data frames são compostos de vetores podemos criar com os vetores nomes, idade e profissão criados acima. Para isso usarei a função `data.frame()` e incluirei esses vetores dentro dos parênteses.
+
+```{r echo=TRUE}
+catalogo<-data.frame(nome, idade, profissao)
+
+catalogo
+```
+
+Também é possível verificar o data frame criado utilizando a função `View()` que vimos no workshop anterior
+
+```{r eval=FALSE, include=TRUE}
+View(catalogo)
+```
 
 
-## Inspecionando dados
+Podemos sempre utilizar a função `class()` para verificar o tipo ou estrutura de dado dos objetos ou dos elementos contidos nele. Quando utilizamos esta função nos vetores criados acima ela nos retornou o tipo de dados contido no vetor. O exemplo abaixo mostra o tipo de estrutura de dados contido no objeto `catalogo` 
+```{r echo=TRUE}
+class(catalogo)
+
+```
+
+### Listas
+São estruturas que podem comportar dados de tipos diferentes. Não utilizaremos as listas neste workshop, mas elas são estruturas importantes de se conhecer pois elas possibilitam automatizar bastante o trabalho no R. Mas este assunto é mais avançado, deixarei material complementar sobre automatização de códigos para quem quiser se aprofundar. 
+
+Vou criar uma lista que contenha o vetor profissão, o data frame catalogo e uma string. Para isso uso a função `list()` e incluo os elementos entre parênteses
+
+```{r echo=TRUE}
+
+lista<-list(profissao, catalogo, "Isso é uma frase")
+
+lista
+
+```
+
+O número que aparece em cima de cada elemento é a posição em que ele se encontra dentro da lista. Desta forma, se eu quiser acessar apenas o vetor eu devo escrever o nome da lista e o número correspondente à posição que ele está entre colchetes
+
+```{r echo=TRUE}
+
+lista[1]
+
+```
+
+O data frame está na segunda posição da lista
+```{r echo=TRUE}
+lista[2]
+
+```
+
+Para estudar vetores e listas com mais detalhes veja o material disponibilizado na seção "Material complementar". A partir de agora vamos focar nossos estudos nos data frames
 
 
-## Manipulação de dados com dplyr
+## Inspecionando e fazendo subset de dados
+Vamos finalmente começar a usar os dados que trouxemos para o R!. Os objetos `migracao`, `exportacao` e `importacao` são todos data frames. Podemos descobrir várias informações sobre eles como número de colunas e linhas, o tipo de dados suas variáveis, entre outras coisas. Desta forma, podemos inspecionar data frames por tamanho, conteúdo, nomes e resumo:
+
+### Tamanho
+  * `dim()` - retorna um vetor com o número de linhas como primeiro elemento e o número de colunas como o segundo
+  * `nrow` - retorna o número de linhas
+  * `ncol` - retorna o número de colunas
+    
+Vamos testar essas funções com o nosso banco `migracao`:
+
+```{r include=FALSE}
+#primeiro é preciso fazer o upload dos pacotes
+library(tidyverse)
+library(readxl)
+
+#upload do banco de migração. 
+migracao<-read_csv("dados/migracao_completo.csv")
+
+## upload dos bancos de exportação e importação
+exportacao<-read_excel("dados/export_sc.xlsx")
+
+importacao<-read_excel("dados/import_sc.xlsx")
+```
+
+
+```{r echo=TRUE}
+dim(migracao)
+```
+Este banco apresenta 826375 linhas e 7 colunas
+
+```{r echo=TRUE}
+nrow(migracao)
+```
+
+```{r echo=TRUE}
+ncol(migracao)
+```
+
+### Conteúdo
+
+  * `head()` - retorna as 6 primeiras linhas
+  * `tail()` - retorna as 6 últimas linhas
+  
+```{r echo=TRUE}
+head(migracao)
+```
+
+
+```{r echo=TRUE}
+tail(migracao)
+```
+
+### Nomes
+  * `names()`- retorna os nomes das colunas
+  
+```{r echo=TRUE}
+names(migracao)
+```
+
+
+### Resumo
+
+## Manipulação de dados com dplyr e tidyr
+
+## Material complementar
+
+Veja o capítulo [vetores](https://r4ds.had.co.nz/vectors.html) no livro [R for Data Science](https://r4ds.had.co.nz/index.html) para mais detalhes de como trabalhar com vetores e listas
+
+[Relação](https://www.tidyverse.org/packages/) de pacotes contidos no tidyverse
+
+[Documentação](https://tidyverse.tidyverse.org) do tidyverse
+
+[Tutorial que escrevi sobre automatização de códigos para cientistas sociais](https://nataliablock.rbind.io/post/automatizar/). O tutorial apresenta uma breve revisão das estruturas de dados apresentadas aqui e apresenta tópicos mais avançados como o uso de listas, funções e iteração para automatizar trabalhos repetitivos no R.
 
 ## Atividades
