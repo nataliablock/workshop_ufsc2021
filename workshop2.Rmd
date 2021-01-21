@@ -164,7 +164,7 @@ names(migracao)
 
 ## Manipulação de dados com dplyr e tidyr
 
-## Material complementar
+# Material complementar
 
 Veja o capítulo [vetores](https://r4ds.had.co.nz/vectors.html) no livro [R for Data Science](https://r4ds.had.co.nz/index.html) para mais detalhes de como trabalhar com vetores e listas
 
@@ -175,4 +175,4 @@ Veja o capítulo [vetores](https://r4ds.had.co.nz/vectors.html) no livro [R for 
 [Documentação](https://tidyverse.tidyverse.org) do tidyverse
 
 
-## Atividades
+# Atividades
