@@ -274,9 +274,9 @@ O `dplyr` é um pacote que fornece instrumentos simples para as tarefas mais com
 
 O `dplyr` e o `tidyr` são pacotes contidos no `tidyverse` que instalamos no workshop anterior. O `tidyverse` é um pacote que possui outros pacotes dentro. Ele é como se fosse uma caixa de ferramentas para a manipulação de dados. Outro pacote que utilizaremos neste workshop e que faz parte do `tidyverse` e o `ggplot2` que nos dá ferramentas para construir gráficos. No material adicional você encontrará uma lista com todos os pacotes contidos no `tidyverse`
 
-# Limpando o banco de migração
+### Limpando o banco de migração
 
-# Selecionando colunas e filtrando linhas
+### Selecionando colunas e filtrando linhas
 
 Vamos começar a limpar os nossos bancos. Vamos dar uma olhada no banco de migração. Caso queiramos reproduzir o gráfico de migração do dashboard vamos precisar realizar as seguintes limpezas neste banco:
 
@@ -353,7 +353,7 @@ migracao<-migracao%>%
 migracao
 ```
 
-# Agrupando dados
+### Agrupando dados
 
 Queremos saber o total de homens e mulheres que entraram em Santa Catarina por país e ano. Para isso teremos que agrupar as colunas `PNASC_DESC`, `SEXO_DESCRICAO` e `ano` e contá-las. O resultado disso será uma linha para cada país, sexo e ano com o respectivo total. Salvarei o resultado em um objeto separado para não perder os dados primários que limpamos. Para isso usamos a função `group_by()` para selecionar as colunas que serão agrupadas e a função `count()` para contar quantas linhas foram agrupadas em cada grupo.
 

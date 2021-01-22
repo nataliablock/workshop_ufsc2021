@@ -728,13 +728,11 @@ migracao$ano&lt;-as.factor(migracao$ano)</code></pre>
 <p>Dificilmente nossos bancos de dados virão preparados para uso. Quase sempre devemos fazer ajustes nos dados, como selecionar apenas as linhas de interesse, deletar colunas desnecessárias, recodificar variáveis, fazer cálculos, criar colunas novas, etc. Essa é a fase que normalmente chamamos de limpeza dos dados.</p>
 <p>O <code>dplyr</code> é um pacote que fornece instrumentos simples para as tarefas mais comuns de limpeza de dados. O <code>tidyr</code> (que veremos no próximo workshop) permite alterar o formato do banco, transformando linhas em colunas. Remodelar o banco desta forma parece estranho, mas veremos que por vezes esse tipo alteração é necessária dependendo do gráfico que queremos elaborar, ou de como uma função específica do R precisa receber os dados. Vamos ver um exemplo disso mais adiante com nossos dados de exportação e importação.</p>
 <p>O <code>dplyr</code> e o <code>tidyr</code> são pacotes contidos no <code>tidyverse</code> que instalamos no workshop anterior. O <code>tidyverse</code> é um pacote que possui outros pacotes dentro. Ele é como se fosse uma caixa de ferramentas para a manipulação de dados. Outro pacote que utilizaremos neste workshop e que faz parte do <code>tidyverse</code> e o <code>ggplot2</code> que nos dá ferramentas para construir gráficos. No material adicional você encontrará uma lista com todos os pacotes contidos no <code>tidyverse</code></p>
+<div id="limpando-o-banco-de-migração" class="section level3">
+<h3>Limpando o banco de migração</h3>
 </div>
-</div>
-<div id="limpando-o-banco-de-migração" class="section level1">
-<h1>Limpando o banco de migração</h1>
-</div>
-<div id="selecionando-colunas-e-filtrando-linhas" class="section level1">
-<h1>Selecionando colunas e filtrando linhas</h1>
+<div id="selecionando-colunas-e-filtrando-linhas" class="section level3">
+<h3>Selecionando colunas e filtrando linhas</h3>
 <p>Vamos começar a limpar os nossos bancos. Vamos dar uma olhada no banco de migração. Caso queiramos reproduzir o gráfico de migração do dashboard vamos precisar realizar as seguintes limpezas neste banco:</p>
 <ol style="list-style-type: decimal">
 <li>selecionar apenas as colunas de interesse que são as de estado (<code>UFRES</code>), país (<code>PNASC_DESC</code>), sexo (<code>SEXO_DESCRICAO</code>) e ano.</li>
@@ -846,8 +844,8 @@ migracao</code></pre>
 ## 10 SC    FRANCA                     Masculino      2010 
 ## # … with 3,307 more rows</code></pre>
 </div>
-<div id="agrupando-dados" class="section level1">
-<h1>Agrupando dados</h1>
+<div id="agrupando-dados" class="section level3">
+<h3>Agrupando dados</h3>
 <p>Queremos saber o total de homens e mulheres que entraram em Santa Catarina por país e ano. Para isso teremos que agrupar as colunas <code>PNASC_DESC</code>, <code>SEXO_DESCRICAO</code> e <code>ano</code> e contá-las. O resultado disso será uma linha para cada país, sexo e ano com o respectivo total. Salvarei o resultado em um objeto separado para não perder os dados primários que limpamos. Para isso usamos a função <code>group_by()</code> para selecionar as colunas que serão agrupadas e a função <code>count()</code> para contar quantas linhas foram agrupadas em cada grupo.</p>
 <pre class="r"><code>migracao_ano_sexo&lt;-migracao%&gt;%
   group_by(PNASC_DESC, SEXO_DESCRICAO, ano)%&gt;%
@@ -869,6 +867,8 @@ migracao</code></pre>
 ## 10 SC    FRANCA                     Masculino      2010 
 ## # … with 3,307 more rows</code></pre>
 <p>Repare que dentro da função <code>count()</code> eu inclui o argumento <code>name</code> para atribuir um nome à coluna que está sendo criada.</p>
+</div>
+</div>
 </div>
 <div id="material-complementar" class="section level1">
 <h1>Material complementar</h1>
