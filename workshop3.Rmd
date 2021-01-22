@@ -8,7 +8,7 @@ output:
     toc_depth: 2
 ---
 
-# Manipulação de dados com tidyr e elaboração de gráficos com ggplot
+# Manipulação de dados com tidyr e elaboração de gráficos com ggplot2
 
 Em breve
 
