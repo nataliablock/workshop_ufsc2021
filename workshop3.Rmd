@@ -1,5 +1,5 @@
 ---
-title: "Workshop 3 - Dia"
+title: "Workshop 3 - 9 de fevereiro"
 output:
   html_document:
     theme: flatly
@@ -8,9 +8,8 @@ output:
     toc_depth: 2
 ---
 
-# Construção de gráficos e o ggplot
+# Manipulação de dados com tidyr e elaboração de gráficos com ggplot
 
-Hello World!
+Em breve
 
 
-## Subcontent

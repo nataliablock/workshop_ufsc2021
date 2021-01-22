@@ -1,5 +1,5 @@
 ---
-title: "Workshop 2 - 2 de fevereiro (a confirmar)"
+title: "Workshop 2 - 2 de fevereiro"
 output:
   html_document:
     theme: flatly
@@ -8,7 +8,7 @@ output:
     toc_depth: 2
 ---
 
-# Estruturas de dados e manipulação de dados com dplyr e tidyr
+# Estruturas de dados e manipulação de dados com dplyr
 
 ## Estruturas de dados
 Existem várias formas de se organizar dados no R: como vetor, lista, matriz, data frame, dentre várias outras estruturas. 
@@ -100,7 +100,7 @@ lista[2]
 Para estudar vetores e listas com mais detalhes veja o material disponibilizado na seção "Material complementar". A partir de agora vamos focar nossos estudos nos data frames
 
 
-## Inspecionando e fazendo subset de dados
+## Inspecionando data frames
 Vamos finalmente começar a usar os dados que trouxemos para o R! Os objetos `migracao`, `exportacao` e `importacao` são todos data frames. Podemos descobrir várias informações sobre eles como número de colunas e linhas, o tipo de dados de suas variáveis, entre outras coisas. Desta forma, podemos inspecionar data frames por **tamanho, conteúdo, nomes e resumo**:
 
 ### Tamanho
@@ -161,8 +161,214 @@ names(migracao)
 
 
 ### Resumo
+  * `str()` - retorna a estrutura do objeto e informações sobre a classe, comprimento e conteúdo de cada coluna
+  * `summary()` - retorna estatísticas básicas para cada coluna
+  * `glimpse()` retorna o número de colunas e linhas, nomes e classes de cada coluna, e apresenta uma visualização reduzida do banco. Ao contrário das outras funções, `glimpse()` não faz parte da base R de forma que é preciso fazer o upload `dplyr` (contido no tidyverse) para executá-la.
+  
+Vamos inspecionar agora o nosso banco `exportacao`
 
-## Manipulação de dados com dplyr e tidyr
+```{r echo = TRUE}
+str(exportacao)
+
+```
+
+```{r echo=TRUE}
+summary(exportacao)
+```
+
+```{r echo=TRUE}
+#Para usar o glimpse precisamos fazer o upload do dplyr. Como ele faz parte do tidyverse podemos usar o library() para fazer o upload ou do tidyverse ou do dplyr
+
+#caso não tenha feito o upload do tidyverse ainda rode a linha comentada abaixo antes de rodar o glimpse(
+#library(dplyr)
+
+glimpse(exportacao)
+
+```
+
+## Coletando um subconjunto de dados (subsetting)
+
+Por vezes poderemos precisar de apenas um subconjunto dos dados, seja um número limitado de linhas ou algumas colunas específicas. Para extrair dados específicos de um data frame precisamos especipicas as "coordenadas" de onde elas estão.
+
+Para isso, escrevemos o nome do objeto em que está o data frame seguido de colchetes. Dentro dos colchetes colocamos o número correspondente à posição da linha seguido de vírgula e o número da posição da coluna. Resumidamente seria algo como:
+  * meu_banco[número_linha, número_coluna]
+  
+Vejamos isso na prática. Digamos que no nosso banco migração eu queira retirar o primeiro elemento da sexta coluna: 
+
+```{r echo=TRUE}
+migracao[1,6]
+```
+
+Caso eu queira os primeiros três elementos da quinta coluna:
+```{r echo=TRUE}
+migracao[1:3, 5]
+```
+
+Caso eu queira retornas a terceira linha de todo o data frame:
+```{r echo=TRUE}
+migracao[3, ]
+```
+
+Se eu quiser todo o banco exceto a primeira coluna:
+```{r echo=TRUE}
+migracao[, -1]
+```
+
+Na verdade nós não precisaremos da coluna X1 para as nossas análises. Para retirá-la poderíamos utilizar o código acima e salvá-lo no próprio objeto migração. Faríamos o seguinte: `migracao<-migracao[ , -1]`.
+
+Vamos fazer a mesma coisa de uma forma diferente. Para acessar uma variável do banco para fazer alguma alteração nela utilizamos o símbolo `$`; escrevemos o nome do data frame, seguido de `$` e o nome da variável. Para deletar uma coluna utilizamos a função `NULL`. Dessa forma, outra maneira de retirar a coluna X1 de migração seria a seguinte:
+
+```{r echo=TRUE}
+
+migracao$X1<-NULL
+
+migracao
+```
+
+
+## Alterando tipos de dados
+Por vezes teremos que alterar o tipo de dado de uma coluna do nosso data frame. Dados podem ser do tipo character (palavras), numeric ou double(números) ou factors (fatores). Existem outros tipos de dados, como data e hora, mas não vamos abordar no workshop.
+
+Pode acontecer que ao importar os dados eles venham com tipos que não correspondem ao que eles representam. Uma variável de ano, por exemplo, pode vir como numérica quando na verdade ela é um fator. Na hora de elaborar um gráfico poderemos ter problemas com essa classificação.
+
+Vamos entender primeiro a diferença entre dados numéricos e fatores. O dado **numérico** será necessariamente intervalar. O valor de exportações em um ano, por exemplo, é numérico pois corresponde a um valor que pode variar dentro de uma escala. No nosso **dashboard** no gráfico de exportações vemos que as exportação de Santa Catarina para a China tinha um valor de 3,5 bilhões de dólares em 2018 e caiu para 1,5 bilhões em 2019. Existe então uma diferença entre os dois números de 2 bilhões. Esses dois números são escalares, existe um intervalo entre eles. De forma mais simples, eles demonstram *quantidades*
+
+Já o **fator** apresenta uma categoria. Masculino e feminino, sim e não, são tipos de categorias que algumas vezes podem vir em bancos de dados codificadas como números. Porém eles não são quantidades. No caso do exemplo dos dados de exportação, os anos são fatores pois tratam de momentos no tempo específico, e não quantidades de tempo. No gráfico do dashboard podemos ver que 2010, 2011, 2012... são pontos específicos no tempo, por isso classificamos como fatores. Os países também são fatores pois são como se fossem categorias de países diferentes.
+
+Para alterar os tipos de dados das variáveis utilizamos as seguintes funções:
+
+  * `as.factor` para alterar dados para fator. Ex: `meu_banco$variavel<-as.factor(meu_banco$variavel)`
+  * `as.character` para alterar dados para character. Ex:`meu_banco$variavel<-as.character(meu_banco$variavel)`
+  * `as.numeric` para alterar dados para numéricos. Ex: ``meu_banco$variavel<-as.numeric(meu_banco$variavel)`
+
+Vamos dar uma olhada no tipo de dados do banco de migração:
+
+```{r echo=TRUE}
+
+glimpse(migracao)
+
+```
+
+Vemos que `PNASC_DESC`, `SEXO_DESCRICAO` estão classificadas como character e `ano` como double, que é o tipo de dado numérico que pode apresentar dígitos. Porém, todas essas variáveis são fatores. Vamos alterá-las:
+
+```{r echo=TRUE}
+migracao$PNASC_DESC<-as.factor(migracao$PNASC_DESC)
+
+migracao$SEXO_DESCRICAO<-as.factor(migracao$SEXO_DESCRICAO)
+
+migracao$ano<-as.factor(migracao$ano)
+```
+
+Vamos verificar se a alteração foi realizada:
+
+```{r echo=TRUE}
+glimpse(migracao)
+```
+
+  
+## Manipulação de dados com dplyr 
+
+Dificilmente nossos bancos de dados virão preparados para uso. Quase sempre devemos fazer ajustes nos dados, como selecionar apenas as linhas de interesse, deletar colunas desnecessárias, recodificar variáveis, fazer cálculos, criar colunas novas, etc. Essa é a fase que normalmente chamamos de limpeza dos dados. 
+
+O `dplyr` é um pacote que fornece instrumentos simples para as tarefas mais comuns de limpeza de dados. O `tidyr` (que veremos no próximo workshop) permite alterar o formato do banco, transformando linhas em colunas. Remodelar o banco desta forma parece estranho, mas veremos que por vezes esse tipo alteração é necessária dependendo do gráfico que queremos elaborar, ou de como uma função específica do R precisa receber os dados. Vamos ver um exemplo disso mais adiante com nossos dados de exportação e importação.
+
+O `dplyr` e o `tidyr` são pacotes contidos no `tidyverse` que instalamos no workshop anterior. O `tidyverse` é um pacote que possui outros pacotes dentro. Ele é como se fosse uma caixa de ferramentas para a manipulação de dados. Outro pacote que utilizaremos neste workshop e que faz parte do `tidyverse` e o `ggplot2` que nos dá ferramentas para construir gráficos. No material adicional você encontrará uma lista com todos os pacotes contidos no `tidyverse`
+
+# Limpando o banco de migração
+
+# Selecionando colunas e filtrando linhas
+
+Vamos começar a limpar os nossos bancos. Vamos dar uma olhada no banco de migração. Caso queiramos reproduzir o gráfico de migração do dashboard vamos precisar realizar as seguintes limpezas neste banco:
+
+  1. selecionar apenas as colunas de interesse que são as de estado (`UFRES`), país (`PNASC_DESC`), sexo (`SEXO_DESCRICAO`) e ano.
+  2. filtrar na coluna estado apenas Santa Catarina
+  3. filtrar na coluna país apenas aqueles de interesse: Alemanha, China, Estados Unidos, França, Itália, Japão e Reino Unido.
+  4. agrupar as linhas por sexo e país para contar quantos homens e mulheres entraram no país.
+  
+Vamos passo a passo. Primeiro vamos selecionar as variáveis. No dplyr utilizamos a função `select()` para isso. Após digitar `select` colocamos, entre parênteses, o nome do banco e das colunas que queremos selecionar separados por vírgula. 
+
+```{r echo=TRUE}
+select(migracao, UFRES, PNASC_DESC, SEXO_DESCRICAO, ano)
+
+```
+
+Vamos salvar esse resultado em um objeto diferente de `migracao` para não perdermos os dados brutos
+
+```{r echo=TRUE}
+migracao_select<-select(migracao, UFRES, PNASC_DESC, SEXO_DESCRICAO, ano)
+```
+
+Agora vamos utilizar este último objeto que criamos, o `migracao_select` para selecionar o estado de Santa Catarina. Para isso vamos utilizar a função `filter()`. Após `filter` digitamos dentro dos parênteses o nome do banco seguido de vírgula, o nome da coluna que se quer filtrar, um sinal de igual duplo `==` e a linha que queremos filtrar. Vamos salvar esse resultado em outro objeto chamado de migracao_sc. Repare pelo painel Environment que o número de linhas de `migracao_sc` vai reduzir bastante comparado com o de `migracao_select`.
+
+```{r echo=TRUE}
+migracao_sc<-filter(migracao_select, UFRES=="SC")
+
+migracao_sc
+```
+
+Este novo banco contêm apenas as variáveis selecionadas em `migracao_limp` e as linhas de Santa Catarina filtradas em `migracao_sc`. No entanto, esse processo tem muitos passos separados, cria muitos objetos (o que pode causar confusão), e torna o código confuso. 
+
+A alternativa é fazer todos esses passos de uma só vez. Para isso podemos utilizar os pipes `%>%`, que permitem que o resultado de uma função seja "enviado" para a função seguinte. Os pipes são parte do pacote `magrittr` que são instalados automaticamente com o `dplyr`.
+
+Como ainda temos o banco bruto `migracao` podemos utilizá-lo para refazer este trabalho agora utilizando pipes. Selecionarei as variáveis e filtrarei o estado de SC e salvarei o resultado no próprio objeto `migracao`. Já que não utilizaremos os dados que estamos descartando não tem problema de subscrevermos esse objeto. Ao utilizar pipe primeiro coloco o nome do objeto em que está o banco sendo utilizado e vou incluindo pipes para cada função utilizada. Veja a seguir:
+
+```{r echo=TRUE}
+
+migracao<-migracao%>%
+  select(UFRES, PNASC_DESC, SEXO_DESCRICAO, ano)%>%
+  filter(UFRES=="SC")
+
+migracao
+
+```
+Repare que agora o banco `migracao` está igual ao `migracao_sc` pois realizamos as mesmas operações, porém com um código mais conciso.
+
+Mas ainda precisamos fazer mais limpeza nesse banco. Temos que filtrar os países de interesse. No exemplo acima tínhamos filtrado apenas um caso. Como fazemos quando precisamos filtrar vários casos. Temos mais de uma forma de realizar essa operação: uma mais longa e outra mais concisa.
+
+Primeiro a mais longa. Ao invés de filtrar todos os países vamos selecionar apeans França, Itália e Alemanha para ilustrar, sem salvar em objeto. Filtraremos todos os casos e salvaremos no objeto quando eu apresentar a segunda forma. 
+
+Antes de tudo é preciso verificar como estão escritos os nomes que vamos filtrar. Repare que estão em letra maiúscula e lembre-se de que o R é sensível à letras maísculas e minúsculas. Devemos escrever da mesma forma como aparece no banco. A seguir faremos a filtragem utilizando o pipes como feito acima. Vejamos:
+
+```{r echo=TRUE}
+
+migracao%>%
+  filter(PNASC_DESC=="ALEMANHA"| PNASC_DESC=="ITALIA" | PNASC_DESC== "FRANCA")
+
+```
+
+Para filtrar mais de um caso precisamos repetir o nome da variável a ser filtrada seguida de `==` e o nome do caso que queremos. O operador que separa cada caso "|" é ou que chamamos de operador booleano **OU**. Assim, dizemos para o R que queremos filtrar Alemanha **ou** França **ou** Italia e ele nos retorna apenas as linhas desses países. Porém, repare que para selecionar todos os países que queremos teríamos que fazer isso sete vezes. O código ficaria enorme. Não há problema nenhum de fazer isso, mas existe uma forma mais sucinta.
+
+Vejamos a segunda forma. Podemos salvar os nomes dos países em um vetor, como vimos no início deste workshop, e utilizar este vetor dentro da função `filter()` com o símbolo `%in%`. Vou salvar essa operação direto no objeto migração e este será meu banco de migração final.
+
+```{r echo=TRUE}
+
+#criando vetor de países
+pais_mig<-c("ALEMANHA", "REPUBLICA POPULAR DA CHINA", "ESTADOS UNIDOS DA AMERICA",
+            "FRANCA", "ITALIA", "JAPAO", "REINO UNIDO")
+
+#aplicando o vetor à função filter
+migracao<-migracao%>%
+  filter(PNASC_DESC %in% pais_mig)
+
+migracao
+```
+
+# Agrupando dados
+
+Queremos saber o total de homens e mulheres que entraram em Santa Catarina por país e ano. Para isso teremos que agrupar as colunas `PNASC_DESC`, `SEXO_DESCRICAO` e `ano` e contá-las. O resultado disso será uma linha para cada país, sexo e ano com o respectivo total. Salvarei o resultado em um objeto separado para não perder os dados primários que limpamos. Para isso usamos a função `group_by()` para selecionar as colunas que serão agrupadas e a função `count()` para contar quantas linhas foram agrupadas em cada grupo.
+
+```{r echo=TRUE}
+
+migracao_ano_sexo<-migracao%>%
+  group_by(PNASC_DESC, SEXO_DESCRICAO, ano)%>%
+  count(name="tot_ano_sexo")
+
+migracao
+
+```
+
+Repare que dentro da função `count()` eu inclui o argumento `name` para atribuir um nome à coluna que está sendo criada. 
+
 
 # Material complementar
 
@@ -174,5 +380,9 @@ Veja o capítulo [vetores](https://r4ds.had.co.nz/vectors.html) no livro [R for 
 
 [Documentação](https://tidyverse.tidyverse.org) do tidyverse
 
+[Cheat sheet](https://rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf) elaborado pelo RStudio com explicações de todas as transformações de dados possíveis de serem feitas com funções do `dplyr`
+
 
 # Atividades
+
+Em breve

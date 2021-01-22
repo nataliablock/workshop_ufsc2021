@@ -11,7 +11,7 @@
 
 
 
-<title>Workshop 2 - 2 de fevereiro (a confirmar)</title>
+<title>Workshop 2 - 2 de fevereiro</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -412,13 +412,13 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Workshop 2 - 2 de fevereiro (a confirmar)</h1>
+<h1 class="title toc-ignore">Workshop 2 - 2 de fevereiro</h1>
 
 </div>
 
 
-<div id="estruturas-de-dados-e-manipulação-de-dados-com-dplyr-e-tidyr" class="section level1">
-<h1>Estruturas de dados e manipulação de dados com dplyr e tidyr</h1>
+<div id="estruturas-de-dados-e-manipulação-de-dados-com-dplyr" class="section level1">
+<h1>Estruturas de dados e manipulação de dados com dplyr</h1>
 <div id="estruturas-de-dados" class="section level2">
 <h2>Estruturas de dados</h2>
 <p>Existem várias formas de se organizar dados no R: como vetor, lista, matriz, data frame, dentre várias outras estruturas.</p>
@@ -496,8 +496,8 @@ lista</code></pre>
 <p>Para estudar vetores e listas com mais detalhes veja o material disponibilizado na seção “Material complementar”. A partir de agora vamos focar nossos estudos nos data frames</p>
 </div>
 </div>
-<div id="inspecionando-e-fazendo-subset-de-dados" class="section level2">
-<h2>Inspecionando e fazendo subset de dados</h2>
+<div id="inspecionando-data-frames" class="section level2">
+<h2>Inspecionando data frames</h2>
 <p>Vamos finalmente começar a usar os dados que trouxemos para o R! Os objetos <code>migracao</code>, <code>exportacao</code> e <code>importacao</code> são todos data frames. Podemos descobrir várias informações sobre eles como número de colunas e linhas, o tipo de dados de suas variáveis, entre outras coisas. Desta forma, podemos inspecionar data frames por <strong>tamanho, conteúdo, nomes e resumo</strong>:</p>
 <div id="tamanho" class="section level3">
 <h3>Tamanho</h3>
@@ -553,11 +553,322 @@ lista</code></pre>
 </div>
 <div id="resumo" class="section level3">
 <h3>Resumo</h3>
+<ul>
+<li><code>str()</code> - retorna a estrutura do objeto e informações sobre a classe, comprimento e conteúdo de cada coluna</li>
+<li><code>summary()</code> - retorna estatísticas básicas para cada coluna</li>
+<li><code>glimpse()</code> retorna o número de colunas e linhas, nomes e classes de cada coluna, e apresenta uma visualização reduzida do banco. Ao contrário das outras funções, <code>glimpse()</code> não faz parte da base R de forma que é preciso fazer o upload <code>dplyr</code> (contido no tidyverse) para executá-la.</li>
+</ul>
+<p>Vamos inspecionar agora o nosso banco <code>exportacao</code></p>
+<pre class="r"><code>str(exportacao)</code></pre>
+<pre><code>## tibble [232 × 12] (S3: tbl_df/tbl/data.frame)
+##  $ UF do Município       : chr [1:232] &quot;Santa Catarina&quot; &quot;Santa Catarina&quot; &quot;Santa Catarina&quot; &quot;Santa Catarina&quot; ...
+##  $ País                  : chr [1:232] &quot;China&quot; &quot;Estados Unidos&quot; &quot;Japão&quot; &quot;Argentina&quot; ...
+##  $ 2019 - Valor FOB (US$): num [1:232] 1.59e+09 1.44e+09 5.62e+08 4.48e+08 3.79e+08 ...
+##  $ 2018 - Valor FOB (US$): num [1:232] 3.51e+09 1.49e+09 5.36e+08 5.53e+08 3.43e+08 ...
+##  $ 2017 - Valor FOB (US$): num [1:232] 1.39e+09 1.55e+09 6.46e+08 6.01e+08 3.70e+08 ...
+##  $ 2016 - Valor FOB (US$): num [1:232] 1.10e+09 1.35e+09 4.95e+08 4.65e+08 3.19e+08 ...
+##  $ 2015 - Valor FOB (US$): num [1:232] 8.30e+08 1.10e+09 5.06e+08 4.63e+08 3.05e+08 ...
+##  $ 2014 - Valor FOB (US$): num [1:232] 1.15e+09 1.20e+09 6.32e+08 4.42e+08 3.06e+08 ...
+##  $ 2013 - Valor FOB (US$): num [1:232] 9.99e+08 1.05e+09 5.95e+08 5.18e+08 2.99e+08 ...
+##  $ 2012 - Valor FOB (US$): num [1:232] 9.01e+08 1.05e+09 6.54e+08 5.45e+08 3.06e+08 ...
+##  $ 2011 - Valor FOB (US$): num [1:232] 7.06e+08 9.89e+08 8.15e+08 6.87e+08 2.72e+08 ...
+##  $ 2010 - Valor FOB (US$): num [1:232] 4.27e+08 9.05e+08 5.28e+08 6.06e+08 2.84e+08 ...</code></pre>
+<pre class="r"><code>summary(exportacao)</code></pre>
+<pre><code>##  UF do Município        País           2019 - Valor FOB (US$)
+##  Length:232         Length:232         Min.   :0.000e+00     
+##  Class :character   Class :character   1st Qu.:1.830e+05     
+##  Mode  :character   Mode  :character   Median :2.706e+06     
+##                                        Mean   :4.424e+07     
+##                                        3rd Qu.:1.612e+07     
+##                                        Max.   :1.589e+09     
+##  2018 - Valor FOB (US$) 2017 - Valor FOB (US$) 2016 - Valor FOB (US$)
+##  Min.   :0.000e+00      Min.   :0.000e+00      Min.   :0.000e+00     
+##  1st Qu.:1.578e+05      1st Qu.:1.698e+05      1st Qu.:1.247e+05     
+##  Median :2.498e+06      Median :2.242e+06      Median :2.000e+06     
+##  Mean   :5.995e+07      Mean   :4.758e+07      Mean   :4.117e+07     
+##  3rd Qu.:2.353e+07      3rd Qu.:1.935e+07      3rd Qu.:1.531e+07     
+##  Max.   :3.508e+09      Max.   :1.551e+09      Max.   :1.347e+09     
+##  2015 - Valor FOB (US$) 2014 - Valor FOB (US$) 2013 - Valor FOB (US$)
+##  Min.   :0.000e+00      Min.   :0.000e+00      Min.   :0.000e+00     
+##  1st Qu.:1.074e+05      1st Qu.:1.003e+05      1st Qu.:9.929e+04     
+##  Median :2.146e+06      Median :2.683e+06      Median :2.916e+06     
+##  Mean   :3.893e+07      Mean   :4.801e+07      Mean   :4.897e+07     
+##  3rd Qu.:1.637e+07      3rd Qu.:1.785e+07      3rd Qu.:1.906e+07     
+##  Max.   :1.097e+09      Max.   :1.203e+09      Max.   :1.048e+09     
+##  2012 - Valor FOB (US$) 2011 - Valor FOB (US$) 2010 - Valor FOB (US$)
+##  Min.   :0.000e+00      Min.   :        0      Min.   :        0     
+##  1st Qu.:1.449e+05      1st Qu.:    91318      1st Qu.:    96815     
+##  Median :3.006e+06      Median :  3203930      Median :  2841518     
+##  Mean   :4.800e+07      Mean   : 46287094      Mean   : 39930206     
+##  3rd Qu.:2.200e+07      3rd Qu.: 17723350      3rd Qu.: 17163657     
+##  Max.   :1.045e+09      Max.   :988975308      Max.   :905227739</code></pre>
+<pre class="r"><code>#Para usar o glimpse precisamos fazer o upload do dplyr. Como ele faz parte do tidyverse podemos usar o library() para fazer o upload ou do tidyverse ou do dplyr
+
+#caso não tenha feito o upload do tidyverse ainda rode a linha comentada abaixo antes de rodar o glimpse(
+#library(dplyr)
+
+glimpse(exportacao)</code></pre>
+<pre><code>## Rows: 232
+## Columns: 12
+## $ `UF do Município`        &lt;chr&gt; &quot;Santa Catarina&quot;, &quot;Santa Catarina&quot;, &quot;Santa C…
+## $ País                     &lt;chr&gt; &quot;China&quot;, &quot;Estados Unidos&quot;, &quot;Japão&quot;, &quot;Argenti…
+## $ `2019 - Valor FOB (US$)` &lt;dbl&gt; 1589499886, 1440141803, 561745487, 447748671…
+## $ `2018 - Valor FOB (US$)` &lt;dbl&gt; 3508475541, 1491866039, 536371415, 552792985…
+## $ `2017 - Valor FOB (US$)` &lt;dbl&gt; 1387040317, 1550676302, 646116312, 600795239…
+## $ `2016 - Valor FOB (US$)` &lt;dbl&gt; 1096838348, 1346732839, 494740514, 464676279…
+## $ `2015 - Valor FOB (US$)` &lt;dbl&gt; 829695943, 1096870156, 506287327, 463324482,…
+## $ `2014 - Valor FOB (US$)` &lt;dbl&gt; 1149980960, 1202700380, 632299712, 441784068…
+## $ `2013 - Valor FOB (US$)` &lt;dbl&gt; 999306427, 1048402543, 595461424, 517716973,…
+## $ `2012 - Valor FOB (US$)` &lt;dbl&gt; 900878336, 1045101363, 654453665, 544805341,…
+## $ `2011 - Valor FOB (US$)` &lt;dbl&gt; 706020312, 988975308, 815239040, 686721289, …
+## $ `2010 - Valor FOB (US$)` &lt;dbl&gt; 427097677, 905227739, 527734577, 606416573, …</code></pre>
 </div>
 </div>
-<div id="manipulação-de-dados-com-dplyr-e-tidyr" class="section level2">
-<h2>Manipulação de dados com dplyr e tidyr</h2>
+<div id="coletando-um-subconjunto-de-dados-subsetting" class="section level2">
+<h2>Coletando um subconjunto de dados (subsetting)</h2>
+<p>Por vezes poderemos precisar de apenas um subconjunto dos dados, seja um número limitado de linhas ou algumas colunas específicas. Para extrair dados específicos de um data frame precisamos especipicas as “coordenadas” de onde elas estão.</p>
+<p>Para isso, escrevemos o nome do objeto em que está o data frame seguido de colchetes. Dentro dos colchetes colocamos o número correspondente à posição da linha seguido de vírgula e o número da posição da coluna. Resumidamente seria algo como: * meu_banco[número_linha, número_coluna]</p>
+<p>Vejamos isso na prática. Digamos que no nosso banco migração eu queira retirar o primeiro elemento da sexta coluna:</p>
+<pre class="r"><code>migracao[1,6]</code></pre>
+<pre><code>## # A tibble: 1 x 1
+##   SEXO_DESCRICAO
+##   &lt;chr&gt;         
+## 1 Masculino</code></pre>
+<p>Caso eu queira os primeiros três elementos da quinta coluna:</p>
+<pre class="r"><code>migracao[1:3, 5]</code></pre>
+<pre><code>## # A tibble: 3 x 1
+##   PNASC_DESC
+##   &lt;chr&gt;     
+## 1 ITALIA    
+## 2 BELGICA   
+## 3 ITALIA</code></pre>
+<p>Caso eu queira retornas a terceira linha de todo o data frame:</p>
+<pre class="r"><code>migracao[3, ]</code></pre>
+<pre><code>## # A tibble: 1 x 7
+##      X1 DATA_REG   CLASSIFICACAO UFRES PNASC_DESC SEXO_DESCRICAO   ano
+##   &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;         &lt;chr&gt; &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt;
+## 1     3 04/01/2010 PERMANENTE    RJ    ITALIA     Masculino       2010</code></pre>
+<p>Se eu quiser todo o banco exceto a primeira coluna:</p>
+<pre class="r"><code>migracao[, -1]</code></pre>
+<pre><code>## # A tibble: 826,375 x 6
+##    DATA_REG   CLASSIFICACAO UFRES PNASC_DESC                SEXO_DESCRICAO   ano
+##    &lt;chr&gt;      &lt;chr&gt;         &lt;chr&gt; &lt;chr&gt;                     &lt;chr&gt;          &lt;dbl&gt;
+##  1 04/01/2010 PERMANENTE    SP    ITALIA                    Masculino       2010
+##  2 04/01/2010 PERMANENTE    AM    BELGICA                   Feminino        2010
+##  3 04/01/2010 PERMANENTE    RJ    ITALIA                    Masculino       2010
+##  4 04/01/2010 PERMANENTE    PR    COSTA RICA                Masculino       2010
+##  5 04/01/2010 PERMANENTE    AP    GUINE BISSAU              Feminino        2010
+##  6 04/01/2010 PERMANENTE    RJ    REPUBLICA POPULAR DA CHI… Masculino       2010
+##  7 04/01/2010 PERMANENTE    RS    MEXICO                    Masculino       2010
+##  8 04/01/2010 PERMANENTE    PR    SUICA                     Masculino       2010
+##  9 04/01/2010 PERMANENTE    SP    REPUBLICA POPULAR DA CHI… Feminino        2010
+## 10 04/01/2010 PERMANENTE    RJ    ESTADOS UNIDOS DA AMERICA Masculino       2010
+## # … with 826,365 more rows</code></pre>
+<p>Na verdade nós não precisaremos da coluna X1 para as nossas análises. Para retirá-la poderíamos utilizar o código acima e salvá-lo no próprio objeto migração. Faríamos o seguinte: <code>migracao&lt;-migracao[ , -1]</code>.</p>
+<p>Vamos fazer a mesma coisa de uma forma diferente. Para acessar uma variável do banco para fazer alguma alteração nela utilizamos o símbolo <code>$</code>; escrevemos o nome do data frame, seguido de <code>$</code> e o nome da variável. Para deletar uma coluna utilizamos a função <code>NULL</code>. Dessa forma, outra maneira de retirar a coluna X1 de migração seria a seguinte:</p>
+<pre class="r"><code>migracao$X1&lt;-NULL
+
+migracao</code></pre>
+<pre><code>## # A tibble: 826,375 x 6
+##    DATA_REG   CLASSIFICACAO UFRES PNASC_DESC                SEXO_DESCRICAO   ano
+##    &lt;chr&gt;      &lt;chr&gt;         &lt;chr&gt; &lt;chr&gt;                     &lt;chr&gt;          &lt;dbl&gt;
+##  1 04/01/2010 PERMANENTE    SP    ITALIA                    Masculino       2010
+##  2 04/01/2010 PERMANENTE    AM    BELGICA                   Feminino        2010
+##  3 04/01/2010 PERMANENTE    RJ    ITALIA                    Masculino       2010
+##  4 04/01/2010 PERMANENTE    PR    COSTA RICA                Masculino       2010
+##  5 04/01/2010 PERMANENTE    AP    GUINE BISSAU              Feminino        2010
+##  6 04/01/2010 PERMANENTE    RJ    REPUBLICA POPULAR DA CHI… Masculino       2010
+##  7 04/01/2010 PERMANENTE    RS    MEXICO                    Masculino       2010
+##  8 04/01/2010 PERMANENTE    PR    SUICA                     Masculino       2010
+##  9 04/01/2010 PERMANENTE    SP    REPUBLICA POPULAR DA CHI… Feminino        2010
+## 10 04/01/2010 PERMANENTE    RJ    ESTADOS UNIDOS DA AMERICA Masculino       2010
+## # … with 826,365 more rows</code></pre>
 </div>
+<div id="alterando-tipos-de-dados" class="section level2">
+<h2>Alterando tipos de dados</h2>
+<p>Por vezes teremos que alterar o tipo de dado de uma coluna do nosso data frame. Dados podem ser do tipo character (palavras), numeric ou double(números) ou factors (fatores). Existem outros tipos de dados, como data e hora, mas não vamos abordar no workshop.</p>
+<p>Pode acontecer que ao importar os dados eles venham com tipos que não correspondem ao que eles representam. Uma variável de ano, por exemplo, pode vir como numérica quando na verdade ela é um fator. Na hora de elaborar um gráfico poderemos ter problemas com essa classificação.</p>
+<p>Vamos entender primeiro a diferença entre dados numéricos e fatores. O dado <strong>numérico</strong> será necessariamente intervalar. O valor de exportações em um ano, por exemplo, é numérico pois corresponde a um valor que pode variar dentro de uma escala. No nosso <strong>dashboard</strong> no gráfico de exportações vemos que as exportação de Santa Catarina para a China tinha um valor de 3,5 bilhões de dólares em 2018 e caiu para 1,5 bilhões em 2019. Existe então uma diferença entre os dois números de 2 bilhões. Esses dois números são escalares, existe um intervalo entre eles. De forma mais simples, eles demonstram <em>quantidades</em></p>
+<p>Já o <strong>fator</strong> apresenta uma categoria. Masculino e feminino, sim e não, são tipos de categorias que algumas vezes podem vir em bancos de dados codificadas como números. Porém eles não são quantidades. No caso do exemplo dos dados de exportação, os anos são fatores pois tratam de momentos no tempo específico, e não quantidades de tempo. No gráfico do dashboard podemos ver que 2010, 2011, 2012… são pontos específicos no tempo, por isso classificamos como fatores. Os países também são fatores pois são como se fossem categorias de países diferentes.</p>
+<p>Para alterar os tipos de dados das variáveis utilizamos as seguintes funções:</p>
+<ul>
+<li><code>as.factor</code> para alterar dados para fator. Ex: <code>meu_banco$variavel&lt;-as.factor(meu_banco$variavel)</code></li>
+<li><code>as.character</code> para alterar dados para character. Ex:<code>meu_banco$variavel&lt;-as.character(meu_banco$variavel)</code></li>
+<li><code>as.numeric</code> para alterar dados para numéricos. Ex: `<code>meu_banco$variavel&lt;-as.numeric(meu_banco$variavel)</code></li>
+</ul>
+<p>Vamos dar uma olhada no tipo de dados do banco de migração:</p>
+<pre class="r"><code>glimpse(migracao)</code></pre>
+<pre><code>## Rows: 826,375
+## Columns: 6
+## $ DATA_REG       &lt;chr&gt; &quot;04/01/2010&quot;, &quot;04/01/2010&quot;, &quot;04/01/2010&quot;, &quot;04/01/2010&quot;…
+## $ CLASSIFICACAO  &lt;chr&gt; &quot;PERMANENTE&quot;, &quot;PERMANENTE&quot;, &quot;PERMANENTE&quot;, &quot;PERMANENTE&quot;…
+## $ UFRES          &lt;chr&gt; &quot;SP&quot;, &quot;AM&quot;, &quot;RJ&quot;, &quot;PR&quot;, &quot;AP&quot;, &quot;RJ&quot;, &quot;RS&quot;, &quot;PR&quot;, &quot;SP&quot;, …
+## $ PNASC_DESC     &lt;chr&gt; &quot;ITALIA&quot;, &quot;BELGICA&quot;, &quot;ITALIA&quot;, &quot;COSTA RICA&quot;, &quot;GUINE BI…
+## $ SEXO_DESCRICAO &lt;chr&gt; &quot;Masculino&quot;, &quot;Feminino&quot;, &quot;Masculino&quot;, &quot;Masculino&quot;, &quot;Fe…
+## $ ano            &lt;dbl&gt; 2010, 2010, 2010, 2010, 2010, 2010, 2010, 2010, 2010, …</code></pre>
+<p>Vemos que <code>PNASC_DESC</code>, <code>SEXO_DESCRICAO</code> estão classificadas como character e <code>ano</code> como double, que é o tipo de dado numérico que pode apresentar dígitos. Porém, todas essas variáveis são fatores. Vamos alterá-las:</p>
+<pre class="r"><code>migracao$PNASC_DESC&lt;-as.factor(migracao$PNASC_DESC)
+
+migracao$SEXO_DESCRICAO&lt;-as.factor(migracao$SEXO_DESCRICAO)
+
+migracao$ano&lt;-as.factor(migracao$ano)</code></pre>
+<p>Vamos verificar se a alteração foi realizada:</p>
+<pre class="r"><code>glimpse(migracao)</code></pre>
+<pre><code>## Rows: 826,375
+## Columns: 6
+## $ DATA_REG       &lt;chr&gt; &quot;04/01/2010&quot;, &quot;04/01/2010&quot;, &quot;04/01/2010&quot;, &quot;04/01/2010&quot;…
+## $ CLASSIFICACAO  &lt;chr&gt; &quot;PERMANENTE&quot;, &quot;PERMANENTE&quot;, &quot;PERMANENTE&quot;, &quot;PERMANENTE&quot;…
+## $ UFRES          &lt;chr&gt; &quot;SP&quot;, &quot;AM&quot;, &quot;RJ&quot;, &quot;PR&quot;, &quot;AP&quot;, &quot;RJ&quot;, &quot;RS&quot;, &quot;PR&quot;, &quot;SP&quot;, …
+## $ PNASC_DESC     &lt;fct&gt; ITALIA, BELGICA, ITALIA, COSTA RICA, GUINE BISSAU, REP…
+## $ SEXO_DESCRICAO &lt;fct&gt; Masculino, Feminino, Masculino, Masculino, Feminino, M…
+## $ ano            &lt;fct&gt; 2010, 2010, 2010, 2010, 2010, 2010, 2010, 2010, 2010, …</code></pre>
+</div>
+<div id="manipulação-de-dados-com-dplyr" class="section level2">
+<h2>Manipulação de dados com dplyr</h2>
+<p>Dificilmente nossos bancos de dados virão preparados para uso. Quase sempre devemos fazer ajustes nos dados, como selecionar apenas as linhas de interesse, deletar colunas desnecessárias, recodificar variáveis, fazer cálculos, criar colunas novas, etc. Essa é a fase que normalmente chamamos de limpeza dos dados.</p>
+<p>O <code>dplyr</code> é um pacote que fornece instrumentos simples para as tarefas mais comuns de limpeza de dados. O <code>tidyr</code> (que veremos no próximo workshop) permite alterar o formato do banco, transformando linhas em colunas. Remodelar o banco desta forma parece estranho, mas veremos que por vezes esse tipo alteração é necessária dependendo do gráfico que queremos elaborar, ou de como uma função específica do R precisa receber os dados. Vamos ver um exemplo disso mais adiante com nossos dados de exportação e importação.</p>
+<p>O <code>dplyr</code> e o <code>tidyr</code> são pacotes contidos no <code>tidyverse</code> que instalamos no workshop anterior. O <code>tidyverse</code> é um pacote que possui outros pacotes dentro. Ele é como se fosse uma caixa de ferramentas para a manipulação de dados. Outro pacote que utilizaremos neste workshop e que faz parte do <code>tidyverse</code> e o <code>ggplot2</code> que nos dá ferramentas para construir gráficos. No material adicional você encontrará uma lista com todos os pacotes contidos no <code>tidyverse</code></p>
+</div>
+</div>
+<div id="limpando-o-banco-de-migração" class="section level1">
+<h1>Limpando o banco de migração</h1>
+</div>
+<div id="selecionando-colunas-e-filtrando-linhas" class="section level1">
+<h1>Selecionando colunas e filtrando linhas</h1>
+<p>Vamos começar a limpar os nossos bancos. Vamos dar uma olhada no banco de migração. Caso queiramos reproduzir o gráfico de migração do dashboard vamos precisar realizar as seguintes limpezas neste banco:</p>
+<ol style="list-style-type: decimal">
+<li>selecionar apenas as colunas de interesse que são as de estado (<code>UFRES</code>), país (<code>PNASC_DESC</code>), sexo (<code>SEXO_DESCRICAO</code>) e ano.</li>
+<li>filtrar na coluna estado apenas Santa Catarina</li>
+<li>filtrar na coluna país apenas aqueles de interesse: Alemanha, China, Estados Unidos, França, Itália, Japão e Reino Unido.</li>
+<li>agrupar as linhas por sexo e país para contar quantos homens e mulheres entraram no país.</li>
+</ol>
+<p>Vamos passo a passo. Primeiro vamos selecionar as variáveis. No dplyr utilizamos a função <code>select()</code> para isso. Após digitar <code>select</code> colocamos, entre parênteses, o nome do banco e das colunas que queremos selecionar separados por vírgula.</p>
+<pre class="r"><code>select(migracao, UFRES, PNASC_DESC, SEXO_DESCRICAO, ano)</code></pre>
+<pre><code>## # A tibble: 826,375 x 4
+##    UFRES PNASC_DESC                 SEXO_DESCRICAO ano  
+##    &lt;chr&gt; &lt;fct&gt;                      &lt;fct&gt;          &lt;fct&gt;
+##  1 SP    ITALIA                     Masculino      2010 
+##  2 AM    BELGICA                    Feminino       2010 
+##  3 RJ    ITALIA                     Masculino      2010 
+##  4 PR    COSTA RICA                 Masculino      2010 
+##  5 AP    GUINE BISSAU               Feminino       2010 
+##  6 RJ    REPUBLICA POPULAR DA CHINA Masculino      2010 
+##  7 RS    MEXICO                     Masculino      2010 
+##  8 PR    SUICA                      Masculino      2010 
+##  9 SP    REPUBLICA POPULAR DA CHINA Feminino       2010 
+## 10 RJ    ESTADOS UNIDOS DA AMERICA  Masculino      2010 
+## # … with 826,365 more rows</code></pre>
+<p>Vamos salvar esse resultado em um objeto diferente de <code>migracao</code> para não perdermos os dados brutos</p>
+<pre class="r"><code>migracao_select&lt;-select(migracao, UFRES, PNASC_DESC, SEXO_DESCRICAO, ano)</code></pre>
+<p>Agora vamos utilizar este último objeto que criamos, o <code>migracao_select</code> para selecionar o estado de Santa Catarina. Para isso vamos utilizar a função <code>filter()</code>. Após <code>filter</code> digitamos dentro dos parênteses o nome do banco seguido de vírgula, o nome da coluna que se quer filtrar, um sinal de igual duplo <code>==</code> e a linha que queremos filtrar. Vamos salvar esse resultado em outro objeto chamado de migracao_sc. Repare pelo painel Environment que o número de linhas de <code>migracao_sc</code> vai reduzir bastante comparado com o de <code>migracao_select</code>.</p>
+<pre class="r"><code>migracao_sc&lt;-filter(migracao_select, UFRES==&quot;SC&quot;)
+
+migracao_sc</code></pre>
+<pre><code>## # A tibble: 54,618 x 4
+##    UFRES PNASC_DESC    SEXO_DESCRICAO ano  
+##    &lt;chr&gt; &lt;fct&gt;         &lt;fct&gt;          &lt;fct&gt;
+##  1 SC    CUBA          Masculino      2010 
+##  2 SC    LIBANO        Masculino      2010 
+##  3 SC    PARAGUAI      Feminino       2010 
+##  4 SC    RUSSIA        Feminino       2010 
+##  5 SC    ARGENTINA     Masculino      2010 
+##  6 SC    COREIA DO SUL Masculino      2010 
+##  7 SC    ARGENTINA     Masculino      2010 
+##  8 SC    PORTUGAL      Masculino      2010 
+##  9 SC    ARGENTINA     Feminino       2010 
+## 10 SC    PERU          Feminino       2010 
+## # … with 54,608 more rows</code></pre>
+<p>Este novo banco contêm apenas as variáveis selecionadas em <code>migracao_limp</code> e as linhas de Santa Catarina filtradas em <code>migracao_sc</code>. No entanto, esse processo tem muitos passos separados, cria muitos objetos (o que pode causar confusão), e torna o código confuso.</p>
+<p>A alternativa é fazer todos esses passos de uma só vez. Para isso podemos utilizar os pipes <code>%&gt;%</code>, que permitem que o resultado de uma função seja “enviado” para a função seguinte. Os pipes são parte do pacote <code>magrittr</code> que são instalados automaticamente com o <code>dplyr</code>.</p>
+<p>Como ainda temos o banco bruto <code>migracao</code> podemos utilizá-lo para refazer este trabalho agora utilizando pipes. Selecionarei as variáveis e filtrarei o estado de SC e salvarei o resultado no próprio objeto <code>migracao</code>. Já que não utilizaremos os dados que estamos descartando não tem problema de subscrevermos esse objeto. Ao utilizar pipe primeiro coloco o nome do objeto em que está o banco sendo utilizado e vou incluindo pipes para cada função utilizada. Veja a seguir:</p>
+<pre class="r"><code>migracao&lt;-migracao%&gt;%
+  select(UFRES, PNASC_DESC, SEXO_DESCRICAO, ano)%&gt;%
+  filter(UFRES==&quot;SC&quot;)
+
+migracao</code></pre>
+<pre><code>## # A tibble: 54,618 x 4
+##    UFRES PNASC_DESC    SEXO_DESCRICAO ano  
+##    &lt;chr&gt; &lt;fct&gt;         &lt;fct&gt;          &lt;fct&gt;
+##  1 SC    CUBA          Masculino      2010 
+##  2 SC    LIBANO        Masculino      2010 
+##  3 SC    PARAGUAI      Feminino       2010 
+##  4 SC    RUSSIA        Feminino       2010 
+##  5 SC    ARGENTINA     Masculino      2010 
+##  6 SC    COREIA DO SUL Masculino      2010 
+##  7 SC    ARGENTINA     Masculino      2010 
+##  8 SC    PORTUGAL      Masculino      2010 
+##  9 SC    ARGENTINA     Feminino       2010 
+## 10 SC    PERU          Feminino       2010 
+## # … with 54,608 more rows</code></pre>
+<p>Repare que agora o banco <code>migracao</code> está igual ao <code>migracao_sc</code> pois realizamos as mesmas operações, porém com um código mais conciso.</p>
+<p>Mas ainda precisamos fazer mais limpeza nesse banco. Temos que filtrar os países de interesse. No exemplo acima tínhamos filtrado apenas um caso. Como fazemos quando precisamos filtrar vários casos. Temos mais de uma forma de realizar essa operação: uma mais longa e outra mais concisa.</p>
+<p>Primeiro a mais longa. Ao invés de filtrar todos os países vamos selecionar apeans França, Itália e Alemanha para ilustrar, sem salvar em objeto. Filtraremos todos os casos e salvaremos no objeto quando eu apresentar a segunda forma.</p>
+<p>Antes de tudo é preciso verificar como estão escritos os nomes que vamos filtrar. Repare que estão em letra maiúscula e lembre-se de que o R é sensível à letras maísculas e minúsculas. Devemos escrever da mesma forma como aparece no banco. A seguir faremos a filtragem utilizando o pipes como feito acima. Vejamos:</p>
+<pre class="r"><code>migracao%&gt;%
+  filter(PNASC_DESC==&quot;ALEMANHA&quot;| PNASC_DESC==&quot;ITALIA&quot; | PNASC_DESC== &quot;FRANCA&quot;)</code></pre>
+<pre><code>## # A tibble: 2,020 x 4
+##    UFRES PNASC_DESC SEXO_DESCRICAO ano  
+##    &lt;chr&gt; &lt;fct&gt;      &lt;fct&gt;          &lt;fct&gt;
+##  1 SC    FRANCA     Feminino       2010 
+##  2 SC    ITALIA     Masculino      2010 
+##  3 SC    ITALIA     Masculino      2010 
+##  4 SC    ITALIA     Masculino      2010 
+##  5 SC    ITALIA     Feminino       2010 
+##  6 SC    ALEMANHA   Masculino      2010 
+##  7 SC    ITALIA     Feminino       2010 
+##  8 SC    FRANCA     Masculino      2010 
+##  9 SC    ALEMANHA   Feminino       2010 
+## 10 SC    ITALIA     Masculino      2010 
+## # … with 2,010 more rows</code></pre>
+<p>Para filtrar mais de um caso precisamos repetir o nome da variável a ser filtrada seguida de <code>==</code> e o nome do caso que queremos. O operador que separa cada caso “|” é ou que chamamos de operador booleano <strong>OU</strong>. Assim, dizemos para o R que queremos filtrar Alemanha <strong>ou</strong> França <strong>ou</strong> Italia e ele nos retorna apenas as linhas desses países. Porém, repare que para selecionar todos os países que queremos teríamos que fazer isso sete vezes. O código ficaria enorme. Não há problema nenhum de fazer isso, mas existe uma forma mais sucinta.</p>
+<p>Vejamos a segunda forma. Podemos salvar os nomes dos países em um vetor, como vimos no início deste workshop, e utilizar este vetor dentro da função <code>filter()</code> com o símbolo <code>%in%</code>. Vou salvar essa operação direto no objeto migração e este será meu banco de migração final.</p>
+<pre class="r"><code>#criando vetor de países
+pais_mig&lt;-c(&quot;ALEMANHA&quot;, &quot;REPUBLICA POPULAR DA CHINA&quot;, &quot;ESTADOS UNIDOS DA AMERICA&quot;,
+            &quot;FRANCA&quot;, &quot;ITALIA&quot;, &quot;JAPAO&quot;, &quot;REINO UNIDO&quot;)
+
+#aplicando o vetor à função filter
+migracao&lt;-migracao%&gt;%
+  filter(PNASC_DESC %in% pais_mig)
+
+migracao</code></pre>
+<pre><code>## # A tibble: 3,317 x 4
+##    UFRES PNASC_DESC                 SEXO_DESCRICAO ano  
+##    &lt;chr&gt; &lt;fct&gt;                      &lt;fct&gt;          &lt;fct&gt;
+##  1 SC    FRANCA                     Feminino       2010 
+##  2 SC    ESTADOS UNIDOS DA AMERICA  Masculino      2010 
+##  3 SC    ITALIA                     Masculino      2010 
+##  4 SC    REPUBLICA POPULAR DA CHINA Feminino       2010 
+##  5 SC    ITALIA                     Masculino      2010 
+##  6 SC    ITALIA                     Masculino      2010 
+##  7 SC    ITALIA                     Feminino       2010 
+##  8 SC    ALEMANHA                   Masculino      2010 
+##  9 SC    ITALIA                     Feminino       2010 
+## 10 SC    FRANCA                     Masculino      2010 
+## # … with 3,307 more rows</code></pre>
+</div>
+<div id="agrupando-dados" class="section level1">
+<h1>Agrupando dados</h1>
+<p>Queremos saber o total de homens e mulheres que entraram em Santa Catarina por país e ano. Para isso teremos que agrupar as colunas <code>PNASC_DESC</code>, <code>SEXO_DESCRICAO</code> e <code>ano</code> e contá-las. O resultado disso será uma linha para cada país, sexo e ano com o respectivo total. Salvarei o resultado em um objeto separado para não perder os dados primários que limpamos. Para isso usamos a função <code>group_by()</code> para selecionar as colunas que serão agrupadas e a função <code>count()</code> para contar quantas linhas foram agrupadas em cada grupo.</p>
+<pre class="r"><code>migracao_ano_sexo&lt;-migracao%&gt;%
+  group_by(PNASC_DESC, SEXO_DESCRICAO, ano)%&gt;%
+  count(name=&quot;tot_ano_sexo&quot;)
+
+migracao</code></pre>
+<pre><code>## # A tibble: 3,317 x 4
+##    UFRES PNASC_DESC                 SEXO_DESCRICAO ano  
+##    &lt;chr&gt; &lt;fct&gt;                      &lt;fct&gt;          &lt;fct&gt;
+##  1 SC    FRANCA                     Feminino       2010 
+##  2 SC    ESTADOS UNIDOS DA AMERICA  Masculino      2010 
+##  3 SC    ITALIA                     Masculino      2010 
+##  4 SC    REPUBLICA POPULAR DA CHINA Feminino       2010 
+##  5 SC    ITALIA                     Masculino      2010 
+##  6 SC    ITALIA                     Masculino      2010 
+##  7 SC    ITALIA                     Feminino       2010 
+##  8 SC    ALEMANHA                   Masculino      2010 
+##  9 SC    ITALIA                     Feminino       2010 
+## 10 SC    FRANCA                     Masculino      2010 
+## # … with 3,307 more rows</code></pre>
+<p>Repare que dentro da função <code>count()</code> eu inclui o argumento <code>name</code> para atribuir um nome à coluna que está sendo criada.</p>
 </div>
 <div id="material-complementar" class="section level1">
 <h1>Material complementar</h1>
@@ -565,9 +876,11 @@ lista</code></pre>
 <p><a href="https://nataliablock.rbind.io/post/automatizar/">Tutorial que escrevi sobre automatização de códigos para cientistas sociais</a>. O tutorial apresenta uma breve revisão das estruturas de dados apresentadas aqui e apresenta tópicos mais avançados como o uso de listas, funções e iteração para automatizar trabalhos repetitivos no R.</p>
 <p><a href="https://www.tidyverse.org/packages/">Relação</a> de pacotes contidos no tidyverse</p>
 <p><a href="https://tidyverse.tidyverse.org">Documentação</a> do tidyverse</p>
+<p><a href="https://rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf">Cheat sheet</a> elaborado pelo RStudio com explicações de todas as transformações de dados possíveis de serem feitas com funções do <code>dplyr</code></p>
 </div>
 <div id="atividades" class="section level1">
 <h1>Atividades</h1>
+<p>Em breve</p>
 </div>
 
 

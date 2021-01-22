@@ -1,5 +1,5 @@
 ---
-title: "Workshop 4 - Dia"
+title: "Workshop 4 - 23 de fevereiro"
 output:
   html_document:
     theme: flatly
@@ -8,9 +8,8 @@ output:
     toc_depth: 2
 ---
 
-# Customização de gráficos no ggplot
+# Elaboração e customização de gráficos no ggplot
 
-Hello World!
+Em breve
 
 
-## Subcontent
