@@ -363,7 +363,7 @@ migracao_ano_sexo<-migracao%>%
   group_by(PNASC_DESC, SEXO_DESCRICAO, ano)%>%
   count(name="tot_ano_sexo")
 
-migracao
+migracao_ano_sexo
 
 ```
 
@@ -382,7 +382,30 @@ Veja o capítulo [vetores](https://r4ds.had.co.nz/vectors.html) no livro [R for 
 
 [Cheat sheet](https://rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf) elaborado pelo RStudio com explicações de todas as transformações de dados possíveis de serem feitas com funções do `dplyr`
 
+[Tutorial](https://blog.exploratory.io/filter-data-with-dplyr-76cf5f1a258e) sobre filtragem de dados com dplyr
+
 
 # Atividades
 
-Em breve
+Nesta atividade você terá que utilizar as funções do pacote `dplyr` apresentadas no workshop para elaborar dois bancos de dados a partir do banco `migracao`. Esses bancos serão utilizados nos workshops 3 e 4 para elaborarmos gráficos. 
+
+1. Crie um banco chamado `migracao_sexo` que apresente o total de homens e mulheres dos países listados abaixo que migraram para Santa Catarina. Para isso, você terá que criar uma coluna, que deverá se chamar `total_sexo` que apresente o resultado da contagem de homens e mulheres por país. Após elaborar a tabela salve-a no seu diretório de trabalho como um arquivo csv com o nome `migracao_sexo.csv` como apresentado no workshop 1. 
+
+Os países que trabalharemos são os seguintes: Alemanha, China, Estados Unidos, França, Itália, Japão e Reino Unido.
+
+**Dica**: Para realizar a filtragem do estado de Santa Catarina e dos países de interesse você pode usar a função `filter()` duas vezes em linhas separadas ou utilizar o operador booleano `&` para fazer as duas filtragens ao mesmo tempo em uma única linha. Leia o tutorial sobre filtragem de dados no dplyr na seção de material complementar para utilizar essa segunda opção.
+
+A sua tabela deverá ficar com a forma da imagem a seguir.
+
+![](imagens/migracao_sexo.png)
+
+
+2. Crie uma tabela chamada `migracao_alemanha` que apresente o total de migrantes alemães que chegaram a Santa Catarina por ano. Nomeie a coluna com o a contagem de migrantes como `total`. Após elaborar a tabela salve-a no seu diretório de trabalho como arquivo csv com o nome de `migracao_alemanha.csv`. As mesmas dicas apresentadas no item anterior podem ser utilizadas aqui também.  
+
+A sua tabela deverá ficar como a imagem a seguir
+
+![](imagens/migracao_alemanha.png)
+
+3. Tenha essas tabelas abertas no seu RStudio para o início do workshop 3 (no dia 09 de fevereiro). Caso "desligue" o RStudio será necessário fazer o upload dos bancos na nova seção de R. Utilize a função `read_csv()` do pacote readxl que vimos no workshop 1.
+
+

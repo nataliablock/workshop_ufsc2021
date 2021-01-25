@@ -851,21 +851,22 @@ migracao</code></pre>
   group_by(PNASC_DESC, SEXO_DESCRICAO, ano)%&gt;%
   count(name=&quot;tot_ano_sexo&quot;)
 
-migracao</code></pre>
-<pre><code>## # A tibble: 3,317 x 4
-##    UFRES PNASC_DESC                 SEXO_DESCRICAO ano  
-##    &lt;chr&gt; &lt;fct&gt;                      &lt;fct&gt;          &lt;fct&gt;
-##  1 SC    FRANCA                     Feminino       2010 
-##  2 SC    ESTADOS UNIDOS DA AMERICA  Masculino      2010 
-##  3 SC    ITALIA                     Masculino      2010 
-##  4 SC    REPUBLICA POPULAR DA CHINA Feminino       2010 
-##  5 SC    ITALIA                     Masculino      2010 
-##  6 SC    ITALIA                     Masculino      2010 
-##  7 SC    ITALIA                     Feminino       2010 
-##  8 SC    ALEMANHA                   Masculino      2010 
-##  9 SC    ITALIA                     Feminino       2010 
-## 10 SC    FRANCA                     Masculino      2010 
-## # … with 3,307 more rows</code></pre>
+migracao_ano_sexo</code></pre>
+<pre><code>## # A tibble: 103 x 4
+## # Groups:   PNASC_DESC, SEXO_DESCRICAO, ano [103]
+##    PNASC_DESC SEXO_DESCRICAO ano   tot_ano_sexo
+##    &lt;fct&gt;      &lt;fct&gt;          &lt;fct&gt;        &lt;int&gt;
+##  1 ALEMANHA   Feminino       2010            20
+##  2 ALEMANHA   Feminino       2011            29
+##  3 ALEMANHA   Feminino       2012            25
+##  4 ALEMANHA   Feminino       2013            53
+##  5 ALEMANHA   Feminino       2014            32
+##  6 ALEMANHA   Feminino       2015            50
+##  7 ALEMANHA   Feminino       2016            65
+##  8 ALEMANHA   Feminino       2017            43
+##  9 ALEMANHA   Feminino       2018            47
+## 10 ALEMANHA   Feminino       2019            48
+## # … with 93 more rows</code></pre>
 <p>Repare que dentro da função <code>count()</code> eu inclui o argumento <code>name</code> para atribuir um nome à coluna que está sendo criada.</p>
 </div>
 </div>
@@ -877,10 +878,26 @@ migracao</code></pre>
 <p><a href="https://www.tidyverse.org/packages/">Relação</a> de pacotes contidos no tidyverse</p>
 <p><a href="https://tidyverse.tidyverse.org">Documentação</a> do tidyverse</p>
 <p><a href="https://rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf">Cheat sheet</a> elaborado pelo RStudio com explicações de todas as transformações de dados possíveis de serem feitas com funções do <code>dplyr</code></p>
+<p><a href="https://blog.exploratory.io/filter-data-with-dplyr-76cf5f1a258e">Tutorial</a> sobre filtragem de dados com dplyr</p>
 </div>
 <div id="atividades" class="section level1">
 <h1>Atividades</h1>
-<p>Em breve</p>
+<p>Nesta atividade você terá que utilizar as funções do pacote <code>dplyr</code> apresentadas no workshop para elaborar dois bancos de dados a partir do banco <code>migracao</code>. Esses bancos serão utilizados nos workshops 3 e 4 para elaborarmos gráficos.</p>
+<ol style="list-style-type: decimal">
+<li>Crie um banco chamado <code>migracao_sexo</code> que apresente o total de homens e mulheres dos países listados abaixo que migraram para Santa Catarina. Para isso, você terá que criar uma coluna, que deverá se chamar <code>total_sexo</code> que apresente o resultado da contagem de homens e mulheres por país. Após elaborar a tabela salve-a no seu diretório de trabalho como um arquivo csv com o nome <code>migracao_sexo.csv</code> como apresentado no workshop 1.</li>
+</ol>
+<p>Os países que trabalharemos são os seguintes: Alemanha, China, Estados Unidos, França, Itália, Japão e Reino Unido.</p>
+<p><strong>Dica</strong>: Para realizar a filtragem do estado de Santa Catarina e dos países de interesse você pode usar a função <code>filter()</code> duas vezes em linhas separadas ou utilizar o operador booleano <code>&amp;</code> para fazer as duas filtragens ao mesmo tempo em uma única linha. Leia o tutorial sobre filtragem de dados no dplyr na seção de material complementar para utilizar essa segunda opção.</p>
+<p>A sua tabela deverá ficar com a forma da imagem a seguir.</p>
+<p><img src="imagens/migracao_sexo.png" /></p>
+<ol start="2" style="list-style-type: decimal">
+<li>Crie uma tabela chamada <code>migracao_alemanha</code> que apresente o total de migrantes alemães que chegaram a Santa Catarina por ano. Nomeie a coluna com o a contagem de migrantes como <code>total</code>. Após elaborar a tabela salve-a no seu diretório de trabalho como arquivo csv com o nome de <code>migracao_alemanha.csv</code>. As mesmas dicas apresentadas no item anterior podem ser utilizadas aqui também.</li>
+</ol>
+<p>A sua tabela deverá ficar como a imagem a seguir</p>
+<p><img src="imagens/migracao_alemanha.png" /></p>
+<ol start="3" style="list-style-type: decimal">
+<li>Tenha essas tabelas abertas no seu RStudio para o início do workshop 3 (no dia 09 de fevereiro). Caso “desligue” o RStudio será necessário fazer o upload dos bancos na nova seção de R. Utilize a função <code>read_csv()</code> do pacote readxl que vimos no workshop 1.</li>
+</ol>
 </div>
 
 
