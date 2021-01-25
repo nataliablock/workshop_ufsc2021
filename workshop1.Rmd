@@ -182,11 +182,8 @@ install.packages("readxl")
 
 ```
 
-<<<<<<< HEAD
 Não basta instalar o pacote. Toda vez que iniciarmos o R precisamos importar os pacotes que desejamos utilizar.
-=======
-Não basta instalar o pacote. Toda vez que iniciarmos o R precisamos importar os pacotes de desejamos utilizar.
->>>>>>> 24e2a7f9b9cbe6b3d5cb6436bf0477a7ec6f0cc8
+
 Vamos importar estes pacotes. Para isso podemos utilizar a função `library()` ou `require()`. Para a importação não colocamos os nomes dos pacotes entre aspas.
 
 ```{r eval=FALSE, include=TRUE}
@@ -194,7 +191,7 @@ library(tidyverse)
 require(readxl)
 ```
 
-Agora podemos utilizar as funções que vem dentro desses pacotes. O pacote `readxl` é utilizado para importar documentos de Excel para o R. Sobre o `tidyverse` falaremos com mais detalhes no próximo workshop.
+Agora podemos utilizar as funções que vêm dentro desses pacotes. O pacote `readxl` é utilizado para importar documentos de Excel para o R. Sobre o `tidyverse` falaremos com mais detalhes no próximo workshop.
 
 
 ## Gerenciamento de dados
