@@ -182,7 +182,7 @@ install.packages("readxl")
 
 ```
 
-Não basta instalar o pacote. Toda que iniciarmos o R precisamos importar os pacotes de desejamos utilizar.
+Não basta instalar o pacote. Toda vez que iniciarmos o R precisamos importar os pacotes de desejamos utilizar.
 Vamos importar estes pacotes. Para isso podemos utilizar a função `library()` ou `require()`. Para a importação não colocamos os nomes dos pacotes entre aspas.
 
 ```{r eval=FALSE, include=TRUE}
