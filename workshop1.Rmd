@@ -174,7 +174,7 @@ round(3.14159, 2)
 
 ## Instalando e importando pacotes
 
-Como explicado anteriormente, existem função que não fazer parte da base do R e precisamos instalá-las e importá-las para que sejam usadas. Vamos instalar dois pacotes que iremos usar no workshop: o `tidyverse` e o `readxl`. Para isso utilizamos a função `install.packages()`. Veja que o nome do pacote deve vir entre aspas dentro dos parenteses
+Como explicado anteriormente, existem funções que não fazer parte da base do R e precisamos instalá-las e importá-las para que sejam usadas. Vamos instalar dois pacotes que iremos usar no workshop: o `tidyverse` e o `readxl`. Para isso utilizamos a função `install.packages()`. Veja que o nome do pacote deve vir entre aspas dentro dos parenteses
 
 ```{r eval=FALSE, include=TRUE}
 install.packages("tidyverse")
