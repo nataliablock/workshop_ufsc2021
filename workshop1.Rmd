@@ -222,7 +222,7 @@ O redirecionamento costuma ser complicado para quem está começando com a lingu
 ![](imagens/setwd3.png)
 
 ## Importando e exportando dados
-O R comporta vários tipos de estrutura de dados, como veremos no próximo workshop. No entanto, focaremos nos data frames, que são estruturas tabulares de dados, semelhantes às tabelas de excel. Na seção vamos aprender como abrir tabelas/planilhas no R.
+O R comporta vários tipos de estrutura de dados, como veremos no próximo workshop. No entanto, focaremos nos data frames, que são estruturas tabulares de dados, semelhantes às tabelas de excel. Nessa seção vamos aprender como abrir tabelas/planilhas no R.
 
 Antes de tudo é preciso se certificar de que o R está apontando para o diretório em que estão as tabelas que se quer abrir, como vimos na seção anterior. 
 
