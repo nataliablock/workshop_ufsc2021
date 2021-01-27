@@ -406,6 +406,6 @@ A sua tabela deverá ficar como a imagem a seguir
 
 ![](imagens/migracao_alemanha.png)
 
-3. Tenha essas tabelas abertas no seu RStudio para o início do workshop 3 (no dia 09 de fevereiro). Caso "desligue" o RStudio será necessário fazer o upload dos bancos na nova seção de R. Utilize a função `read_csv()` do pacote readxl que vimos no workshop 1.
+3. Tenha essas tabelas abertas no seu RStudio para o início do workshop 3 (no dia 09 de fevereiro). Caso "desligue" o RStudio será necessário fazer o upload dos bancos na nova seção de R. Utilize a função `read_csv()` do pacote readr que vimos no workshop 1.
 
 
