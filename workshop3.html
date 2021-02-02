@@ -419,7 +419,232 @@ div.tocify {
 
 <div id="manipulação-de-dados-com-tidyr-e-elaboração-de-gráficos-com-ggplot2" class="section level1">
 <h1>Manipulação de dados com tidyr e elaboração de gráficos com ggplot2</h1>
-<p>Em breve</p>
+<div id="manipulação-de-dados-com-tidyr" class="section level2">
+<h2>Manipulação de dados com tidyr</h2>
+<p>Antes de tudo, vou apontar o R para meu diretório, fazer o upload dos bancos que vamos usar e das tabelas que trabalharemos</p>
+<pre class="r"><code>#Apontando o R para meu diretório
+setwd(&quot;~/Dropbox/repositories/workshop_ufsc2021&quot;)
+
+#upload de pacotes
+library(tidyverse)
+library(readxl)
+
+#upload de bancos
+
+#banco de migracao
+migracao&lt;-read_csv(&quot;dados/migracao_completo.csv&quot;)
+
+#banco criado na atividade 2: migracao_alemanha
+migracao_alemanha&lt;-read_csv(&quot;dados/migracao_alemanha.csv&quot;)
+
+# banco criado na atividade 2: migracao_sexo
+migracao_sexo&lt;-read_csv(&quot;dados/migracao_sexo.csv&quot;)
+
+#banco de exportacao
+exportacao&lt;-read_excel(&quot;dados/export_sc.xlsx&quot;)</code></pre>
+<p>Como comentei no workshop anterior, o pacote tidyr (incluso no tidyverse) nos permite remodelar a estrutura da tabela, transformando linhas em colunas e vice-versa. Por vezes nossas tabelas precisam ser reestruturadas por causa do tipo de gráfico que queremos elaborar ou da forma como determinada função exige que os dados sejam apresentados.</p>
+<p>As tabelas podem estruturadas de duas formas, em formato long, que em português costumamos chamar de painel, ou do formato wide. O formato painel apresenta todos os valores observados das variáveis para a unidade de análise nas linhas da tabela, enquanto no formato wide os valores observados para cada unidade de análise se encontram organizados em colunas separadas.</p>
+<p>Vamos primeiro entender qual é a nossa unidade de análise. Para o nosso caso, estamos analisando os valores de migração, exportação e importação de Santa Catarina <strong>por país e ano</strong>. <strong>País e ano são nossas unidades de análise</strong>. Desta forma, se os valores de uma tabela forem apresentados <strong>por país e por ano nas linhas a tabela terá um formato long</strong>. Se elas forem apresentadas com <strong>país na linha e ano na coluna, ou ano na linha e e país na coluna a tabela terá o formato wide</strong>.</p>
+<p>No caso das nossas tabelas, a tabela de migração apresenta formato de painel (long). Repare que para cada caso de nosso banco os países e bancos estão nas linhas.</p>
+<pre class="r"><code>migracao</code></pre>
+<pre><code>## # A tibble: 826,375 x 7
+##       X1 DATA_REG   CLASSIFICACAO UFRES PNASC_DESC          SEXO_DESCRICAO   ano
+##    &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;         &lt;chr&gt; &lt;chr&gt;               &lt;chr&gt;          &lt;dbl&gt;
+##  1     1 04/01/2010 PERMANENTE    SP    ITALIA              Masculino       2010
+##  2     2 04/01/2010 PERMANENTE    AM    BELGICA             Feminino        2010
+##  3     3 04/01/2010 PERMANENTE    RJ    ITALIA              Masculino       2010
+##  4     4 04/01/2010 PERMANENTE    PR    COSTA RICA          Masculino       2010
+##  5     5 04/01/2010 PERMANENTE    AP    GUINE BISSAU        Feminino        2010
+##  6     6 04/01/2010 PERMANENTE    RJ    REPUBLICA POPULAR … Masculino       2010
+##  7     7 04/01/2010 PERMANENTE    RS    MEXICO              Masculino       2010
+##  8     8 04/01/2010 PERMANENTE    PR    SUICA               Masculino       2010
+##  9     9 04/01/2010 PERMANENTE    SP    REPUBLICA POPULAR … Feminino        2010
+## 10    10 04/01/2010 PERMANENTE    RJ    ESTADOS UNIDOS DA … Masculino       2010
+## # … with 826,365 more rows</code></pre>
+<p>Por sua vez, nossas tabelas de exportação e importação estão no formato wide pois os países estão na linha e os anos estão nas colunas, ou seja, as colunas apresentam os valores de exportação e importação para cada ano.</p>
+<pre class="r"><code>exportacao</code></pre>
+<pre><code>## # A tibble: 232 x 12
+##    `UF do Municípi… País  `2019 - Valor F… `2018 - Valor F… `2017 - Valor F…
+##    &lt;chr&gt;            &lt;chr&gt;            &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;
+##  1 Santa Catarina   China       1589499886       3508475541       1387040317
+##  2 Santa Catarina   Esta…       1440141803       1491866039       1550676302
+##  3 Santa Catarina   Japão        561745487        536371415        646116312
+##  4 Santa Catarina   Arge…        447748671        552792985        600795239
+##  5 Santa Catarina   Méxi…        378975807        342542623        370202508
+##  6 Santa Catarina   Aráb…        378497673        385196450        415060832
+##  7 Santa Catarina   Chile        319902112        284802121        296522108
+##  8 Santa Catarina   Emir…        288968147        266484776        250951898
+##  9 Santa Catarina   Hong…        264453882        297468554        298270270
+## 10 Santa Catarina   Rein…        260757521        257047712        331852429
+## # … with 222 more rows, and 7 more variables: `2016 - Valor FOB (US$)` &lt;dbl&gt;,
+## #   `2015 - Valor FOB (US$)` &lt;dbl&gt;, `2014 - Valor FOB (US$)` &lt;dbl&gt;, `2013 -
+## #   Valor FOB (US$)` &lt;dbl&gt;, `2012 - Valor FOB (US$)` &lt;dbl&gt;, `2011 - Valor FOB
+## #   (US$)` &lt;dbl&gt;, `2010 - Valor FOB (US$)` &lt;dbl&gt;</code></pre>
+<p>No entanto, para elaborarmos os gráficos iguais aos do dashboard teremos que alterar a estrutura dessas tabelas. Para criarmos um gráfico de linha de exportação a tabela precisa estar em formato long, enquanto para montarmos um gráfico do tipo dumbbell para migração de mulheres e homens precisamos do dados organizados em formato wide.</p>
+</div>
+<div id="transformando-tabela-wide-para-long-limpando-a-tabela-exportação" class="section level2">
+<h2>Transformando tabela wide para long: limpando a tabela exportação</h2>
+<p>Para alterar o formato da nossa tabela <code>exportacao</code> usaremos a função <code>pivot_longer</code> do <code>tidyr</code>. Ela recebe como argumentos os seguintes parâmetros:</p>
+<ul>
+<li><p><code>cols</code>= colunas que se transformarão ndo formato wide para long. Podemos utilizar <code>:</code> se as colunas a serem reformatadas estão em uma área específica do dataframe, ou podemos criar um vetor, utilizando a função <code>c()</code> que vimos no workshop 2, com os nomes das colunas que iremos alterar. No caso da tabela migração as colunas estão todas em uma área específica, então iremos usar a primeira opção.</p></li>
+<li><p><code>names_to</code>= será a nova coluna criada a partir dos nomes das colunas. Insira neste argumento o nome que esta nova coluna receberá na forma de string, ou seja, entre aspas. No nosso exemplo daremos o nome de <code>ano_bruto</code>. Escolhi esse nome porque a seguir criaremos outra coluna apenas com os anos a partir desta.</p></li>
+<li><p><code>values_to</code>= será a nova coluna que receberá os valores que serão colapsados no formato long a partir das antigas colunas. Colocaremos aí o nome desta nova coluna em formato string, que será <code>valor</code>.</p></li>
+</ul>
+<p>Salvarei essa transformação no objeto <code>exportacao</code> pois este será o formato final do nosso banco. Estamos subscrevendo o banco anterior, salvando, assim, espaço em memória.</p>
+<pre class="r"><code>exportacao&lt;- exportacao%&gt;%
+  pivot_longer(cols=`2019 - Valor FOB (US$)`:`2010 - Valor FOB (US$)`,
+               names_to = &quot;ano_bruto&quot;,
+               values_to = &quot;valor&quot;)
+
+exportacao</code></pre>
+<pre><code>## # A tibble: 2,320 x 4
+##    `UF do Município` País  ano_bruto                   valor
+##    &lt;chr&gt;             &lt;chr&gt; &lt;chr&gt;                       &lt;dbl&gt;
+##  1 Santa Catarina    China 2019 - Valor FOB (US$) 1589499886
+##  2 Santa Catarina    China 2018 - Valor FOB (US$) 3508475541
+##  3 Santa Catarina    China 2017 - Valor FOB (US$) 1387040317
+##  4 Santa Catarina    China 2016 - Valor FOB (US$) 1096838348
+##  5 Santa Catarina    China 2015 - Valor FOB (US$)  829695943
+##  6 Santa Catarina    China 2014 - Valor FOB (US$) 1149980960
+##  7 Santa Catarina    China 2013 - Valor FOB (US$)  999306427
+##  8 Santa Catarina    China 2012 - Valor FOB (US$)  900878336
+##  9 Santa Catarina    China 2011 - Valor FOB (US$)  706020312
+## 10 Santa Catarina    China 2010 - Valor FOB (US$)  427097677
+## # … with 2,310 more rows</code></pre>
+<p>Veja no dashboard que para criar um gráfico de linhas precisaremos dos valores de cada país por ano. Dessa forma, temos que criar uma coluna apenas com os anos. Para isso utilizaremos o pacote <code>stringr</code>, que faz parte do <code>tidyverse</code>, para retirarmos apenas os anos da coluna <code>ano_bruto</code> e salvarmos em uma nova coluna que chamarei de <code>ano</code>.</p>
+<p>Não veremos o <code>stringr</code> com detalhes neste workshop. Resumidamente, esse pacote possui funções para a manipulação de strings, ou seja, palavras. Deste pacote, utilizaremos a função <code>substr</code>, de “substract” que irá retirar da coluna <code>ano_bruto</code> os elementos que incluiremos nos argumentos <code>start</code> e <code>stop</code>. Queremos retirar os quatro primeiros elementos da string que nos dão os anos. Assim, <code>start</code> recebe 1 e <code>stop</code> recebe 4. Vamos salvar o resultado em uma nova variável chamada <code>ano</code>. Para isso estamos usando o <code>$</code> para acessar uma coluna na tabela, como vimos no workshop passado, e escrevemos o nome da nova coluna logo depois do símbolo.</p>
+<pre class="r"><code>exportacao$ano&lt;-substr(exportacao$ano_bruto, start=1, stop=4)
+
+exportacao</code></pre>
+<pre><code>## # A tibble: 2,320 x 5
+##    `UF do Município` País  ano_bruto                   valor ano  
+##    &lt;chr&gt;             &lt;chr&gt; &lt;chr&gt;                       &lt;dbl&gt; &lt;chr&gt;
+##  1 Santa Catarina    China 2019 - Valor FOB (US$) 1589499886 2019 
+##  2 Santa Catarina    China 2018 - Valor FOB (US$) 3508475541 2018 
+##  3 Santa Catarina    China 2017 - Valor FOB (US$) 1387040317 2017 
+##  4 Santa Catarina    China 2016 - Valor FOB (US$) 1096838348 2016 
+##  5 Santa Catarina    China 2015 - Valor FOB (US$)  829695943 2015 
+##  6 Santa Catarina    China 2014 - Valor FOB (US$) 1149980960 2014 
+##  7 Santa Catarina    China 2013 - Valor FOB (US$)  999306427 2013 
+##  8 Santa Catarina    China 2012 - Valor FOB (US$)  900878336 2012 
+##  9 Santa Catarina    China 2011 - Valor FOB (US$)  706020312 2011 
+## 10 Santa Catarina    China 2010 - Valor FOB (US$)  427097677 2010 
+## # … with 2,310 more rows</code></pre>
+<div id="criando-novas-colunas-com-base-em-colunas-existentes" class="section level3">
+<h3>Criando novas colunas com base em colunas existentes</h3>
+<p>Para finalizarmos o limpeza do banco de exportação para que fique pronto para criarmos o gráfico ainda precisamos fazer algumas pequenas alterações. Veja que os valores das exportações como aparecem são difíceis de ler pois não existe pontuação ou dígitos que nos indiquem centenas e milhares. Para que a leitura dos valores ficasse mais compreensível nos gráficos do dashboard transformei os valores em milhões simplesmente dividindo os valores da coluna <code>valor</code> por um milhão. Para fazer este cálculo retornamos ao pacote <code>dplyr</code> para utilizar a função <code>mutate</code> que nos permite realizar cálculos e gerar novas colunas a partir de valores de colunas mais existentes. Logo após a função <code>mutate</code>, entre parênteses, damos o nome à nova variável (que no nosso exemplo será <code>valor_milhoes</code>), seguido de <code>=</code> e o cálculo que queremos realizar (veja no código abaixo).</p>
+<p>Além dessa alterção, precisamos filtrar apenas os países de interesse da coluna país. Faremos da mesma forma como apresentado no workshop anterior: criaremos um vetor com o nome dos países e o incluíremos na função filter com símbolo <code>%in%</code>. Por fim, vamos selecionar apenas as colunas que nos interessam, <code>País</code>, <code>valor</code> e <code>ano</code> e salvaremos todas as alterações no objeto <code>exportacao</code>. Por fim, utilizaremos mais uma função do <code>dplyr</code>, a <code>rename</code>, para alterar o nome da coluna <code>País</code> para <code>pais</code>, assim evitamos acentos em nossa programação. Faremos todas essas alterações em apenas um bloco de código</p>
+<pre class="r"><code>#primeiro crio o vetor com os países que serão filtrados
+paises&lt;-c(&quot;Alemanha&quot;, &quot;China&quot;, &quot;Estados Unidos&quot;, &quot;França&quot;, &quot;Itália&quot;, &quot;Japão&quot;,
+          &quot;Reino Unido&quot;)
+
+
+exportacao&lt;-exportacao%&gt;%
+  mutate(valor_milhoes=valor/1000000)%&gt;%
+  filter(País %in% paises)%&gt;%
+  select(País, valor_milhoes, ano)%&gt;%
+  rename(pais=País)
+  
+exportacao</code></pre>
+<pre><code>## # A tibble: 70 x 3
+##    pais  valor_milhoes ano  
+##    &lt;chr&gt;         &lt;dbl&gt; &lt;chr&gt;
+##  1 China         1589. 2019 
+##  2 China         3508. 2018 
+##  3 China         1387. 2017 
+##  4 China         1097. 2016 
+##  5 China          830. 2015 
+##  6 China         1150. 2014 
+##  7 China          999. 2013 
+##  8 China          901. 2012 
+##  9 China          706. 2011 
+## 10 China          427. 2010 
+## # … with 60 more rows</code></pre>
+<p>Este será o banco que utilizaremos para criar nossos gráficos de exportação. Vamos salvá-los para não ter que rodar novamente todos esses códigos. Vou salvá-lo como csv com o nome de “exportacao_final”.</p>
+<pre class="r"><code>write_csv(exportacao, &quot;dados/exportacao_final.csv&quot;)</code></pre>
+</div>
+</div>
+<div id="transformando-tabela-long-para-wide-limpando-a-tabela-migracao_sexo" class="section level2">
+<h2>Transformando tabela long para wide: limpando a tabela migracao_sexo</h2>
+<p>Agora vamos fazer algumas alterações na tabela <code>migracao_sexo</code> que foi criada nas atividades do workshop 2. Para criarmos um gráfico do tipo dumbbell como o apresentado no dashboard precisamos que a tabela apresente o nome dos países e os valores de entrada no estado por sexo nas colunas. Para isso, utilizaremos a função do <code>tidyr</code> chamada <code>pivot_wider</code>. Ela receberá os seguintes argumentos:</p>
+<ul>
+<li><p><code>names_from</code> = deve receber a coluna que deve ser reestruturada de long para wide. Queremos ter uma coluna para valores de Feminino e outra para Masculino, assim esse argumento receberá a coluna que nos diz o sexo, que é <code>SEXO_DESCRICAO</code>.</p></li>
+<li><p><code>values_from</code> = deve receber a coluna com os valores que as novas colunas devem receber. No nosso caso é <code>total_sexo</code>.</p></li>
+</ul>
+<p>Vou salvar os resultados no próprio objeto <code>migracao_sexo</code>, subscrevendo a tabela anterior.</p>
+<pre class="r"><code>migracao_sexo&lt;-migracao_sexo%&gt;%
+  pivot_wider(names_from = SEXO_DESCRICAO, values_from = total_sexo)
+
+migracao_sexo</code></pre>
+<pre><code>## # A tibble: 7 x 3
+##   PNASC_DESC                 Feminino Masculino
+##   &lt;chr&gt;                         &lt;dbl&gt;     &lt;dbl&gt;
+## 1 ALEMANHA                        412       583
+## 2 ESTADOS UNIDOS DA AMERICA       424       574
+## 3 FRANCA                          191       269
+## 4 ITALIA                          165       400
+## 5 JAPAO                            27        39
+## 6 REINO UNIDO                      10        19
+## 7 REPUBLICA POPULAR DA CHINA       67       137</code></pre>
+<p>Para finalizarmos esse banco ainda precisamos alterar a forma como estão escritos os nomes dos países. Repare que neste banco os nomes estão escritos de forma completamente diferente do banco de exportação. Vamos uniformizar esses nomes. Para isso vamos usar a função <code>mutate</code> para criar uma nova coluna a partir da coluna <code>PNASC_DESC</code> que se chamará <code>paises</code>. Dentro de <code>mutate</code> vamos utilizar outra função do dplyr chamada <code>case_when</code> que nos permite recodificar os casos. Assim, diremos ao <code>dplyr</code> que toda vez (<code>case_when</code>) a coluna <code>PNASC_DESC</code> for igual (<code>==</code>) à <code>&quot;REPUBLICA POPULAR DA CHINA&quot;</code> queremos que a nova coluna <code>paises</code> receba como valor (<code>~</code>) <code>China</code>. Faremos isso com todos os países. Salvarei as alterações no mesmo objeto migracao_sexo. Veja abaixo como fica a sintaxe.</p>
+<pre class="r"><code>migracao_sexo&lt;-migracao_sexo%&gt;%
+  mutate(paises=case_when(PNASC_DESC==&quot;REPUBLICA POPULAR DA CHINA&quot; ~ &quot;China&quot;,
+                          PNASC_DESC==&quot;REINO UNIDO&quot; ~ &quot;Reino Unido&quot;,
+                          PNASC_DESC==&quot;JAPAO&quot; ~ &quot;Japão&quot;,
+                          PNASC_DESC==&quot;ITALIA&quot; ~ &quot;Itália&quot;,
+                          PNASC_DESC==&quot;FRANCA&quot; ~ &quot;França&quot;,
+                          PNASC_DESC==&quot;ESTADOS UNIDOS DA AMERICA&quot; ~ &quot;Estados Unidos&quot;,
+                          PNASC_DESC==&quot;ALEMANHA&quot; ~ &quot;Alemanha&quot;))
+
+migracao_sexo</code></pre>
+<pre><code>## # A tibble: 7 x 4
+##   PNASC_DESC                 Feminino Masculino paises        
+##   &lt;chr&gt;                         &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;         
+## 1 ALEMANHA                        412       583 Alemanha      
+## 2 ESTADOS UNIDOS DA AMERICA       424       574 Estados Unidos
+## 3 FRANCA                          191       269 França        
+## 4 ITALIA                          165       400 Itália        
+## 5 JAPAO                            27        39 Japão         
+## 6 REINO UNIDO                      10        19 Reino Unido   
+## 7 REPUBLICA POPULAR DA CHINA       67       137 China</code></pre>
+<p>Vamos salvar este banco como csv com o nome de <code>migracao_sexo_final</code>.</p>
+<pre class="r"><code>write_csv(migracao_sexo, &quot;dados/migracao_sexo_final.csv&quot;)</code></pre>
+</div>
+</div>
+<div id="visualização-de-dados-com-ggplot2" class="section level1">
+<h1>Visualização de dados com ggplot2</h1>
+<p>Agora que já temos nossos dados limpos e estruturados podemos pensar em elaborar gráficos com eles. Podemos elaborar gráfico apenas com a base do R, porém, existe um pacote ainda mais poderoso para elaboração de gráficos: o ggplot2. Apesar de ser mais complexo com relação à sintaxe de código, o ggplot2 permite elaborar gráficos altamente customizáveis e, como resultado, entrega visualizações de dados bem mais profissionais. Desta forma, vamos focar o restante deste workshop em compreender a sintaxe do ggplot2 e como customizar nossos gráficos com esse pacote.</p>
+<div id="a-gramática-em-camadas-do-ggplot2" class="section level3">
+<h3>A gramática em camadas do ggplot2</h3>
+<p>O ggplot2, como dito anteriormente, é um pacote para visualização de dados e, assim como o <code>dplyr</code> e o <code>tidyr</code>, faz parte do <code>tidyverse</code>. Ele segue uma sintaxe que chamamos de “gramática de gráficos” em que o gráfico é contruído de camada em camada. O bloco de código abaixo apresenta conceitualmente a estrutura básica das camadas para se construir um gráfico. Camadas adicionais podem ser adicionadas para customizar o gráfico.</p>
+<pre class="r"><code>ggplot(data = &lt;NOME_DO_BANCO&gt;, mapping = aes(&lt;MAPEAMENTO&gt;) ) +
+  &lt;GEOM_FUNCTION&gt;(
+    stat = &lt;ESTATISTICA&gt;,
+    position= &lt;POSICAO&gt;) +
+  &lt;COORDINATE_FUNCTION&gt; +
+  &lt;FACET_FUNCTION&gt;
+  )</code></pre>
+<p>Vamos entender essa sintaxe:</p>
+<ol style="list-style-type: decimal">
+<li><p>Primeiro começamos o bloco de código chamando a função <code>ggplot</code>. Então abrimos parênteses para começar a escrever nossa primeira camada. O primeiro argumento dessa função é o banco de dados que utilizaremos para criar o gráfico, seguido de vírgula. Após a vírgula, vamos realizar o mapeamento do gráfico com o argumento <code>aes</code> (de aesthetics, estética em ingês). Aqui nós iremos indicar quais colunas do nosso banco devem entrar no eixo x e no eixo y. Essa é a nossa primeira camada. Para adicionar uma segunda camada digitamos <code>+</code> ao final desta camada.</p></li>
+<li><p>A segunda camada começa com a função que indica o tipo de gráfico que iremos montar. A função sempre começa com <code>geom_</code> que indica a “geometria” ou o desenho do gráfico. Por exemplo, se for um gráfico de barras a função será <code>geom_bar</code>, se for de linha <code>geom_line</code>, se for um gráfico de dispersão, em que cada observação da tabela será um ponto no gráfico, utilizaremos <code>geom_point</code>. Existem diversas geometrias para o gráfico, mas em nosso workshop focar em gráficos de linha e de barras pois são os que melhor apresentam os dados que estamos trabalhando. Para conhecer as outras possibilidades de gráficos veja a documentação do ggplot2 e os tutoriais que inclui no material complementar.</p></li>
+</ol>
+<p>Logo a função <code>geom_</code>, dentro dos parênteses temos o argumento stat, que indica a estatística que será utilizada sobre os dados. Nem sempre este argumento é utilizado. Podemos utilizar, estatísticas como média, proporção, etc. No caso dos nossos dados queremos que o gráfico apresente extamante os números observados na tabela, por isso usamos como argumento, principalmente em gráficos de barra, “identity”.</p>
+<p>O próximo argumento desta camada é a posição da nossa geometria. Nem sempre ela será necessária também. Com ela podemos indicar, por exemplo, se queremos o nosso gráfico de barras agrupados um do lado do outro (<code>dodge</code>), ou todas as categorias de uma variável na mesma barra (<code>stacked</code>), etc. Ao finalizar essa camada seguimos para a seguinte com <code>+</code></p>
+<ol start="3" style="list-style-type: decimal">
+<li><p>A próxima camada indica o sistema de coordenada do gráfico. O sistema default do ggplot2 é o sistema cartesiano, mas existe vários outros sistemas de coordenadas possíveis. Nesse curso vamos trabalhar apenas com o sistema cartesiano, possívelmente apenas alterando as posições de x e y para termos outras possibilidades de visualização por meio da função <code>coord_flip</code></p></li>
+<li><p>A última camada apresentada no código acima (que não necessariamente será a última camada do seu gráfico) é uma camada opcional chamada <code>facet</code>. Esta camada permite dividir o seu gráfico em subgráficos, cada um deles apresentando um subconjunto dos dados. Essa é uma função particularmente útil quando queremos elaborar visualizações para variáveis com várias categorias.</p></li>
+</ol>
+<p>Neste workshop vamos focar nas duas primeiras camadas que nos permitem construir o corpo do gráfico. No workshop 4 veremos como customizar nossos gráficos, então veremos as últimas duas camadas, além de camadas complementares que nos permitem alterar cor, incluir título, alterar fundo, etc.</p>
+</div>
+</div>
+<div id="material-complementar" class="section level1">
+<h1>Material complementar</h1>
+<p>Para mais explicações sobre limpeza de banco de dados com <code>dplyr</code> e <code>tidy</code> leia <a href="https://datacarpentry.org/r-socialsci/03-dplyr-tidyr/index.html">essa aula do curso de R para Cientistas Sociais do Data Carpentries</a></p>
+<p>Para explicação mais detalhada sobre visualização de dados com ggplot2 e a sua gramática veja <a href="https://r4ds.had.co.nz/data-visualisation.html">este capítulo do livro R for Data Science</a> e <a href="https://datacarpentry.org/r-socialsci/04-ggplot2/index.html">leia esta aula do curso de R para Cientistas Sociais do Data Carpentries</a></p>
+<p>Você encontra todos os parâmetros para criar qualquer gráfico no ggplot2 na <a href="https://cran.r-project.org/web/packages/ggplot2/ggplot2.pdf">documentação oficial</a></p>
+<p><a href="http://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html#Time%20Series%20Plot%20From%20a%20Time%20Series%20Object">Aqui</a> você encontra tutoriais com códigos para criar vários tipos de gráficos no ggplot2.</p>
+<p><a href="https://www.r-graph-gallery.com/index.html">Aqui</a> também tem uma lista de como fazer vários tipos de gráficos no ggplot2 com os respectivos códigos.</p>
 </div>
 
 
