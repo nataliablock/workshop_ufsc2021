@@ -166,9 +166,9 @@ write_csv(migracao_sexo, "dados/migracao_sexo_final.csv")
 ```
 
 
-# Visualização de dados com ggplot2
+## Visualização de dados com ggplot2
 
-Agora que já temos nossos dados limpos e estruturados podemos pensar em elaborar gráficos com eles. Podemos elaborar gráfico apenas com a base do R, porém, existe um pacote ainda mais poderoso para elaboração de gráficos: o ggplot2. Apesar de ser mais complexo com relação à sintaxe de código, o ggplot2 permite elaborar gráficos altamente customizáveis e, como resultado, entrega visualizações de dados bem mais profissionais. Desta forma, vamos focar o restante deste workshop em compreender a sintaxe do ggplot2 e como customizar nossos gráficos com esse pacote.
+Agora que já temos nossos dados limpos e estruturados podemos pensar em elaborar gráficos com eles. Podemos elaborar gráficos apenas com a base do R, porém, existe um pacote ainda mais poderoso para elaboração de gráficos: o ggplot2. Apesar de ser mais complexo com relação à sintaxe do código, o ggplot2 permite elaborar gráficos altamente customizáveis e, como resultado, entrega visualizações de dados bem mais profissionais. Desta forma, vamos focar o restante deste workshop em compreender a sintaxe do ggplot2 e como customizar nossos gráficos com esse pacote.
 
 ### A gramática em camadas do ggplot2
 
@@ -188,18 +188,129 @@ Vamos entender essa sintaxe:
 
 1. Primeiro começamos o bloco de código chamando a função `ggplot`. Então abrimos parênteses para começar a escrever nossa primeira camada. O primeiro argumento dessa função é o banco de dados que utilizaremos para criar o gráfico, seguido de vírgula. Após a vírgula, vamos realizar o mapeamento do gráfico com o argumento `aes` (de aesthetics, estética em ingês). Aqui nós iremos indicar quais colunas do nosso banco devem entrar no eixo x e no eixo y. Essa é a nossa primeira camada. Para adicionar uma segunda camada digitamos `+` ao final desta camada.
 
-2. A segunda camada começa com a função que indica o tipo de gráfico que iremos montar. A função sempre começa com `geom_` que indica a "geometria" ou o desenho do gráfico. Por exemplo, se for um gráfico de barras a função será `geom_bar`, se for de linha `geom_line`, se for um gráfico de dispersão, em que cada observação da tabela será um ponto no gráfico, utilizaremos `geom_point`. Existem diversas geometrias para o gráfico, mas em nosso workshop focar em gráficos de linha e de barras pois são os que melhor apresentam os dados que estamos trabalhando. Para conhecer as outras possibilidades de gráficos veja a documentação do ggplot2 e os tutoriais que inclui no material complementar.
+2. A segunda camada começa com a função que indica o tipo de gráfico que iremos montar. A função sempre começa com `geom_` que indica a "geometria" ou o desenho do gráfico. Por exemplo, se for um gráfico de barras a função será `geom_bar`, se for de linha `geom_line`, se for um gráfico de dispersão, em que cada observação da tabela será um ponto no gráfico, utilizaremos `geom_point`. Existem diversas geometrias para o gráfico, mas em nosso workshop vamos focar em gráficos de linha e de barras pois são os que melhor apresentam os dados que estamos trabalhando. Para conhecer as outras possibilidades de gráficos veja a documentação do ggplot2 e os tutoriais que inclui no material complementar.
 
-Logo a função `geom_`, dentro dos parênteses temos o argumento stat, que indica a estatística que será utilizada sobre os dados. Nem sempre este argumento é utilizado. Podemos utilizar, estatísticas como média, proporção, etc. No caso dos nossos dados queremos que o gráfico apresente extamante os números observados na tabela, por isso usamos como argumento, principalmente em gráficos de barra, "identity".
+Logo após a função `geom_`, dentro dos parênteses temos o argumento stat, que indica a estatística que será utilizada sobre os dados. Nem sempre este argumento é utilizado. Podemos utilizar neste argumento a média, proporção, etc. No caso dos nossos dados queremos que o gráfico apresente extamante os números observados na tabela, por isso usamos como argumento, principalmente em gráficos de barra, "identity".
 
 O próximo argumento desta camada é a posição da nossa geometria. Nem sempre ela será necessária também. Com ela podemos indicar, por exemplo, se queremos o nosso gráfico de barras agrupados um do lado do outro (`dodge`), ou todas as categorias de uma variável na mesma barra (`stacked`), etc. Ao finalizar essa camada seguimos para a seguinte com `+`
 
-3. A próxima camada indica o sistema de coordenada do gráfico. O sistema default do ggplot2 é o sistema cartesiano, mas existe vários outros sistemas de coordenadas possíveis. Nesse curso vamos trabalhar apenas com o sistema cartesiano, possívelmente apenas alterando as posições de x e y para termos outras possibilidades de visualização por meio da função `coord_flip`
+3. A próxima camada indica o sistema de coordenadas do gráfico. O sistema default do `ggplot2` é o sistema cartesiano, mas existem vários outros sistemas de coordenadas possíveis. Nesse curso vamos trabalhar apenas com o sistema cartesiano, possívelmente apenas alterando as posições de x e y para termos outras possibilidades de visualização por meio da função `coord_flip()`
 
-4. A última camada apresentada no código acima (que não necessariamente será a última camada do seu gráfico) é uma camada opcional chamada `facet`. Esta camada permite dividir o seu gráfico em subgráficos, cada um deles apresentando um subconjunto dos dados. Essa é uma função particularmente útil quando queremos elaborar visualizações para variáveis com várias categorias.
+4. A última camada apresentada no código acima (que não necessariamente será a última camada do gráfico) é uma camada opcional chamada `facet`. Esta camada permite dividir o seu gráfico em subgráficos, cada um deles apresentando um subconjunto dos dados. Essa é uma função particularmente útil quando queremos elaborar visualizações para variáveis com várias categorias.
 
 Neste workshop vamos focar nas duas primeiras camadas que nos permitem construir o corpo do gráfico. No workshop 4 veremos como customizar nossos gráficos, então veremos as últimas duas camadas, além de camadas complementares que nos permitem alterar cor, incluir título, alterar fundo, etc.
 
+Vamos ver na prática como essas camadas são construídas. Vamos utilizar o banco `migracao_sexo` elaborado na atividade 2 para criar um gráfico de barras apresentando o total de migrantes alemães que entraram em Santa Catarina por ano.
+
+```{r echo=TRUE}
+ggplot(migracao_alemanha, aes(x=ano, y=total))+
+  geom_bar(stat = "identity")
+```
+
+Veja que para chegar a este gráfico construímos 2 camadas. Começamos usando a função `ggplot`, incluindo o nome do banco a ser utilizado, seguido de vírgula e o argumento `aes` em que dizemos ao ggplot qual variável entra no eixo x e qual entra no eixo y. Queremos que x sejam os anos e y o total de migrantes. Finalizamos essa camada com o `+` para incluir a segunda camada. Na seguunda camada indicamos que queremos um gráfico de barras com a função geom_bar, e entre parênteses usamos o argumento `stat="identity` para indicar ao ggplot que queremos que as barras representem exatamente o valor indicado na tabela. 
+
+Mas existe um problema no eixo x: os anos estão aparecendo com decimais. Isso tem a ver com a discussão do workshop passado sobre tipos de dados. Vamos usar a função `glimpse` para verificar como estão armazenados esses dados.
+
+```{r echo=TRUE}
+glimpse(migracao_alemanha)
+```
+
+Repare que o ano está como um valor numérico que aceita dígitos (double). Como discutimos na semana passada, nossa variável de ano deve ser um fator, pois não é uma quantidade e sim um tipo de categoria. Vamos realizar a alteração de numérico para fator, como vimos no workshop passado, e rodar novamente o código para criar o gráfico.
+
+```{r echo=TRUE}
+
+migracao_alemanha$ano<-as.factor(migracao_alemanha$ano)
+
+ggplot(migracao_alemanha, aes(x=ano, y=total))+
+  geom_bar(stat = "identity")
+
+```
+
+Veja que após a alteração do tipo de dado o gráfico apresenta um ano para cada barra. No próximo workshop veremos como customizar esse gráfico, alterando cores, mudando label dos eixos, incluindo título, etc.
+
+Agora vamos trabalhar com nosso banco de exportação. Digamos que queremos criar um gráfico de barras com os valores de exportação para a China. No caso do nosso banco `migracao_alemanha` já tínhamos o banco recortado apenas com dados da Alemanha. No caso do banco de exportação podemos utilizar o `dplyr` para filtrar apenas a China e utilizar o ggplot para plotar o gráfico logo depois no mesmo bloco de gráficos utilizando o `%>%`. Repare que como estamos utilizando a função `ggplot` seguido de um `%>%` não é necessário colocar o nome do banco utilizado como argumento pois já especificamos no começo do bloco de código, na primeira linha.
+
+```{r echo=TRUE}
+exportacao%>%
+  filter(pais=="China")%>%
+  ggplot(aes(x=ano, y=valor_milhoes))+
+  geom_bar(stat="identity")
+
+
+```
+
+
+Vamos explorar um pouco mais o gráfico de barras. Digamos que queremos ver a evolução das exportação de todos os países para todos os anos. Cada ano apresentaria uma barra com os valores de cada país. Para isso, na primeira camada teremos que indicar no argumento `aes` (lembre-se que é ele que criar a "estética" do gráfico) que cada barra representará um país. Para isso utilizamos o argumento `fill`. Na camada que cria a geometria do gráfico, utilizaremos o argumento `position` dentro da função `geom_bar` como apresentado no bloco de códigos conceitual acima. EM `position` queremos indicar ao ggplot que queremos as barras agrupadas, então utilizamos o argumento `position_dodge()`
+
+```{r echo=TRUE}
+exportacao%>%
+  ggplot(aes(x=ano, y=valor_milhoes, fill=pais))+
+  geom_bar(stat="identity", position=position_dodge())
+```
+
+Repare, no entanto, que esse gráfico não é muito legível. Ele está muito tulmutuado, com muitas barras. Uma alternativa, se quisessemos insistir no gráfico de barras, seria utilizar a camada de `facet` (camada 4 do nosso bloco de código conceitual acima) e retirar os argumentos `fill` e `position` da primeira e segunda camada. Faríamos um facet por país, que geraria um gráfico com 7 subgráficos, um para cada país. Veremos como fazer isso no próximo workshop.
+
+Uma segunda opção seria plotar um gráfico de linha como temos em nosso dashboard. Para isso, ao invés de utilizarmos o `geom_bar` na segunda camada utilizaremos a função `geom_line`. Na primeira camada, além dos argumentos referentes aos eixos, teremos que colocar mais dois: o `group` e o `colour`. O argumento `group` indica ao ggplot sobre o quê se refere cada linha do gráfico, que no nosso caso são os países. O argumento `colour` indica ao ggplot que cada país terá cores diferentes.
+
+```{r echo=TRUE}
+exportacao%>%
+  ggplot(aes(x=ano, y=valor_milhoes, group=pais, colour=pais))+
+  geom_line()
+
+```
+
+
+Gráficos também podem ser salvos dentro de objetos. Pode ser útil salvá-los ao longo de um projeto para não ter que ficar rodando repetidamente o mesmo bloco de código para gerar o gráfico.
+
+```{r echo=TRUE}
+
+plot_exportacao<-exportacao%>%
+  ggplot(aes(x=ano, y=valor_milhoes, group=pais, colour=pais))+
+  geom_line()
+
+plot_exportacao
+
+```
+
+
+
+### Salvando gráficos do ggplot2
+
+Podemos salvar nossos gráficos por meio do próprio R Studio. Nas imagens a seguir mostro o passo a passo.
+
+1. No painel da direita, na parte de baixo, selecione a aba "Plots". O gráfico que quer salvar deve estar aparecendo neste painel. Se não estiver, rode o bloco de códigos com o gráfico que quer salvar. No pequeno menu deste painel clique em "Export".
+
+![](imagens/plot1.png)
+
+
+É possível salvar um gráfico como pdf ou imagem. Vamos salvá-la como imagem. Escolha a opção "Save as Image".
+
+![](imagens/plot2.png)
+
+A tela a seguir abrirá para você. 
+
+![](imagens/plot3.png)
+
+No canto superior esquerdo, em "Image Format", é possível selecionar o formato como quer salvar seu gráfico, incluindo PNG e JPEG.
+
+![](imagens/plot4.png)
+
+Em "File name" escreva o nome que quer que seu arquivo salvo tenha. Repare ao lado de "Directory" que o seu gráfico será salvo para a pasta que você apontou o R.
+
+![](imagens/plot5.png)
+
+No canto superior direito você pode escolher as dimensões que seu gráfico terá. Após realizar alterações clique no botão "Update Preview" para ver as modificações. Caso selecione a opção "Maintain aspect ratio" o RStudio adequará as dimensões do seu gráfico às proporções da tela.
+
+![](imagens/plot6.png)
+
+
+Se selecionar a opção "View plot after saving" no canto inferior esquerdo o R abrirá o documento com a sua imagem logo após ele for salvo.
+
+![](imagens/plot7.png)
+
+Após realizar todas as seleções não esqueça de clicar no botão "Save" para salvar seu gráfico. Ele estará no diretório de trabalho apontado para o R com `setwd()` no início do seu projeto.
+
+![](imagens/plot8.png)
 
 
 # Material complementar
