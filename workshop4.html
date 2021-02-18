@@ -419,7 +419,284 @@ div.tocify {
 
 <div id="elaboração-e-customização-de-gráficos-no-ggplot2" class="section level1">
 <h1>Elaboração e customização de gráficos no ggplot2</h1>
-<p>Em breve</p>
+<p>Neste workshop vamos recapitular rapidamente o que vimos sobre criação de gráficos no ggplot na última aula e iremos aprender a customizar nossos gráficos: incluir título, mudar cor, usar temas e templates já incluídos no ggplot2, etc.</p>
+<p>Antes de tudo precisamos preparar nossa seção de trabalho. Continuaremos trabalhando com as tabelas criadas na atividade 2 (particularmente a <code>migracao_alemanha</code>) e as que criamos no workshop 3 (<code>exportacao_final</code> e <code>migracao_sexo_final</code>). Vamos apontar nosso diretório de trabalho, fazer o upload do tidyverse e das tabelas:</p>
+<pre class="r"><code>#Apontando o R para meu diretório
+setwd(&quot;~/Dropbox/repositories/workshop_ufsc2021&quot;)
+
+#upload de pacotes
+library(tidyverse)
+
+
+#upload de bancos
+
+#banco migracao_alemanha
+migracao_alemanha&lt;-read_csv(&quot;dados/migracao_alemanha.csv&quot;)
+
+#banco exportacao_final
+exportacao&lt;-read_csv(&quot;dados/exportacao_final.csv&quot;)
+
+#banco migracao_sexo_final (wide - workshop 3)
+migracao_sexo_wide&lt;-read_csv(&quot;dados/migracao_sexo_final.csv&quot;)</code></pre>
+<p>Vamos começar com nossos dados de migração. No workshop passado vimos como criar um gráfico de barras de migração alemã para Santa Catarina utilizando o banco criado na atividade 2, o <code>migracao_alemanha</code>. Vimos que antes de tudo precisamos transformar a coluna <code>ano</code> de numérica para fator. A seguir, para criar a estrutura básica do gráfico precisamos criar duas camadas: uma que indica ao ggplot2 a tabela que será utilizada com os respectivos eixos x e y incluídos no argumento <code>aes</code>, e uma segunda camada indicando a geometria do gráfico com <code>geom_bar</code> e a estatística a ser apresentada pelas barras. No nosso caso queremos apresentar os dados assim como estão na tabela, então usamos o argumento <code>stat=identity</code>.</p>
+<pre class="r"><code>migracao_alemanha$ano&lt;-as.factor(migracao_alemanha$ano)
+
+ggplot(migracao_alemanha, aes(x=ano, y=total))+
+  geom_bar(stat = &quot;identity&quot;)</code></pre>
+<p><img src="workshop4_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<div id="incluindo-labels-títulos-e-notas" class="section level2">
+<h2>Incluindo labels, títulos e notas</h2>
+<p>Vamos customizar esse gráfico. Como explicado no workshop anterior, cada novo elemento incluído ou alterado no ggplot2 será uma nova camada. O ggplot2 tem centenas de comandos para criar e customizar nossos gráficos e é impossível conhecer todos e sabê-los de memória. Por isso é importante se acostumar a ler a documentação dos pacotes e chamar o <code>help</code> do R. No material complementar da aula passada tem tutoriais muito bons ensinando a fazer diversos outros tipos de gráficos.</p>
+<p>Vamos começar pelos labels dos eixos, ou seja, o texto que cada eixo está apresentando. No eixo x, em que temos os anos, o label não é necessário porque dá para compreender vendo o gráfico que trata-se dos anos. Além disso, posteriormente vamos colocar a informação de ano no subtítulo do gráfico. Para o eixo y, queremos alterar <code>total</code> para <code>total de migrantes</code>. Para realizar essas alterações incluiremos as camadas <code>xlab()</code> e <code>ylab()</code> e escreveremos o novo texto entre aspas dentro dos parênteses. Como queremos que o eixo x fique em branco, não escreveremos nada dentro das aspas.</p>
+<pre class="r"><code>ggplot(migracao_alemanha, aes(x=ano, y=total))+
+  geom_bar(stat = &quot;identity&quot;)+
+  xlab(&quot;&quot;)+
+  ylab(&quot;total de migrantes&quot;)</code></pre>
+<p><img src="workshop4_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p>Veja que conforme vamos alterando o gráfico vamos incluindo novas camadas. No entanto, para organizar melhor o trabalho, é possível salvar o gráfico como ele está no momento e ir adicionando camadas ao objeto. Vamos ver como isso funciona. Primeiro vamos salvar esse código que temos agora ao objeto <code>plot_migracao_alemanha</code>.</p>
+<pre class="r"><code>plot_migracao_alemanha&lt;-ggplot(migracao_alemanha, aes(x=ano, y=total))+
+  geom_bar(stat = &quot;identity&quot;)+
+  xlab(&quot;&quot;)+
+  ylab(&quot;total de migrantes&quot;)</code></pre>
+<p>Agora quero adicionar mais informações nesse gráfico. Vamos incluir um título que será <code>Total de migrantes alemães em Santa Catarina</code>, um subtítulo dizendo <code>entre os anos de 2010 e 2019</code>, e uma nota com a fonte dos dados, que será <code>Fonte: SISMIGRA, SINCRE. Elaboração Própria</code>. Para incluir todos esses textos criaremos uma nova camada com a função <code>labs</code> que receberá como argumentos <code>title</code>, <code>subtitle</code> e <code>caption</code>, que devem ser incluídos entre parênteses e seguidos por vírgulas. Como sempre, os textos deverão ser incluídos entre aspas.</p>
+<p>Como salvamos as camadas anteriores ao objeto plot_migracao_alemanha não precisamos reescrever todo o código. Vamos usar este objeto e adicionar a nova camada <code>labs</code> a ele.</p>
+<pre class="r"><code>plot_migracao_alemanha +
+  labs(title=&quot;Total de migrantes alemães em Santa Catarina&quot;,
+       subtitle=&quot;entre os anos de 2010 e 2019&quot;,
+       caption=&quot;Fonte: SISMIGRA, SINCRE. Elaboração Própria&quot;)</code></pre>
+<p><img src="workshop4_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>Ótimo! Estou satisfeita com esse layout. Vou salvar esta nova camada ao objeto que eu já tenho. Basta subscrever o objeto com o código do bloco anterior. Para visualizar o gráfico basta escrever o nome do objeto e rodá-lo.</p>
+<pre class="r"><code>plot_migracao_alemanha&lt;-plot_migracao_alemanha +
+  labs(title=&quot;Total de migrantes alemães em Santa Catarina&quot;,
+       subtitle=&quot;entre os anos de 2010 e 2019&quot;,
+       caption=&quot;Fonte: SISMIGRA, SINCRE. Elaboração Própria&quot;)
+
+plot_migracao_alemanha</code></pre>
+<p><img src="workshop4_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+</div>
+<div id="usando-temas-para-alterar-o-painel" class="section level2">
+<h2>Usando temas para alterar o painel</h2>
+<p>Agora vamos mudar o visual do gráfico, como cor e linhas de fundo. O ggplot2 já vem com algumas formatações de painel prontas, que chamamos de themes (temas). Essa é uma forma rápida de formatar gráficos, mas também é possível customizar esses detalhes. Vamos focar apenas nos temas já prontos pois eles já nos permitem ter visualizações muito boas. Caso queira ver com mais detalhes como alterar cor de fundo, linhas de paineis, etc, sugiro verificar a documentação do pacote.</p>
+<p>Para termos um gráfico com visual clássico, com fundo limpo e linhas de eixos delimitadas podemos usar o tema <code>theme_classic()</code>. Para isso, basta adicionar essa função em uma camada ao plot já criado.</p>
+<pre class="r"><code>plot_migracao_alemanha + theme_classic()</code></pre>
+<p><img src="workshop4_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p>Existem diversos temas no ggplot2. Você encontra uma lista com todos os temas no material complementar. Vamos dar uma olhada em alguns.</p>
+<pre class="r"><code>plot_migracao_alemanha + theme_minimal()</code></pre>
+<p><img src="workshop4_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<pre class="r"><code>plot_migracao_alemanha + theme_light()</code></pre>
+<p><img src="workshop4_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<pre class="r"><code>plot_migracao_alemanha + theme_bw()</code></pre>
+<p><img src="workshop4_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+</div>
+<div id="alterando-posição-de-barras-e-direcionamento-de-eixos" class="section level2">
+<h2>Alterando posição de barras e direcionamento de eixos</h2>
+<p>No workshop 3 vimos que podemos alterar as posições das barras. Utilizamos, dentro da função <code>geom_bar</code> o argumento <code>position</code> e utilizamos a opcão <code>position_dodge</code> para criar um gráfico de barras agrupadas de países para cada ano. Vamos explorar um pouco mais as possibilidades de posições de barras.</p>
+<p>Agora vamos criar um gráfico de barra comparando a entrada de alemães em Santa Catarina por sexo utilizando nossa tabela <code>migracao_sexo_wide</code>. Queremos fazer um gráfico em que a mesma barra apresente o total de mulheres e homens por país. A barra terá duas cores, uma para cada sexo. Chamamos esse tipo de gráfico de <strong>stacked</strong>. Para criá-lo precisamos primeiro transformar essa tabela de wide para long, como vimos no workshop anterior, pois esta é a forma a qual os dados devem ser apresentados para o ggplot.</p>
+<p>Como mostrado no workshop anterior, realizarei a alteração da tabela e criarei tidyr a estética do gráfico (argumento <code>aes</code>) com ggplot no mesmo bloco de códigos utilizando pipes e salvarei em um objeto chamado <code>plot_migracao_sexo</code>. No entanto, estou incluindo um novo argumento que ainda não exploramos dentro da função <code>aes</code> chamado <code>label</code>. Mais adiante vou querer que o valor representado pelas barras apareçam dentro delas. Para isso preciso indicar na camada aesthetics (<code>aes</code>) qual coluna estão os valores que deverão aparecer nessas barras que, no nosso caso, estão na coluna <code>valor</code> criada na função <code>pivot_longer</code> neste mesmo bloco de código.</p>
+<pre class="r"><code>plot_migracao_sexo&lt;-migracao_sexo_wide%&gt;%
+  pivot_longer(cols = Feminino:Masculino,
+               names_to = &quot;sexo&quot;,
+               values_to = &quot;valor&quot;)%&gt;%
+  ggplot(aes(x=paises, y=valor, fill=sexo, label=valor))
+
+
+plot_migracao_sexo</code></pre>
+<p><img src="workshop4_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p>Para criar um gráfico de barras stacked basta incluir em <code>geom_bar</code> apenas o argumento <code>stat</code>. Como já indicamos que nossas barras representam os valores por sexo no argumento <code>fill</code> do <code>aes</code>, a função geom_bar apresentará um gráfico stacked como default.</p>
+<pre class="r"><code>plot_migracao_sexo + geom_bar(stat = &quot;identity&quot;)</code></pre>
+<p><img src="workshop4_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<p>O bom deste gráfico é que visualizamos não apenas o total de migrantes por país, permitindo a comparação entre eles, mas também a diferença entre homens e mulheres. No entanto, para saber a quantidade de homens e mulheres para cada país é necessário reduzir a quantidade de um dos sexos do total. Por exemplo: entraram 583 homens (barra azul) de um total de 995 migrantes alemães. Desta forma, a barra rosa indica que 412 mulheres alemãs entraram em Santa Catarina. Assim, a leitura da diferença entre os sexos não é fácil.</p>
+<p>Para resolver esse problema é possível colocar rótulos (que chamamos de labels) para indicar as quantidades dentro das barras. Para isso, incluimos uma nova camada chamada <code>geom_text</code> que incluirá os rótulos que indicamos para o ggplot no argumento <code>label=valor</code> na camada <code>aes</code>. A função <code>geom_text</code> irá pegar a coluna que indicamos como <code>label</code> na camada <code>aes</code> e incluirá nas barras. Dentro desta função o argumento <code>size</code> indica o tamanho da fonte do rótulo. Devemos também incluir a posição em que esses rótulos devem aparecer. Como nossas barras são stacked esta é a posição que deve ser indicada neste argumento: <code>position=position-stack</code>. Dentro de <code>posistion_stack</code> eu tenho a opção de colocar o alinhamento que quero para este rótulo. Uso o argumento <code>vjust</code> porque quero alinhá-los na vertical (caso quisesse na horizontal seria <code>hjust</code>). Uso o valor <code>0.5</code> pois quero os rótulos bem no meio da barra; se quisesse que fossem alinhados na parte superior da barra incluiria o valor <code>1</code>, e caso quisesse na parte inferior o valor deveria ser <code>0</code>.</p>
+<pre class="r"><code>plot_migracao_sexo + geom_bar(stat=&quot;identity&quot;)+
+  geom_text(size=3, position=position_stack(vjust=0.5))</code></pre>
+<p><img src="workshop4_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p>Ese gráfico está mais compreensível que o anterior, mas ainda não acho que a comparação entre os sexos seja eficiente. Desta forma, outra opção de visualização seria usar as barras agrupadas com o argumento <code>position=position_dodge()</code> visto no workshop passado. Assim teríamos uma barra por sexo para cada país. Vamos ver como ficaria:</p>
+<pre class="r"><code>plot_migracao_sexo + geom_bar(stat=&quot;identity&quot;, position=&quot;dodge&quot;) </code></pre>
+<p><img src="workshop4_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p>Neste gráfico não conseguimos ver o total de migrantes por país como no gráfico anterior, porém a diferença entre os sexos por país é mais clara. Desta forma, a escolha entre qual dos dois gráficos usar vai depender de qual informação é mais relevante para o seu trabalho e deve ser destacada; se for o total por ano o gráfico stacked é o melhor. Se for a quantidade por sexo o gráfico dodge é a melhor opção.</p>
+<p>Esta apresentação dos dados está boa, mas podemos inverter os eixos dos gráficos para que a comparação entre os países seja feita com maior clareza. No último workshop falamos sobre a camada das coordenadas, indicada no esquema conceitual como <code>&lt;COORDINATE_FUNCTION&gt;</code>. Podemos inverter os eixos, colocando o eixo x no lugar no y, tornando assim as barras verticais em horizontais. Para isso, basta incluir ao bloco de códigos anterior uma camada com a função <code>coord_flip()</code>.</p>
+<pre class="r"><code>plot_migracao_sexo + geom_bar(stat=&quot;identity&quot;, position=&quot;dodge&quot;) +
+  coord_flip()</code></pre>
+<p><img src="workshop4_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<p>Gostei desse gráfico. A seguir incluirei mais customizações como vimos acima, colocando título, subtítulo, rótulos nos eixos e escolhendo um tema para o painel. Salvarei tudo no objeto plot_migracao_sexo.</p>
+<pre class="r"><code>plot_migracao_sexo&lt;-plot_migracao_sexo + geom_bar(stat=&quot;identity&quot;, position=&quot;dodge&quot;) +
+  xlab(&quot;total de migrantes&quot;)+
+  ylab(&quot;&quot;)+
+  labs(title = &quot;Total de migrantes alemães em Santa Catarina por sexo&quot;,
+       subtitle=&quot;Entre os anos de 2010 e 2019&quot;,
+       caption=&quot;Fonte: SISMIGRA, SINCRE. Elaboração Própria&quot;)+
+  theme_minimal()+
+  coord_flip()
+
+plot_migracao_sexo</code></pre>
+<p><img src="workshop4_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+</div>
+<div id="alterando-cores-e-customizando-legenda" class="section level2">
+<h2>Alterando cores e customizando legenda</h2>
+<p>Digamos que eu não queira usar as cores de barra default do ggplot2 e que prefira incluir cores escolhidas por mim. Para isso adicionamos uma nova camada ao gráfico já criado e salvo no objeto <code>plot_migracao_sexo</code> incluindo a função <code>scale_fill_manual</code>. No primeiro argumento desta função estou renomeando o título da legenda. O segundo argumento <code>values</code> recebe um vetor que indica as cores que quero para cada categoria da minha variável. Escolhi vermelho para feminino e azul para masculino. O ggplot2 reconhece a maioria dos nomes de cores simples em inglês.</p>
+<pre class="r"><code>plot_migracao_sexo + scale_fill_manual(&quot;Legenda&quot;, values = c(&quot;Feminino&quot; = &quot;red&quot;, &quot;Masculino&quot;=&quot;blue&quot;))</code></pre>
+<p><img src="workshop4_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<p>Realizei a alteração mas não gosto muito dessas cores. Existe uma infinidade de cartela de cores que podem ser utilizadas no ggplot2. Podemos escolhê-las e inserir os respectivos códigos. Inclui um link com informações apenas sobre cores na seção de material complementar. Vejamos como faríamos isso:</p>
+<pre class="r"><code>plot_migracao_sexo +   scale_fill_manual(&quot;Legenda&quot;, values = c(&quot;Feminino&quot; = &quot;#CC0033&quot;, &quot;Masculino&quot;=&quot;#003366&quot;))</code></pre>
+<p><img src="workshop4_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<p>Farei mais uma customização neste gráfico. Digamos que ao invés de ter a legenda ao lado do gráfico eu queira que ela apareça abaixo dele. Para isso incluo uma nova camada e utilizo a função <code>theme</code> para alterar o tema do gráfico. Incluirei na função <code>theme</code> o argumento <code>legend.position=&quot;bottom&quot;</code>. Se eu quisesse que a legenda aparecesse acima do gráfico usaria <code>top</code> ao invés de <code>bottom</code>. Vou incluir essas duas novas camadas ao objeto <code>plot_migracao_sexo</code> porque quero manter essas customizações.</p>
+<pre class="r"><code>plot_migracao_sexo&lt;-plot_migracao_sexo + scale_fill_manual(&quot;Legenda&quot;,values = c(&quot;Feminino&quot; = &quot;#CC0033&quot;, &quot;Masculino&quot;=&quot;#003366&quot;))+
+  theme(legend.position = &quot;bottom&quot;)
+
+
+plot_migracao_sexo</code></pre>
+<p><img src="workshop4_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+</div>
+<div id="facet" class="section level2">
+<h2>Facet</h2>
+<p>Vimos no workshop anterior que uma das camadas do nosso gráfico pode ser um facet. O facet divide o gráfico em subgráficos das categorias da variável indicada. Digamos então que ao invés de um gráfico comparativos entre os sexos por país eu queira um gráfico que compare os países e seja subdividido por sexo. Para isso criamos uma nova camada e incluímos a função <code>facet_wrap</code> e indicamos que o facet será feito pela variável <code>sexo</code>.</p>
+<pre class="r"><code>plot_migracao_sexo + facet_wrap(~sexo)</code></pre>
+<p><img src="workshop4_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<p>Ótimo! Mas já que subdividimos o gráfico a legenda não é mais necessária. Para retirá-la podemos incluir a mesma função <code>theme</code> e o argumento <code>legend.position</code> que agora receberá o valor <code>none</code>. Vou salvar o resultado final no objeto <code>plot_migracao_sexo</code>.</p>
+<pre class="r"><code>plot_migracao_sexo&lt;-plot_migracao_sexo + facet_wrap(~sexo)+ theme(legend.position=&quot;none&quot;)
+
+plot_migracao_sexo</code></pre>
+<p><img src="workshop4_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<p>O uso do facet fica ainda mais interessante quando temos uma variável com muitas categorias. Vamos focar agora na nossa tabela de exportação. No workshop passado fizemos um gráfico de barras com <code>position_dodge</code> com todos os países para todos os anos. Por fim, como eram muitos países, chegamos a conclusão de que a visualização não era boa e migramos para o gráfico de linha. Vamos relembrar o que fizemos:</p>
+<pre class="r"><code>exportacao$ano&lt;-as.factor(exportacao$ano)
+
+exportacao%&gt;%
+  ggplot(aes(x=ano, y=valor_milhoes, fill=pais))+
+  geom_bar(stat=&quot;identity&quot;, position=position_dodge())</code></pre>
+<p><img src="workshop4_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<p>O gráfico fica muito tumultuado por causa das várias barras. Uma alternativa seria subdividi-lo por país utilizando facet. Como vamos subdividir o gráfico não precisamos usar os argumentos <code>fill</code> na camada do <code>aes</code> nem o <code>position</code> na camada do <code>geom_bar</code>. Vou salvar o gráfico resultante no objeto <code>plot_exportacao</code>. Vejamos como ficaria.</p>
+<pre class="r"><code>plot_exportacao&lt;-exportacao%&gt;%
+  ggplot(aes(x=ano, y=valor_milhoes))+
+  geom_bar(stat=&quot;identity&quot;)+
+  facet_wrap(~ pais)
+
+plot_exportacao</code></pre>
+<p><img src="workshop4_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+</div>
+<div id="alterando-posição-das-marcações-dos-eixos" class="section level2">
+<h2>Alterando posição das marcações dos eixos</h2>
+<p>Este último gráfico de migração pode receber várias customizações alterando painel, rótulos dos eixos, incluindo título, etc. Como já vimos a maior parte delas vou focar apenas na rotação dos valores do eixo x. Repare que os anos se sobrepõem e não é possível lê-los. Podemos usar a função <code>theme</code> em uma nova camada e ajustar melhor o ângulo dessas marcações. Dentro de <code>theme</code> utilizamos o argumento <code>axis.text.x</code> que irá alterar características do texto das marcações dos valores do eixo x, e incluimos como valor <code>element_text(angle=45)</code> indicando que queremos rotacionar o texto para um ângulo de 45 graus. Além de alterar o ângulo poderíamos fazer várias outras transformações, como alterar o tamanho da fonte com <code>size</code> e o posicionamento do texto na vertical <code>vjust</code> e na horizontal <code>hjust</code>.</p>
+<pre class="r"><code>plot_exportacao + theme(axis.text.x = element_text(angle=45))</code></pre>
+<p><img src="workshop4_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
+</div>
+<div id="alterando-cor-e-tipo-de-linha-em-gráficos-de-linha" class="section level2">
+<h2>Alterando cor e tipo de linha em gráficos de linha</h2>
+<p>Continuando com nosso banco de exportação, vimos na semana passada como fazer um gráfico de linhas comparando todos os países. Vamos relembrar:</p>
+<pre class="r"><code>exportacao%&gt;%
+  ggplot(aes(x=ano, y=valor_milhoes, group=pais, colour=pais))+
+  geom_line()</code></pre>
+<p><img src="workshop4_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+<p>Vamos fazer algumas alterações e customizações nesse gráfico:</p>
+<ol style="list-style-type: decimal">
+<li>Comparar apenas os três paises com maiores valores de exportação: China, Estados Unidos e Japão. Para isso teremos que fazer uma filtragem dos países com <code>dplyr</code>;</li>
+<li>Criar um gráfico de linhas com ggplot;</li>
+<li>Alterar os rótulos dos eixos</li>
+<li>Incluir título, subtítulo e nota com fonte dos dados</li>
+<li>Alterar painel de fundo utilizando um tema</li>
+</ol>
+<p>Como base em tudo que vimos até agora nosso bloco de códigos ficaria deste jeito:</p>
+<pre class="r"><code>paises&lt;-c(&quot;China&quot;, &quot;Estados Unidos&quot;, &quot;Japão&quot;)
+
+exportacao%&gt;%
+  filter(pais %in% paises)%&gt;%
+  ggplot(aes(x=ano, y=valor_milhoes, group=pais, colour=pais))+
+  geom_line()+
+  xlab(&quot;&quot;)+
+  ylab(&quot;milhões de U$&quot;)+
+  labs(title=&quot;Exportações de Santa Catarina para China, EUA e Japão&quot;,
+       subtitle = &quot;de 2010 a 2019&quot;,
+       caption=&quot;Fonte: Comexstat. Elaboração Própria&quot;)+
+  theme_minimal()</code></pre>
+<p><img src="workshop4_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
+<p>Digamos que eu queira alterar o tipo de linha dos gráficos. Para isso preciso primeiro incluir um argumento à função geom_line que identifica a estética da linha. Para isso usaremos a função <code>aes</code> dentro de <code>geom_line</code> e indicaremos que as diferenças das linhas refletirão os diferentes países. Depois incluimos uma nova camada com a função <code>scale_linetype_manual</code> e incluo o argumento <code>values</code> indicando os tipos de linhas que eu quero: sólida, com dois traços (twodash) e traços longos (longdash). Vou salvar o gráfico resultante no objeto <code>plot_exportacao3</code></p>
+<pre class="r"><code>plot_exportacao3&lt;-exportacao%&gt;%
+  filter(pais %in% paises)%&gt;%
+  ggplot(aes(x=ano, y=valor_milhoes, group=pais, colour=pais))+
+  geom_line(aes(linetype=pais))+
+  xlab(&quot;&quot;)+
+  ylab(&quot;milhões de U$&quot;)+
+  labs(title=&quot;Exportações de Santa Catarina para China, EUA e Japão&quot;,
+       subtitle = &quot;de 2010 a 2019&quot;,
+       caption=&quot;Fonte: Comexstat. Elaboração Própria&quot;)+
+  theme_minimal()+
+  scale_linetype_manual(values=c(&quot;solid&quot;, &quot;twodash&quot;, &quot;longdash&quot;))
+
+
+plot_exportacao3</code></pre>
+<p><img src="workshop4_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
+<p>Caso queiramos alterar a cor das linhas temos que utilizar a função <code>scale_color_manual</code>, incluindo no argumento <code>values</code> um vetor com o nome ou código das cores ou códigos na ordem em que as linhas aparecem no gráfico. Vou subscrever o objeto <code>plot_exportacao3</code> por esse novo gráfico.</p>
+<pre class="r"><code>plot_exportacao3&lt;-plot_exportacao3 + scale_color_manual(values=c(&#39;#990000&#39;, &#39;#000099&#39;, &#39;#CC9933&#39;))
+
+plot_exportacao3</code></pre>
+<p><img src="workshop4_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
+</div>
+<div id="temas-prontos-do-pacote-ggthemes" class="section level2">
+<h2>Temas prontos do pacote ggthemes</h2>
+<p>Para finalizar vamos dar uma olhada rápida no pacote ggthemes. Ele tem temas prontos para serem usados em gráficos gerados com ggplot2. Vamos ver alguns deles.</p>
+<pre class="r"><code>#primeiro é necessário instalar o pacote
+#install.packages(&quot;ggthemes&quot;)
+
+#depois fazer o upload
+library(ggthemes)</code></pre>
+<p>Vejamos nosso gráfico <code>plot_exportacao3</code> com a cara dos gráficos do Wall Street Journal. Basta incluir uma nova camada e usar a função <code>theme_wsj</code></p>
+<pre class="r"><code>plot_exportacao3 + theme_wsj() </code></pre>
+<p><img src="workshop4_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
+<p>Agora com “cara” de gráfico da The Economist:</p>
+<pre class="r"><code>plot_exportacao3+ theme_economist()</code></pre>
+<p><img src="workshop4_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
+<p>Até gráfico com cara de Excel dá para fazer!</p>
+<pre class="r"><code>plot_exportacao3 + theme_excel()</code></pre>
+<p><img src="workshop4_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
+<p>Gráfico parecido com o do site Fivethirtyeight</p>
+<pre class="r"><code>plot_exportacao3 + theme_fivethirtyeight()</code></pre>
+<p><img src="workshop4_files/figure-html/unnamed-chunk-33-1.png" width="672" /></p>
+<p>Existem vários outros criados pelos próprios desenvolvedores do ggthemes. Sugiro que vá explorando até que encontre um que agrade. O ggthemes tem diversas funções para customizar os seus temas e várias paletas de cor diferentes para utilizar. A documentação e um site com tutoriais para este pacote está na seção de material complementar.</p>
+<pre class="r"><code>plot_exportacao3 + theme_tufte()</code></pre>
+<p><img src="workshop4_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
+<pre class="r"><code>plot_exportacao3 + theme_pander()</code></pre>
+<p><img src="workshop4_files/figure-html/unnamed-chunk-34-2.png" width="672" /></p>
+<pre class="r"><code>plot_exportacao3 + theme_stata()</code></pre>
+<p><img src="workshop4_files/figure-html/unnamed-chunk-34-3.png" width="672" /></p>
+</div>
+<div id="bônus-gráfico-dumbbbell" class="section level2">
+<h2>Bônus: gráfico dumbbbell</h2>
+<pre class="r"><code>#install.packages(&quot;ggalt&quot;)
+
+library(ggalt)</code></pre>
+<pre><code>## Warning: package &#39;ggalt&#39; was built under R version 4.0.2</code></pre>
+<pre><code>## Registered S3 methods overwritten by &#39;ggalt&#39;:
+##   method                  from   
+##   grid.draw.absoluteGrob  ggplot2
+##   grobHeight.absoluteGrob ggplot2
+##   grobWidth.absoluteGrob  ggplot2
+##   grobX.absoluteGrob      ggplot2
+##   grobY.absoluteGrob      ggplot2</code></pre>
+<pre class="r"><code>migracao_sexo_wide%&gt;%
+  ggplot()+
+  geom_dumbbell(aes(y=paises, x=Feminino, xend=Masculino),
+                size=1, color=&quot;grey&quot;, size_x=3, size_xend = 3, colour_x =&quot;#990000&quot;, colour_xend = &quot;#0066CC&quot;)+
+  geom_text(data=filter(migracao_sexo_wide, paises==&quot;Alemanha&quot;),
+            aes(x=Feminino, y=paises, label=&quot;Mulheres&quot;),
+            colour=&quot;#990000&quot;, size=3, vjust=-1, fontface=&quot;bold&quot;)+
+  geom_text(data=filter(migracao_sexo_wide, paises==&quot;Alemanha&quot;),
+            aes(x=Masculino, y=paises, label=&quot;Homens&quot;),
+            colour=&quot;#0066CC&quot;, size=3, vjust=-1, fontface=&quot;bold&quot;)+
+  xlab(&quot;&quot;)+
+  ylab(&quot;&quot;)+
+  labs(title=&quot;Migrações para Santa Catarina por país e sexo&quot;,
+       subtitle=&quot;entre 2010 e 2019&quot;,
+       caption=&quot;Fonte: SISMIGRA; SINCRE&quot;)+
+  theme_bw()</code></pre>
+<p><img src="workshop4_files/figure-html/unnamed-chunk-35-1.png" width="672" /></p>
+</div>
+</div>
+<div id="material-complementar" class="section level1">
+<h1>Material Complementar:</h1>
+<p><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">Lista de temas (<code>themes</code>)</a> do ggplot2</p>
+<p>Para aprender com mais detalhes o ggplot e a lógica de sua gramática veja o livro (maravilhoso, gratuito e online) <a href="https://ggplot2-book.org/index.html">ggplot2 Elegant Graphics for Data Analysis</a> de Hardley Wickham.</p>
+<p><a href="http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/">Tutorial e listagem de cores</a> no ggplot2</p>
+<p><a href="http://www.sthda.com/english/wiki/ggplot2-line-types-how-to-change-line-types-of-a-graph-in-r-software">Tutorial de customização de gráficos de linha</a> no ggplot2</p>
+<p><a href="https://yutannihilation.github.io/allYourFigureAreBelongToUs/ggthemes/">Listagem dos temas do ggthemes</a> e de suas funções.</p>
 </div>
 
 
