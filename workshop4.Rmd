@@ -418,7 +418,7 @@ plot_exportacao3 + theme_stata()
 
 
 
-## Bônus: gráfico dumbbbell
+## Bônus: gráfico dumbbell
 
 ```{r echo=TRUE}
 
@@ -448,7 +448,7 @@ migracao_sexo_wide%>%
 
 
 
-# Material Complementar:
+# Material Complementar
 
 [Lista de temas (`themes`)](https://ggplot2.tidyverse.org/reference/ggtheme.html) do ggplot2
 
