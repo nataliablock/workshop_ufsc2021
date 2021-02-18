@@ -8,7 +8,7 @@ output:
     toc_depth: 2
 ---
 
-# Elaboração e customização de gráficos no ggplot2
+# Customização de gráficos no ggplot2
 
 Neste workshop vamos recapitular rapidamente o que vimos sobre criação de gráficos no ggplot na última aula e iremos aprender a customizar nossos gráficos: incluir título, mudar cor, usar temas e templates já incluídos no ggplot2, etc.
 
