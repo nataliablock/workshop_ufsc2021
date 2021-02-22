@@ -492,7 +492,7 @@ plot_migracao_alemanha</code></pre>
 <h2>Alterando posição de barras e direcionamento de eixos</h2>
 <p>No workshop 3 vimos que podemos alterar as posições das barras. Utilizamos, dentro da função <code>geom_bar</code> o argumento <code>position</code> e utilizamos a opcão <code>position_dodge</code> para criar um gráfico de barras agrupadas de países para cada ano. Vamos explorar um pouco mais as possibilidades de posições de barras.</p>
 <p>Agora vamos criar um gráfico de barra comparando a entrada de alemães em Santa Catarina por sexo utilizando nossa tabela <code>migracao_sexo_wide</code>. Queremos fazer um gráfico em que a mesma barra apresente o total de mulheres e homens por país. A barra terá duas cores, uma para cada sexo. Chamamos esse tipo de gráfico de <strong>stacked</strong>. Para criá-lo precisamos primeiro transformar essa tabela de wide para long, como vimos no workshop anterior, pois esta é a forma a qual os dados devem ser apresentados para o ggplot.</p>
-<p>Como mostrado no workshop anterior, realizarei a alteração da tabela e criarei tidyr a estética do gráfico (argumento <code>aes</code>) com ggplot no mesmo bloco de códigos utilizando pipes e salvarei em um objeto chamado <code>plot_migracao_sexo</code>. No entanto, estou incluindo um novo argumento que ainda não exploramos dentro da função <code>aes</code> chamado <code>label</code>. Mais adiante vou querer que o valor representado pelas barras apareçam dentro delas. Para isso preciso indicar na camada aesthetics (<code>aes</code>) qual coluna estão os valores que deverão aparecer nessas barras que, no nosso caso, estão na coluna <code>valor</code> criada na função <code>pivot_longer</code> neste mesmo bloco de código.</p>
+<p>Como mostrado no workshop anterior, realizarei a alteração da tabela com tidyr e criarei a estética do gráfico (argumento <code>aes</code>) com ggplot no mesmo bloco de códigos utilizando pipes e salvarei em um objeto chamado <code>plot_migracao_sexo</code>. No entanto, estou incluindo um novo argumento que ainda não exploramos dentro da função <code>aes</code> chamado <code>label</code>. Mais adiante vou querer que o valor representado pelas barras apareçam dentro delas. Para isso preciso indicar na camada aesthetics (<code>aes</code>) qual coluna da nossa tabela estão os valores que deverão aparecer nessas barras que, no nosso caso, estão na coluna <code>valor</code> criada na função <code>pivot_longer</code> neste mesmo bloco de código.</p>
 <pre class="r"><code>plot_migracao_sexo&lt;-migracao_sexo_wide%&gt;%
   pivot_longer(cols = Feminino:Masculino,
                names_to = &quot;sexo&quot;,
@@ -506,7 +506,7 @@ plot_migracao_sexo</code></pre>
 <pre class="r"><code>plot_migracao_sexo + geom_bar(stat = &quot;identity&quot;)</code></pre>
 <p><img src="workshop4_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
 <p>O bom deste gráfico é que visualizamos não apenas o total de migrantes por país, permitindo a comparação entre eles, mas também a diferença entre homens e mulheres. No entanto, para saber a quantidade de homens e mulheres para cada país é necessário reduzir a quantidade de um dos sexos do total. Por exemplo: entraram 583 homens (barra azul) de um total de 995 migrantes alemães. Desta forma, a barra rosa indica que 412 mulheres alemãs entraram em Santa Catarina. Assim, a leitura da diferença entre os sexos não é fácil.</p>
-<p>Para resolver esse problema é possível colocar rótulos (que chamamos de labels) para indicar as quantidades dentro das barras. Para isso, incluimos uma nova camada chamada <code>geom_text</code> que incluirá os rótulos que indicamos para o ggplot no argumento <code>label=valor</code> na camada <code>aes</code>. A função <code>geom_text</code> irá pegar a coluna que indicamos como <code>label</code> na camada <code>aes</code> e incluirá nas barras. Dentro desta função o argumento <code>size</code> indica o tamanho da fonte do rótulo. Devemos também incluir a posição em que esses rótulos devem aparecer. Como nossas barras são stacked esta é a posição que deve ser indicada neste argumento: <code>position=position-stack</code>. Dentro de <code>posistion_stack</code> eu tenho a opção de colocar o alinhamento que quero para este rótulo. Uso o argumento <code>vjust</code> porque quero alinhá-los na vertical (caso quisesse na horizontal seria <code>hjust</code>). Uso o valor <code>0.5</code> pois quero os rótulos bem no meio da barra; se quisesse que fossem alinhados na parte superior da barra incluiria o valor <code>1</code>, e caso quisesse na parte inferior o valor deveria ser <code>0</code>.</p>
+<p>Para resolver esse problema é possível colocar rótulos (que chamamos de labels) para indicar as quantidades dentro das barras. Para isso, incluimos uma nova camada chamada <code>geom_text</code> que incluirá os rótulos que indicamos para o ggplot no argumento <code>label=valor</code> na camada <code>aes</code>. A função <code>geom_text</code> irá pegar a coluna que indicamos como <code>label</code> na camada <code>aes</code> e incluirá nas barras. Dentro desta função o argumento <code>size</code> indica o tamanho da fonte do rótulo. Devemos também incluir a posição em que esses rótulos devem aparecer. Como nossas barras são stacked esta é a posição que deve ser indicada neste argumento: <code>position=position_stack</code>. Dentro de <code>position_stack</code> eu tenho a opção de colocar o alinhamento que quero para este rótulo. Uso o argumento <code>vjust</code> porque quero alinhá-los na vertical (caso quisesse na horizontal seria <code>hjust</code>). Uso o valor <code>0.5</code> pois quero os rótulos bem no meio da barra; se quisesse que fossem alinhados na parte superior da barra incluiria o valor <code>1</code>, e caso quisesse na parte inferior o valor deveria ser <code>0</code>.</p>
 <pre class="r"><code>plot_migracao_sexo + geom_bar(stat=&quot;identity&quot;)+
   geom_text(size=3, position=position_stack(vjust=0.5))</code></pre>
 <p><img src="workshop4_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
@@ -514,7 +514,7 @@ plot_migracao_sexo</code></pre>
 <pre class="r"><code>plot_migracao_sexo + geom_bar(stat=&quot;identity&quot;, position=&quot;dodge&quot;) </code></pre>
 <p><img src="workshop4_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
 <p>Neste gráfico não conseguimos ver o total de migrantes por país como no gráfico anterior, porém a diferença entre os sexos por país é mais clara. Desta forma, a escolha entre qual dos dois gráficos usar vai depender de qual informação é mais relevante para o seu trabalho e deve ser destacada; se for o total por ano o gráfico stacked é o melhor. Se for a quantidade por sexo o gráfico dodge é a melhor opção.</p>
-<p>Esta apresentação dos dados está boa, mas podemos inverter os eixos dos gráficos para que a comparação entre os países seja feita com maior clareza. No último workshop falamos sobre a camada das coordenadas, indicada no esquema conceitual como <code>&lt;COORDINATE_FUNCTION&gt;</code>. Podemos inverter os eixos, colocando o eixo x no lugar no y, tornando assim as barras verticais em horizontais. Para isso, basta incluir ao bloco de códigos anterior uma camada com a função <code>coord_flip()</code>.</p>
+<p>Esta apresentação dos dados está boa, mas podemos inverter os eixos dos gráficos para que a comparação entre os países seja feita com maior clareza. No último workshop falamos sobre a camada das coordenadas, indicada no esquema conceitual como <code>&lt;COORDINATE_FUNCTION&gt;</code>. Podemos inverter os eixos, colocando o eixo x no lugar do y, tornando assim as barras verticais em horizontais. Para isso, basta incluir ao bloco de códigos anterior uma camada com a função <code>coord_flip()</code>.</p>
 <pre class="r"><code>plot_migracao_sexo + geom_bar(stat=&quot;identity&quot;, position=&quot;dodge&quot;) +
   coord_flip()</code></pre>
 <p><img src="workshop4_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
@@ -573,8 +573,8 @@ exportacao%&gt;%
 plot_exportacao</code></pre>
 <p><img src="workshop4_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
 </div>
-<div id="alterando-posição-das-marcações-dos-eixos" class="section level2">
-<h2>Alterando posição das marcações dos eixos</h2>
+<div id="alterando-a-posição-das-marcações-dos-eixos" class="section level2">
+<h2>Alterando a posição das marcações dos eixos</h2>
 <p>Este último gráfico de migração pode receber várias customizações alterando painel, rótulos dos eixos, incluindo título, etc. Como já vimos a maior parte delas vou focar apenas na rotação dos valores do eixo x. Repare que os anos se sobrepõem e não é possível lê-los. Podemos usar a função <code>theme</code> em uma nova camada e ajustar melhor o ângulo dessas marcações. Dentro de <code>theme</code> utilizamos o argumento <code>axis.text.x</code> que irá alterar características do texto das marcações dos valores do eixo x, e incluimos como valor <code>element_text(angle=45)</code> indicando que queremos rotacionar o texto para um ângulo de 45 graus. Além de alterar o ângulo poderíamos fazer várias outras transformações, como alterar o tamanho da fonte com <code>size</code> e o posicionamento do texto na vertical <code>vjust</code> e na horizontal <code>hjust</code>.</p>
 <pre class="r"><code>plot_exportacao + theme(axis.text.x = element_text(angle=45))</code></pre>
 <p><img src="workshop4_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
@@ -594,7 +594,7 @@ plot_exportacao</code></pre>
 <li>Incluir título, subtítulo e nota com fonte dos dados</li>
 <li>Alterar painel de fundo utilizando um tema</li>
 </ol>
-<p>Como base em tudo que vimos até agora nosso bloco de códigos ficaria deste jeito:</p>
+<p>Com base em tudo que vimos até agora nosso bloco de códigos ficaria deste jeito:</p>
 <pre class="r"><code>paises&lt;-c(&quot;China&quot;, &quot;Estados Unidos&quot;, &quot;Japão&quot;)
 
 exportacao%&gt;%
@@ -608,7 +608,7 @@ exportacao%&gt;%
        caption=&quot;Fonte: Comexstat. Elaboração Própria&quot;)+
   theme_minimal()</code></pre>
 <p><img src="workshop4_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
-<p>Digamos que eu queira alterar o tipo de linha dos gráficos. Para isso preciso primeiro incluir um argumento à função geom_line que identifica a estética da linha. Para isso usaremos a função <code>aes</code> dentro de <code>geom_line</code> e indicaremos que as diferenças das linhas refletirão os diferentes países. Depois incluimos uma nova camada com a função <code>scale_linetype_manual</code> e incluo o argumento <code>values</code> indicando os tipos de linhas que eu quero: sólida, com dois traços (twodash) e traços longos (longdash). Vou salvar o gráfico resultante no objeto <code>plot_exportacao3</code></p>
+<p>Digamos que eu queira alterar o tipo de linha dos gráficos. Para isso preciso primeiro incluir um argumento à função geom_line que identifica a estética da linha. Usaremos a função <code>aes</code> dentro de <code>geom_line</code> e indicaremos que as diferenças das linhas refletirão os diferentes países. Depois incluimos uma nova camada com a função <code>scale_linetype_manual</code> e incluo o argumento <code>values</code> indicando os tipos de linhas que eu quero: sólida, com dois traços (twodash) e traços longos (longdash). Vou salvar o gráfico resultante no objeto <code>plot_exportacao3</code></p>
 <pre class="r"><code>plot_exportacao3&lt;-exportacao%&gt;%
   filter(pais %in% paises)%&gt;%
   ggplot(aes(x=ano, y=valor_milhoes, group=pais, colour=pais))+
@@ -624,7 +624,7 @@ exportacao%&gt;%
 
 plot_exportacao3</code></pre>
 <p><img src="workshop4_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
-<p>Caso queiramos alterar a cor das linhas temos que utilizar a função <code>scale_color_manual</code>, incluindo no argumento <code>values</code> um vetor com o nome ou código das cores ou códigos na ordem em que as linhas aparecem no gráfico. Vou subscrever o objeto <code>plot_exportacao3</code> por esse novo gráfico.</p>
+<p>Caso queiramos alterar a cor das linhas temos que utilizar a função <code>scale_color_manual</code>, incluindo no argumento <code>values</code> um vetor com o nome ou código das cores na ordem em que as linhas aparecem no gráfico. Vou subscrever o objeto <code>plot_exportacao3</code> por esse novo gráfico.</p>
 <pre class="r"><code>plot_exportacao3&lt;-plot_exportacao3 + scale_color_manual(values=c(&#39;#990000&#39;, &#39;#000099&#39;, &#39;#CC9933&#39;))
 
 plot_exportacao3</code></pre>

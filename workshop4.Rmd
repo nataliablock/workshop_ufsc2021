@@ -139,7 +139,7 @@ No workshop 3 vimos que podemos alterar as posições das barras. Utilizamos, de
 
 Agora vamos criar um gráfico de barra comparando a entrada de alemães em Santa Catarina por sexo utilizando nossa tabela `migracao_sexo_wide`. Queremos fazer um gráfico em que a mesma barra apresente o total de mulheres e homens por país. A barra terá duas cores, uma para cada sexo. Chamamos esse tipo de gráfico de **stacked**. Para criá-lo precisamos primeiro transformar essa tabela de wide para long, como vimos no workshop anterior, pois esta é a forma a qual os dados devem ser apresentados para o ggplot.
 
-Como mostrado no workshop anterior, realizarei a alteração da tabela e criarei tidyr a estética do gráfico (argumento `aes`) com ggplot no mesmo bloco de códigos utilizando pipes e salvarei em um objeto chamado `plot_migracao_sexo`. No entanto, estou incluindo um novo argumento que ainda não exploramos dentro da função `aes` chamado `label`. Mais adiante vou querer que o valor representado pelas barras apareçam dentro delas. Para isso preciso indicar na camada aesthetics (`aes`) qual coluna estão os valores que deverão aparecer nessas barras que, no nosso caso, estão na coluna `valor` criada na função `pivot_longer` neste mesmo bloco de código.
+Como mostrado no workshop anterior, realizarei a alteração da tabela com tidyr e criarei a estética do gráfico (argumento `aes`) com ggplot no mesmo bloco de códigos utilizando pipes e salvarei em um objeto chamado `plot_migracao_sexo`. No entanto, estou incluindo um novo argumento que ainda não exploramos dentro da função `aes` chamado `label`. Mais adiante vou querer que o valor representado pelas barras apareçam dentro delas. Para isso preciso indicar na camada aesthetics (`aes`) qual coluna da nossa tabela estão os valores que deverão aparecer nessas barras que, no nosso caso, estão na coluna `valor` criada na função `pivot_longer` neste mesmo bloco de código.
 
 ```{r echo=TRUE}
 plot_migracao_sexo<-migracao_sexo_wide%>%
@@ -163,7 +163,7 @@ plot_migracao_sexo + geom_bar(stat = "identity")
 
 O bom deste gráfico é que visualizamos não apenas o total de migrantes por país, permitindo a comparação entre eles, mas também a diferença entre homens e mulheres. No entanto, para saber a quantidade de homens e mulheres para cada país é necessário reduzir a quantidade de um dos sexos do total. Por exemplo: entraram 583 homens (barra azul) de um total de 995 migrantes alemães. Desta forma, a barra rosa indica que 412 mulheres alemãs entraram em Santa Catarina. Assim, a leitura da diferença entre os sexos não é fácil. 
 
-Para resolver esse problema é possível colocar rótulos (que chamamos de labels) para indicar as quantidades dentro das barras. Para isso, incluimos uma nova camada chamada `geom_text` que incluirá os rótulos que indicamos para o ggplot no argumento `label=valor` na camada `aes`. A função `geom_text` irá pegar a coluna que indicamos como `label` na camada `aes` e incluirá nas barras. Dentro desta função o argumento `size` indica o tamanho da fonte do rótulo. Devemos também incluir a posição em que esses rótulos devem aparecer. Como nossas barras são stacked esta é a posição que deve ser indicada neste argumento: `position=position-stack`. Dentro de `posistion_stack` eu tenho a opção de colocar o alinhamento que quero para este rótulo. Uso o argumento `vjust` porque quero alinhá-los na vertical (caso quisesse na horizontal seria `hjust`). Uso o valor `0.5` pois quero os rótulos bem no meio da barra; se quisesse que fossem alinhados na parte superior da barra incluiria o valor `1`, e caso quisesse na parte inferior o valor deveria ser `0`.
+Para resolver esse problema é possível colocar rótulos (que chamamos de labels) para indicar as quantidades dentro das barras. Para isso, incluimos uma nova camada chamada `geom_text` que incluirá os rótulos que indicamos para o ggplot no argumento `label=valor` na camada `aes`. A função `geom_text` irá pegar a coluna que indicamos como `label` na camada `aes` e incluirá nas barras. Dentro desta função o argumento `size` indica o tamanho da fonte do rótulo. Devemos também incluir a posição em que esses rótulos devem aparecer. Como nossas barras são stacked esta é a posição que deve ser indicada neste argumento: `position=position_stack`. Dentro de `position_stack` eu tenho a opção de colocar o alinhamento que quero para este rótulo. Uso o argumento `vjust` porque quero alinhá-los na vertical (caso quisesse na horizontal seria `hjust`). Uso o valor `0.5` pois quero os rótulos bem no meio da barra; se quisesse que fossem alinhados na parte superior da barra incluiria o valor `1`, e caso quisesse na parte inferior o valor deveria ser `0`.
 
 ```{r echo=TRUE}
 
@@ -182,7 +182,7 @@ plot_migracao_sexo + geom_bar(stat="identity", position="dodge")
 
 Neste gráfico não conseguimos ver o total de migrantes por país como no gráfico anterior, porém a diferença entre os sexos por país é mais clara. Desta forma, a escolha entre qual dos dois gráficos usar vai depender de qual informação é mais relevante para o seu trabalho e deve ser destacada; se for o total por ano o gráfico stacked é o melhor. Se for a quantidade por sexo o gráfico dodge é a melhor opção.
 
-Esta apresentação dos dados está boa, mas podemos inverter os eixos dos gráficos para que a comparação entre os países seja feita com maior clareza. No último workshop falamos sobre a camada das coordenadas, indicada no esquema conceitual como `<COORDINATE_FUNCTION>`. Podemos inverter os eixos, colocando o eixo x no lugar no y, tornando assim as barras verticais em horizontais. Para isso, basta incluir ao bloco de códigos anterior uma camada com a função `coord_flip()`.
+Esta apresentação dos dados está boa, mas podemos inverter os eixos dos gráficos para que a comparação entre os países seja feita com maior clareza. No último workshop falamos sobre a camada das coordenadas, indicada no esquema conceitual como `<COORDINATE_FUNCTION>`. Podemos inverter os eixos, colocando o eixo x no lugar do y, tornando assim as barras verticais em horizontais. Para isso, basta incluir ao bloco de códigos anterior uma camada com a função `coord_flip()`.
 
 ```{r echo=TRUE}
 plot_migracao_sexo + geom_bar(stat="identity", position="dodge") +
@@ -283,7 +283,7 @@ plot_exportacao<-exportacao%>%
 plot_exportacao
 ```
 
-## Alterando posição das marcações dos eixos
+## Alterando a posição das marcações dos eixos
 
 Este último gráfico de migração pode receber várias customizações alterando painel, rótulos dos eixos, incluindo título, etc. Como já vimos a maior parte delas vou focar apenas na rotação dos valores do eixo x. Repare que os anos se sobrepõem e não é possível lê-los. Podemos usar a função `theme` em uma nova camada e ajustar melhor o ângulo dessas marcações. Dentro de `theme` utilizamos o argumento `axis.text.x` que irá alterar características do texto das marcações dos valores do eixo x, e incluimos como valor `element_text(angle=45)` indicando que queremos rotacionar o texto para um ângulo de 45 graus. Além de alterar o ângulo poderíamos fazer várias outras transformações, como alterar o tamanho da fonte com `size` e o posicionamento do texto na vertical `vjust` e na horizontal `hjust`. 
 
@@ -312,7 +312,7 @@ Vamos fazer algumas alterações e customizações nesse gráfico:
 4. Incluir título, subtítulo e nota com fonte dos dados
 5. Alterar painel de fundo utilizando um tema
 
-Como base em tudo que vimos até agora nosso bloco de códigos ficaria deste jeito:
+Com base em tudo que vimos até agora nosso bloco de códigos ficaria deste jeito:
 
 
 ```{r echo=TRUE}
@@ -330,7 +330,7 @@ exportacao%>%
   theme_minimal()
 ```
 
-Digamos que eu queira alterar o tipo de linha dos gráficos. Para isso preciso primeiro incluir um argumento à função geom_line que identifica a estética da linha. Para isso usaremos a função `aes` dentro de `geom_line` e indicaremos que as diferenças das linhas refletirão os diferentes países. Depois incluimos uma nova camada com a função `scale_linetype_manual` e incluo o argumento `values` indicando os tipos de linhas que eu quero: sólida, com dois traços (twodash) e traços longos (longdash). Vou salvar o gráfico resultante no objeto `plot_exportacao3`
+Digamos que eu queira alterar o tipo de linha dos gráficos. Para isso preciso primeiro incluir um argumento à função geom_line que identifica a estética da linha. Usaremos a função `aes` dentro de `geom_line` e indicaremos que as diferenças das linhas refletirão os diferentes países. Depois incluimos uma nova camada com a função `scale_linetype_manual` e incluo o argumento `values` indicando os tipos de linhas que eu quero: sólida, com dois traços (twodash) e traços longos (longdash). Vou salvar o gráfico resultante no objeto `plot_exportacao3`
 ```{r echo=TRUE}
 plot_exportacao3<-exportacao%>%
   filter(pais %in% paises)%>%
@@ -349,7 +349,7 @@ plot_exportacao3
 
 ```
 
-Caso queiramos alterar a cor das linhas temos que utilizar a função `scale_color_manual`, incluindo no argumento `values` um vetor com o nome ou código das cores ou códigos na ordem em que as linhas aparecem no gráfico. Vou subscrever o objeto `plot_exportacao3` por esse novo gráfico.
+Caso queiramos alterar a cor das linhas temos que utilizar a função `scale_color_manual`, incluindo no argumento `values` um vetor com o nome ou código das cores na ordem em que as linhas aparecem no gráfico. Vou subscrever o objeto `plot_exportacao3` por esse novo gráfico.
 
 ```{r echo=TRUE}
 
