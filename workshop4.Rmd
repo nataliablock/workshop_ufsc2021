@@ -195,7 +195,7 @@ Gostei desse gráfico. A seguir incluirei mais customizações como vimos acima,
 ```{r echo=TRUE}
 
 plot_migracao_sexo<-plot_migracao_sexo + geom_bar(stat="identity", position="dodge") +
-  xlab("total de migrantes")+
+  xlab("")+
   ylab("")+
   labs(title = "Total de migrantes alemães em Santa Catarina por sexo",
        subtitle="Entre os anos de 2010 e 2019",
